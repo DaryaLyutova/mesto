@@ -1,0 +1,22 @@
+.popup__input-activity {
+    display: flex;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    min-width: 358px;
+    min-height: 27.34px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    margin: 28.74px auto 0 auto;
+}
+
+.popup__input-activity:first-of-type {
+    margin-top: 0;
+}
+
+@media all and (max-width: 530px) {
+    .popup__input-activity {
+        min-width: 240px;
+    }
+}
