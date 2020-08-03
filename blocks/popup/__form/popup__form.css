@@ -1,22 +1,26 @@
-.popup__input-name {
-    display: flex;
+.popup__form {
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
     color: #000000;
     min-width: 358px;
-    min-height: 27.34px;
+    min-height: 27px;
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.2);
     margin: 28.74px auto 0 auto;
 }
 
-.popup__input-name:first-of-type {
+.popup__form:first-of-type {
     margin-top: 0;
 }
 
+.popup__form:hover {
+    transform: scale(1.02);
+    transition: all 0.5s ease;
+}
+
 @media all and (max-width: 530px) {
-    .popup__input-name {
+    .popup__form {
         min-width: 240px;
     }
 }

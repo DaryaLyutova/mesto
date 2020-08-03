@@ -1,3 +1,12 @@
 .footer {
     display: flex;
+    max-width: 882px;
+    width: 100%;
+    justify-content: start;
+    align-items: flex-start;
+}
+@media all and (max-width: 890px) {
+    .footer {
+        padding-left:  27px;
+    }
 }

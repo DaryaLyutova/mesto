@@ -1,9 +1,6 @@
-.element__group {
+.place__group {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     background-color: #FFFFFF;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }

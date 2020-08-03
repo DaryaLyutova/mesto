@@ -1,5 +1,4 @@
 .profile-info {
-    display: flex;
     display: grid;
     grid-gap: 16px;
     justify-content: center;

@@ -1,6 +1,8 @@
-.add-button {
-    background-color: #000000;
-    background-image: url(../../images/add-button/Vector.svg);
+.profile__add-button {
+    position: absolute;
+    right: 0;
+    background:none;
+    background-image: url(../../../images/add-button/Vector.svg);
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid #FFFFFF;
@@ -10,14 +12,15 @@
     padding: 0;
 }
 
-.add-button:hover {
-    background-image: url(../../images/add-button/Vector-hover.svg);
+.profile__add-button:hover {
+    background-image: url(../../../images/add-button/Vector-hover.svg);
+    background-position: center;
     border: 2px solid rgba(255, 255, 255, 0.6);
     cursor: pointer;
 }
 
 @media all and (max-width: 890px) {
-    .add-button {
+    .profile__add-button {
         width: 100%;
     }
 }
