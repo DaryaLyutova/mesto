@@ -8,6 +8,12 @@
     justify-content: start;
 }
 
+@media all and (max-width: 890px) {
+    .popup__title {
+        padding-left:  27px;
+    }
+}
+
 @media all and (max-width: 530px) {
     .popup__title {
         font-size: 20px;

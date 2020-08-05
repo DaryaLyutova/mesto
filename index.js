@@ -2,18 +2,17 @@ let popup = document.querySelector('.popup');
 let popupOpenButton = document.querySelector('.edit-button');
 let popupCloseButton = popup.querySelector('.popup__close-button');
 let popupSaveButton = popup.querySelector('.popup__save-button');
-let InfoContainer = document.querySelector('.profile-info');
+let infoContainer = document.querySelector('.profile-info');
 let saveButton = popup.querySelector('.popup__save-button');
 let name = document.querySelector('.profile-info__name');
 let aboutYou = document.querySelector('.profile-info__activity');
 let inputName = popup.querySelector('.popup__form_input-name');
 let inputAboutYou = popup.querySelector('.popup__form_input-activity');
 
-inputName.value = name.textContent;
-inputAboutYou.value = aboutYou.textContent;
-
-const popupToggle = function () {
+let popupToggle = function () {
    popup.classList.toggle('popup_opened');
+   inputName.value = name.textContent;
+   inputAboutYou.value = aboutYou.textContent;
 }
 
 popupOpenButton.addEventListener('click', popupToggle);
@@ -28,4 +27,7 @@ function formSubmitHandler (evt) {
 
 popup.addEventListener('submit', formSubmitHandler);
 
-saveButton.addEventListener('click', popupToggle);
+let popupClose = function () {
+   popup.classList.remove('popup_opened');
+}
+popupSaveButton.addEventListener('click', popupClose);

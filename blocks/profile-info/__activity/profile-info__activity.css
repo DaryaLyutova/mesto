@@ -7,14 +7,14 @@
     margin: 0 0 0 30px;
 }
 
-@media all and (max-width: 890px) {
+@media all and (max-width: 900px) {
     .profile-info__activity {
         margin: 0 auto 36px auto;
         text-align:  center;
     }
 }
 
-@media all and (max-width: 890px) {
+@media all and (max-width: 605px) {
     .profile-info__activity {
         font-size: 14px;
         line-height: 17px;

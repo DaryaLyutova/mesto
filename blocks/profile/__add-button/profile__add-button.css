@@ -19,8 +19,9 @@
     cursor: pointer;
 }
 
-@media all and (max-width: 890px) {
+@media all and (max-width: 900px) {
     .profile__add-button {
-        width: 100%;
+        position: static;
+        width: 282px;
     }
 }
