@@ -24,50 +24,6 @@
                 <button type="button" class="profile__add-button"></button>
             </section>
             <section class="places">
-                <ul class="places__container">
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1088404-unsplash.jpg" alt="Фотография: Замок в Карачаевске" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Карачаевск</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1404681-unsplash.png" alt="Фотография: закат на Эльбрусе" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Гора Эльбрус</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1556355-unsplash.png" alt="Фотография: горный вид на Домбае" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Домбай</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1404681-unsplash.png" alt="Фотография: закат на Эльбрусе" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Гора Эльбрус</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1556355-unsplash.png" alt="Фотография: горный вид на Домбае" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Домбай</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                    <li class="place">
-                        <img src="./images/place/__image/kirill-pershin-1088404-unsplash.jpg" alt="Фотография: Замок в Карачаевске" class="place__image">
-                        <div class="place__group">
-                            <h2 class="place__title">Карачаево-Черкесск</h2>
-                            <button type="button" class="place__like"></button>
-                        </div>
-                    </li>
-                </ul>
             </section>            
         </main>
         <footer class="footer">
@@ -83,6 +39,15 @@
             </div>
         </form>
     </div>
+    <template class="place">
+        <div>
+            <img alt="Фотография: Замок в Карачаевске" class="place__image">
+            <div class="place__group">
+                <h2 class="place__title"></h2>
+                <button type="button" class="place__like"></button>
+            </div>
+        </div>
+    </template>
     <script src="./index.js"></script>
 </body>
 </html>

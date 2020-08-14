@@ -1,14 +1,15 @@
-let popup = document.querySelector('.popup');
-let popupOpenButton = document.querySelector('.edit-button');
-let popupCloseButton = popup.querySelector('.popup__close-button');
-let popupSaveButton = popup.querySelector('.popup__save-button');
-let infoContainer = document.querySelector('.profile-info');
-let saveButton = popup.querySelector('.popup__save-button');
+const popup = document.querySelector('.popup');
+const popupOpenButton = document.querySelector('.edit-button');
+const popupCloseButton = popup.querySelector('.popup__close-button');
+const popupSaveButton = popup.querySelector('.popup__save-button');
+const infoContainer = document.querySelector('.profile-info');
 let name = document.querySelector('.profile-info__name');
 let aboutYou = document.querySelector('.profile-info__activity');
 let inputName = popup.querySelector('.popup__form_input-name');
 let inputAboutYou = popup.querySelector('.popup__form_input-activity');
 
+//логика работы попапа
+//открытие закрытие попапа
 let popupToggle = function () {
    popup.classList.toggle('popup_opened');
    inputName.value = name.textContent;
@@ -18,6 +19,7 @@ let popupToggle = function () {
 popupOpenButton.addEventListener('click', popupToggle);
 popupCloseButton.addEventListener('click', popupToggle);
 
+//внесение изменений данных из попапа 
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
     
@@ -31,3 +33,52 @@ let popupClose = function () {
    popup.classList.remove('popup_opened');
 }
 popupSaveButton.addEventListener('click', popupClose);
+// попап завершен
+
+//каточки на станице
+
+const initialCards = [
+   {
+       name: 'Архыз',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+   },
+   {
+       name: 'Челябинская область',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+   },
+   {
+       name: 'Иваново',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+   },
+   {
+       name: 'Камчатка',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+   },
+   {
+       name: 'Холмогорский район',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+   },
+   {
+       name: 'Байкал',
+       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+   }
+];
+
+const cardsContainer = document.querySelector('.places');
+
+//функция добавленя элементов массива в DOM
+ initialCards.forEach(function (item) {
+   
+    function addCard(nameElement, linkElement) {
+      const cardTemplate = document.querySelector('.place').content;
+      const cardElement = cardTemplate.cloneNode(true);
+      
+      cardElement.querySelector('.place__image').src = linkElement;
+      cardElement.querySelector('.place__title').textContent = nameElement;
+      cardsContainer.append(cardElement);
+     }
+     const nameElement = item.name;
+     const linkElement = item.link;
+     addCard(nameElement, linkElement);
+ });
+
