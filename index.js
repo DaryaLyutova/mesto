@@ -1,5 +1,8 @@
 const popup = document.querySelector('.popup');
+const popupAddCard = document.querySelector('.popup__add-card');
 const popupOpenButton = document.querySelector('.edit-button');
+const popupAddCardOpenButton = document.querySelector('.profile__add-button');
+const popupAddCardCloseButton = document.querySelector('.popup__close-button_card');
 const popupCloseButton = popup.querySelector('.popup__close-button');
 const popupSaveButton = popup.querySelector('.popup__save-button');
 const infoContainer = document.querySelector('.profile-info');
@@ -8,32 +11,7 @@ let aboutYou = document.querySelector('.profile-info__activity');
 let inputName = popup.querySelector('.popup__form_input-name');
 let inputAboutYou = popup.querySelector('.popup__form_input-activity');
 
-//логика работы попапа
-//открытие закрытие попапа
-let popupToggle = function () {
-   popup.classList.toggle('popup_opened');
-   inputName.value = name.textContent;
-   inputAboutYou.value = aboutYou.textContent;
-}
 
-popupOpenButton.addEventListener('click', popupToggle);
-popupCloseButton.addEventListener('click', popupToggle);
-
-//внесение изменений данных из попапа 
-function formSubmitHandler (evt) {
-    evt.preventDefault(); 
-    
-     name.textContent = inputName.value;
-     aboutYou.textContent = inputAboutYou.value;
-}
-
-popup.addEventListener('submit', formSubmitHandler);
-
-let popupClose = function () {
-   popup.classList.remove('popup_opened');
-}
-popupSaveButton.addEventListener('click', popupClose);
-// попап завершен
 
 //каточки на станице
 
@@ -82,3 +60,39 @@ const cardsContainer = document.querySelector('.places');
      addCard(nameElement, linkElement);
  });
 
+
+//логика работы попапа с инфомацией о пользователе
+//открытие закрытие попапа
+let popupToggle = function () {
+    popup.classList.toggle('popup_opened');
+    inputName.value = name.textContent;
+    inputAboutYou.value = aboutYou.textContent;
+ }
+ 
+ popupOpenButton.addEventListener('click', popupToggle);
+ popupCloseButton.addEventListener('click', popupToggle);
+ 
+ //внесение изменений данных пользователя из попапа 
+ function formSubmitHandler (evt) {
+     evt.preventDefault(); 
+     
+      name.textContent = inputName.value;
+      aboutYou.textContent = inputAboutYou.value;
+ }
+ 
+ popup.addEventListener('submit', formSubmitHandler);
+ 
+ let popupClose = function () {
+    popup.classList.remove('popup_opened');
+ }
+ popupSaveButton.addEventListener('click', popupClose);
+ // попап завершен
+
+ //логика работы попапа добавления карточки места
+//открытие закрытие попапа
+ let popupAddCardToggle = function () {
+    popupAddCard.classList.toggle('popup__add-card_opened');
+ }
+
+ popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
+ popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
