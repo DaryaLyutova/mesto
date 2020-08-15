@@ -96,3 +96,5 @@ let popupToggle = function () {
 
  popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
  popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
+
+ 
