@@ -10,6 +10,7 @@ let name = document.querySelector('.profile-info__name');
 let aboutYou = document.querySelector('.profile-info__activity');
 let inputName = popup.querySelector('.popup__form_input-name');
 let inputAboutYou = popup.querySelector('.popup__form_input-activity');
+const popupCardSaveButton = document.querySelector('.popup__save-button_card');
 
 
 
@@ -45,20 +46,57 @@ const initialCards = [
 const cardsContainer = document.querySelector('.places');
 
 //функция добавленя элементов массива в DOM
- initialCards.forEach(function (item) {
    
-    function addCard(nameElement, linkElement) {
-      const cardTemplate = document.querySelector('.place').content;
-      const cardElement = cardTemplate.cloneNode(true);
+function addCard(nameElement, linkElement) {
+    const cardTemplate = document.querySelector('.place').content;
+    const cardElement = cardTemplate.cloneNode(true);
       
-      cardElement.querySelector('.place__image').src = linkElement;
-      cardElement.querySelector('.place__title').textContent = nameElement;
-      cardsContainer.append(cardElement);
-     }
-     const nameElement = item.name;
-     const linkElement = item.link;
-     addCard(nameElement, linkElement);
- });
+    cardElement.querySelector('.place__image').src = linkElement;
+    cardElement.querySelector('.place__title').textContent = nameElement;
+
+    //Лайк карточки
+    cardElement.querySelector('.place__like').addEventListener('click', function(event) {
+        evt.target.classList.toggle('place__like_active');
+    });
+  
+    //Удаление карточки
+    cardElement.querySelector('.place__delete').addEventListener('click', function(event) {
+        event.target.classList.remove('place__container');
+     });
+
+     cardsContainer.prepend(cardElement);
+}
+
+initialCards.forEach(function (item) {
+    const nameElement = item.name;
+    const linkElement = item.link;   
+    addCard(nameElement, linkElement);
+});
+
+//Добавление карточки
+popupAddCard.addEventListener('submit', evt => {
+    evt.preventDefault();
+    nameElement = popupAddCard.querySelector('.popup__form_input-placename').value;
+    linkElement = popupAddCard.querySelector('.popup__form_input-link').value;
+    
+    addCard(nameElement, linkElement);
+    popupAddCard.reset();
+});
+
+
+//логика работы попапа добавления карточки места
+//открытие закрытие попапа
+const popupAddCardToggle = function () {
+    popupAddCard.classList.toggle('popup__add-card_opened');
+ }
+
+popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
+popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
+
+const popupAddCardClose = function () {
+    popupAddCard.classList.remove('popup__add-card_opened');
+ }
+popupCardSaveButton.addEventListener('click', popupAddCardClose);
 
 
 //логика работы попапа с инфомацией о пользователе
@@ -82,19 +120,9 @@ let popupToggle = function () {
  
  popup.addEventListener('submit', formSubmitHandler);
  
- let popupClose = function () {
+ const popupClose = function () {
     popup.classList.remove('popup_opened');
  }
  popupSaveButton.addEventListener('click', popupClose);
  // попап завершен
 
- //логика работы попапа добавления карточки места
-//открытие закрытие попапа
- let popupAddCardToggle = function () {
-    popupAddCard.classList.toggle('popup__add-card_opened');
- }
-
- popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
- popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
-
- 
