@@ -45,8 +45,7 @@ const initialCards = [
 
 const cardsContainer = document.querySelector('.places');
 
-//функция добавленя элементов массива в DOM
-   
+//функция добавленя элементов массива в DOM   
 function addCard(nameElement, linkElement) {
     const cardTemplate = document.querySelector('.place').content;
     const cardElement = cardTemplate.cloneNode(true);
@@ -56,12 +55,14 @@ function addCard(nameElement, linkElement) {
 
     //Лайк карточки
     cardElement.querySelector('.place__like').addEventListener('click', function(event) {
-        evt.target.classList.toggle('place__like_active');
+        event.target.classList.toggle('place__like_active');
+        console.log(event);
     });
   
-    //Удаление карточки
+    //Удаление карточки (не работает)
     cardElement.querySelector('.place__delete').addEventListener('click', function(event) {
-        event.target.classList.remove('place__container');
+        event.target.remove(cardElement.parentElement);
+        console.log(event);
      });
 
      cardsContainer.prepend(cardElement);

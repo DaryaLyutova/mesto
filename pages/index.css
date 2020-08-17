@@ -1,8 +1,5 @@
 @import url(../vendor/normalize.css);
 @import url(../fonts/inter/inter.css);
-@import url(../blocks/place/__like/_active/place__like_active.css);
-@import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/_closed/popup_closed.css);
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/content/content.css);
@@ -34,3 +31,6 @@
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__add-card/_opened/popup__add-card_opened.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/place/__like/_active/place__like_active.css);
+@import url(../blocks/popup/_closed/popup_closed.css);
