@@ -64,13 +64,21 @@ function addCard(nameElement, linkElement) {
         
      });
 
-     //попап с фотографией
-    // cardElement.querySelector('.place__image').addEventListener('click', function (event) {
-    //     const popupPhotoToggele = function () {
-    //         event.target.classList.toggle('popup_opened');
-    //     }
-        
-    // });
+    //  попап с фотографией
+    const popupPhoto = document.querySelector('.popup__photo')
+    cardElement.querySelector('.place__image').addEventListener('click', function (event) {
+        popupPhoto.classList.toggle('popup_opened');
+        popupPhoto.querySelector('.popup__title-photo').textContent = nameElement;
+        console.log(nameElement);
+        popupPhoto.querySelector('.popup__image').src = linkElement;
+        console.log(linkElement);
+    });
+
+    popupCloseButtonPhoto = popupPhoto.querySelector('.popup__close-button_photo');
+    const popupClosePhoto = function () {
+        popupPhoto.classList.remove('popup_opened');
+    }
+    popupCloseButtonPhoto.addEventListener('click', popupClosePhoto);
 
      cardsContainer.prepend(cardElement);
 }
@@ -108,7 +116,7 @@ popupCardSaveButton.addEventListener('click', popupAddCardClose);
 
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
-let popupToggle = function () {
+const popupToggle = function () {
     popup.classList.toggle('popup_opened');
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
