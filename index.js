@@ -54,16 +54,23 @@ function addCard(nameElement, linkElement) {
     cardElement.querySelector('.place__title').textContent = nameElement;
 
     //Лайк карточки
-    cardElement.querySelector('.place__like').addEventListener('click', function(event) {
+    cardElement.querySelector('.place__like').addEventListener('click', function (event) {
         event.target.classList.toggle('place__like_active');
-        console.log(event);
     });
   
-    //Удаление карточки (не работает)
+    //Удаление карточки 
     cardElement.querySelector('.place__delete').addEventListener('click', function(event) {
-        event.target.remove(cardElement.parentElement);
-        console.log(event);
+        event.target.parentElement.remove();
+        
      });
+
+     //попап с фотографией
+    // cardElement.querySelector('.place__image').addEventListener('click', function (event) {
+    //     const popupPhotoToggele = function () {
+    //         event.target.classList.toggle('popup_opened');
+    //     }
+        
+    // });
 
      cardsContainer.prepend(cardElement);
 }
@@ -84,18 +91,17 @@ popupAddCard.addEventListener('submit', evt => {
     popupAddCard.reset();
 });
 
-
 //логика работы попапа добавления карточки места
 //открытие закрытие попапа
 const popupAddCardToggle = function () {
-    popupAddCard.classList.toggle('popup__add-card_opened');
+    popupAddCard.classList.toggle('popup_opened');
  }
 
 popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
 popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
 
 const popupAddCardClose = function () {
-    popupAddCard.classList.remove('popup__add-card_opened');
+    popupAddCard.classList.remove('popup_opened');
  }
 popupCardSaveButton.addEventListener('click', popupAddCardClose);
 
