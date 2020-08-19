@@ -12,10 +12,7 @@ let inputName = popup.querySelector('.popup__form_input-name');
 let inputAboutYou = popup.querySelector('.popup__form_input-activity');
 const popupCardSaveButton = document.querySelector('.popup__save-button_card');
 
-
-
 //каточки на станице
-
 const initialCards = [
    {
        name: 'Архыз',
@@ -62,7 +59,7 @@ function addCard(nameElement, linkElement) {
     cardElement.querySelector('.place__delete').addEventListener('click', function(event) {
         event.target.parentElement.remove();
         
-     });
+    });
 
     //  попап с фотографией
     const popupPhoto = document.querySelector('.popup__photo')
@@ -80,7 +77,7 @@ function addCard(nameElement, linkElement) {
     }
     popupCloseButtonPhoto.addEventListener('click', popupClosePhoto);
 
-     cardsContainer.prepend(cardElement);
+    cardsContainer.prepend(cardElement);
 }
 
 initialCards.forEach(function (item) {
@@ -103,14 +100,14 @@ popupAddCard.addEventListener('submit', evt => {
 //открытие закрытие попапа
 const popupAddCardToggle = function () {
     popupAddCard.classList.toggle('popup_opened');
- }
+}
 
 popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
 popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
 
 const popupAddCardClose = function () {
     popupAddCard.classList.remove('popup_opened');
- }
+}
 popupCardSaveButton.addEventListener('click', popupAddCardClose);
 
 
@@ -120,24 +117,24 @@ const popupToggle = function () {
     popup.classList.toggle('popup_opened');
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
- }
+}
  
- popupOpenButton.addEventListener('click', popupToggle);
- popupCloseButton.addEventListener('click', popupToggle);
+popupOpenButton.addEventListener('click', popupToggle);
+popupCloseButton.addEventListener('click', popupToggle);
  
- //внесение изменений данных пользователя из попапа 
- function formSubmitHandler (evt) {
-     evt.preventDefault(); 
+//внесение изменений данных пользователя из попапа 
+function formSubmitHandler (evt) {
+    evt.preventDefault(); 
      
-      name.textContent = inputName.value;
-      aboutYou.textContent = inputAboutYou.value;
- }
+    name.textContent = inputName.value;
+    aboutYou.textContent = inputAboutYou.value;
+}
  
- popup.addEventListener('submit', formSubmitHandler);
+popup.addEventListener('submit', formSubmitHandler);
  
- const popupClose = function () {
+const popupClose = function () {
     popup.classList.remove('popup_opened');
- }
- popupSaveButton.addEventListener('click', popupClose);
- // попап завершен
+}
+popupSaveButton.addEventListener('click', popupClose);
+// попап завершен
 
