@@ -2,3 +2,10 @@
     top: 0;
     right: -47px;
 }
+
+@media all and (max-width: 530px) {
+    .popup__close-button_photo {
+        top: 0;
+        right: -37px;
+    }
+}
