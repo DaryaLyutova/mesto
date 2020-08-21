@@ -68,7 +68,7 @@ function createCard(nameElement, linkElement) {
         popupPhoto.querySelector('.popup__title-photo').textContent = nameElement;
         popupPhoto.querySelector('.popup__image').src = linkElement;
     }
-    
+
     placeImage.addEventListener('click', openPopupPhoto);
 
     popupCloseButtonPhoto = popupPhoto.querySelector('.popup__close-button_photo');
@@ -99,32 +99,31 @@ popupAddCard.addEventListener('submit', evt => {
     popupAddCard.reset();
 });
 
-//логика работы попапа добавления карточки места
-//открытие закрытие попапа
-const popupAddCardToggle = function () {
-    popupAddCard.classList.toggle('popup_opened');
-}
-
-popupAddCardOpenButton.addEventListener('click', popupAddCardToggle);
-popupAddCardCloseButton.addEventListener('click', popupAddCardToggle);
-
-const popupAddCardClose = function () {
-    popupAddCard.classList.remove('popup_opened');
-}
-popupCardSaveButton.addEventListener('click', popupAddCardClose);
-
-
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
-const popupToggle = function () {
-    popup.classList.toggle('popup_opened');
+function popupToggle (popupElement) {
+    popupElement.classList.toggle('popup_opened');
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
 }
- 
-popupOpenButton.addEventListener('click', popupToggle);
-popupCloseButton.addEventListener('click', popupToggle);
- 
+
+function popupClose (popupElement) {
+    popupElement.classList.remove('popup_opened');
+}
+
+popupOpenButton.addEventListener('click', function() {
+    popupToggle (popup)
+});
+popupCloseButton.addEventListener('click', function() {
+    popupClose (popup)
+});
+popupAddCardOpenButton.addEventListener('click',  function() {
+    popupToggle (popupAddCard)
+});
+popupAddCardCloseButton.addEventListener('click', function() {
+    popupClose (popupAddCard)
+});
+
 //внесение изменений данных пользователя из попапа 
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
@@ -134,10 +133,12 @@ function formSubmitHandler (evt) {
 }
  
 popup.addEventListener('submit', formSubmitHandler);
- 
-const popupClose = function () {
-    popup.classList.remove('popup_opened');
-}
-popupSaveButton.addEventListener('click', popupClose);
+
+popupSaveButton.addEventListener('click', function() {
+    popupClose (popup)
+});
+popupCardSaveButton.addEventListener('click', function() {
+    popupClose (popupAddCard)
+});
 // попап завершен
 
