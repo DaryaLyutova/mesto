@@ -112,16 +112,16 @@ function popupClose (popupElement) {
 }
 
 popupOpenButton.addEventListener('click', function() {
-    popupToggle (popup)
+    popupToggle (popup);
 });
 popupCloseButton.addEventListener('click', function() {
-    popupClose (popup)
+    popupClose (popup);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
-    popupToggle (popupAddCard)
+    popupToggle (popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function() {
-    popupClose (popupAddCard)
+    popupClose (popupAddCard);
 });
 
 //внесение изменений данных пользователя из попапа 
@@ -135,10 +135,10 @@ function formSubmitHandler (evt) {
 popup.addEventListener('submit', formSubmitHandler);
 
 popupSaveButton.addEventListener('click', function() {
-    popupClose (popup)
+    popupClose (popup);
 });
 popupCardSaveButton.addEventListener('click', function() {
-    popupClose (popupAddCard)
+    popupClose (popupAddCard);
 });
 // попап завершен
 
