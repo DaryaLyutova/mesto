@@ -46,9 +46,10 @@ function createCard(nameElement, linkElement) {
     const cardTemplate = document.querySelector('.place').content;
     const cardElement = cardTemplate.cloneNode(true);
     const placeImage = cardElement.querySelector('.place__image');
+    const placeName = cardElement.querySelector('.place__title')
       
     placeImage.src = linkElement;
-    cardElement.querySelector('.place__title').textContent = nameElement;
+    placeName.textContent = nameElement;
 
     //Лайк карточки
     cardElement.querySelector('.place__like').addEventListener('click', function (event) {
@@ -72,10 +73,10 @@ function createCard(nameElement, linkElement) {
     placeImage.addEventListener('click', openPopupPhoto);
 
     popupCloseButtonPhoto = popupPhoto.querySelector('.popup__close-button_photo');
-    const popupClosePhoto = function () {
-        popupPhoto.classList.remove('popup_opened');
-    }
-    popupCloseButtonPhoto.addEventListener('click', popupClosePhoto);
+    
+    popupCloseButtonPhoto.addEventListener('click', function() {
+        popupClose (popupPhoto);
+    });
     return cardElement;    
 }
 
