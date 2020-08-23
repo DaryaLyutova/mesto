@@ -1,5 +1,6 @@
 const popup = document.querySelector('.popup');
 const popupAddCard = document.querySelector('.popup_add-card');
+const popupInfo = document.querySelector('.popup_info');
 const popupOpenButton = document.querySelector('.edit-button');
 const popupAddCardOpenButton = document.querySelector('.profile__add-button');
 const popupAddCardCloseButton = document.querySelector('.popup__close-button_card');
@@ -103,9 +104,7 @@ popupAddCard.addEventListener('submit', evt => {
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
 function popupToggle (popupElement) {
-    popupElement.classList.toggle('popup_opened');
-    inputName.value = name.textContent;
-    inputAboutYou.value = aboutYou.textContent;
+    popupElement.classList.toggle('popup_opened');    
 }
 
 function popupClose (popupElement) {
@@ -113,10 +112,12 @@ function popupClose (popupElement) {
 }
 
 popupOpenButton.addEventListener('click', function() {
-    popupToggle (popup);
+    inputName.value = name.textContent;
+    inputAboutYou.value = aboutYou.textContent;
+    popupToggle (popupInfo);
 });
 popupCloseButton.addEventListener('click', function() {
-    popupClose (popup);
+    popupClose (popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
     popupToggle (popupAddCard);
@@ -136,7 +137,7 @@ function formSubmitHandler (evt) {
 popup.addEventListener('submit', formSubmitHandler);
 
 popupSaveButton.addEventListener('click', function() {
-    popupClose (popup);
+    popupClose (popupInfo);
 });
 popupCardSaveButton.addEventListener('click', function() {
     popupClose (popupAddCard);
