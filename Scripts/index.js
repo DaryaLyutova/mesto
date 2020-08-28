@@ -45,15 +45,19 @@ const cardsContainer = document.querySelector('.places');
 
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
-function popupToggle (popupElement) {
-    popupElement.classList.toggle('popup_opened');
+function popupAdd (popupElement) {
+    popupElement.classList.add('popup_opened');
+}
+
+function popupRemove (popupElement) {
+    popupElement.classList.remove('popup_opened');
 }
 
 //закрытие попапа на overlay
 
 function closePopup (popupElement) {
     if (event.target !== popupElement) return
-    popupToggle (popupElement);
+    popupRemove (popupElement);
 }
 
 // //закрытие попапов на Esc
@@ -91,17 +95,17 @@ function createCard(nameElement, linkElement) {
     const popupCloseButtonPhoto = popupPhoto.querySelector('.popup__close-button_photo');
 
     placeImage.addEventListener('click', function() {
-        popupToggle (popupPhoto);
+        popupAdd (popupPhoto);
         popupPhoto.querySelector('.popup__title-photo').textContent = nameElement;
-        popupPhoto.querySelector('.popup__image').src = linkElement;
-
-        popupPhoto.addEventListener('click', function() {
-            closePopup (popupPhoto);
-        });
+        popupPhoto.querySelector('.popup__image').src = linkElement;        
+    });
+    
+    popupPhoto.addEventListener('click', function() {
+        closePopup (popupPhoto);
     });
      
     popupCloseButtonPhoto.addEventListener('click', function() {        
-        popupPhoto.classList.remove('popup_opened');
+        popupRemove (popupPhoto);
     });
 
     return cardElement;
@@ -131,16 +135,16 @@ popupAddCard.addEventListener('submit', evt => {
 popupOpenButton.addEventListener('click', function() {
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
-    popupToggle (popupInfo);
+    popupAdd (popupInfo);
 });
 popupCloseButton.addEventListener('click', function() {
-    popupToggle (popupInfo);
+    popupRemove (popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
-    popupToggle (popupAddCard);
+    popupAdd (popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function() {
-    popupToggle (popupAddCard);
+    popupRemove (popupAddCard);
 });
 
 //внесение изменений данных пользователя из попапа 
@@ -154,10 +158,10 @@ function formSubmitHandler (evt) {
 popup.addEventListener('submit', formSubmitHandler);
 
 popupSaveButton.addEventListener('click', function() {
-    popupToggle (popupInfo);
+    popupRemove (popupInfo);
 });
 popupCardSaveButton.addEventListener('click', function() {
-    popupToggle (popupAddCard);
+    popupRemove (popupAddCard);
 });
 
 popup.addEventListener('click', function() {
