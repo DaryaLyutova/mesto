@@ -33,8 +33,8 @@
             <div class="popup__container">
                 <button type="button" class="popup__close-button"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" placeholder="Имя" class="popup__form popup__form_input-name">
-                <input type="text" placeholder="О себе" class="popup__form popup__form_input-activity">
+                <input type="text" placeholder="Имя" class="popup__form popup__form_input-name" minlength="2" maxlength="40" required>
+                <input type="text" placeholder="О себе" class="popup__form popup__form_input-activity" minlength="2" maxlength="200" required>
                 <button type="submit" class="popup__save-button">Сохранить</button>
             </div>
         </form>
@@ -42,8 +42,8 @@
             <div class="popup__container">
                 <button type="button" class="popup__close-button popup__close-button_card"></button>
                 <h2 class="popup__title">Новое место</h2>
-                <input type="text" placeholder="Название" class="popup__form popup__form_input-placename">
-                <input type="text" placeholder="Ссылка на картинку" class="popup__form popup__form_input-link">
+                <input type="text" placeholder="Название" class="popup__form popup__form_input-placename" minlength="1" maxlength="30" required>
+                <input type="url" placeholder="Ссылка на картинку" class="popup__form popup__form_input-link" required>
                 <button type="submit" class="popup__save-button popup__save-button_card">Сохранить</button>
             </div>
         </form>
@@ -66,7 +66,8 @@
                 <button type="button" class="place__like"></button>
             </div>
         </div>
-    </template>
-    <script src="./index.js"></script>
+    </template>    
+    <script src="./Scripts/index.js"></script>
+    <script src="./Scripts/validate.js"></script>    
 </body>
 </html>

@@ -24,3 +24,11 @@
         min-width: 240px;
     }
 }
+
+.popup__form:invalid {
+    border-bottom: 1px solid #FF0000;
+  }
+  
+  .popup__form:valid {
+    border-bottom: none;
+  }

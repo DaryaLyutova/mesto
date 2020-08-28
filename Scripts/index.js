@@ -107,23 +107,19 @@ function popupToggle (popupElement) {
     popupElement.classList.toggle('popup_opened');    
 }
 
-function popupClose (popupElement) {
-    popupElement.classList.remove('popup_opened');
-}
-
 popupOpenButton.addEventListener('click', function() {
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
     popupToggle (popupInfo);
 });
 popupCloseButton.addEventListener('click', function() {
-    popupClose (popupInfo);
+    popupToggle (popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
     popupToggle (popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function() {
-    popupClose (popupAddCard);
+    popupToggle (popupAddCard);
 });
 
 //внесение изменений данных пользователя из попапа 
@@ -137,10 +133,10 @@ function formSubmitHandler (evt) {
 popup.addEventListener('submit', formSubmitHandler);
 
 popupSaveButton.addEventListener('click', function() {
-    popupClose (popupInfo);
+    popupToggle (popupInfo);
 });
 popupCardSaveButton.addEventListener('click', function() {
-    popupClose (popupAddCard);
+    popupToggle (popupAddCard);
 });
 // попап завершен
 
