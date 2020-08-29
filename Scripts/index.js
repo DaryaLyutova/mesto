@@ -62,7 +62,6 @@ function closePopup (popupElement) {
 
 // //закрытие попапов на Esc
 document.addEventListener('keydown', function(evt) {
-    evt.preventDefault(); 
     if (evt.key === 'Escape') {
         popup.classList.remove('popup_opened');
         popupAddCard.classList.remove('popup_opened');
