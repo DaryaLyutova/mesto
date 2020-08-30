@@ -19,16 +19,20 @@
     transition: all 0.5s ease;
 }
 
+.popup__input:focus {
+    outline: none;
+}
+
 @media all and (max-width: 530px) {
     .popup__input {
         min-width: 240px;
     }
 }
 
-.popup__input:invalid {
+/* .popup__input:invalid {
     border-bottom: 1px solid #FF0000;
   }
   
   .popup__input:valid {
     border-bottom: none;
-  }
+  } */

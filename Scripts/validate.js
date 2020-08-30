@@ -1,10 +1,6 @@
+
+
 //функция для  проверки валидности на каждый ввод символа
-// Функция, которая добавляет класс с ошибкой
-// function showInputError(formElement, {inputSelector, ...rest}) {
-//     console.log(inputSelector);
-//     // inputSelector.classList.add('popup__input_type_error');
-//   };
-  
 // Функция, которая добавляет класс с ошибкой
 function showInputError(element) {
     element.classList.add('popup__input_type_error');
@@ -16,8 +12,7 @@ function showInputError(element) {
   };
   
   // Функция, которая проверяет валидность поля
-  function isValid() {
-      
+  function isValid(inputElement) {      
     if (!inputElement.validity.valid) {
       // Если поле не проходит валидацию, покажем ошибку
       showInputError(inputElement);
@@ -30,11 +25,12 @@ function showInputError(element) {
 
 function setEventListener(formElement, {inputSelector, ...rest}) {
     //создаю массив з всех инпутов
+    
     const inputList = Array.from(document.querySelectorAll(inputSelector)); 
 //обхожу весь массив инпутов и вывожу в консоль значеня свойства validity, при вводе значений в инпутах
     inputList.forEach(function (inputElement) {
         inputElement.addEventListener('input', function () {
-            isValid();
+            isValid(inputElement);
           });    
     });
 }
