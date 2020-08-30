@@ -1,4 +1,4 @@
-.popup__form {
+.popup__input {
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
@@ -10,25 +10,25 @@
     margin: 29px auto 0 auto;
 }
 
-.popup__form:first-of-type {
+.popup__input:first-of-type {
     margin-top: 0;
 }
 
-.popup__form:hover {
+.popup__input:hover {
     transform: scale(1.02);
     transition: all 0.5s ease;
 }
 
 @media all and (max-width: 530px) {
-    .popup__form {
+    .popup__input {
         min-width: 240px;
     }
 }
 
-.popup__form:invalid {
+.popup__input:invalid {
     border-bottom: 1px solid #FF0000;
   }
   
-  .popup__form:valid {
+  .popup__input:valid {
     border-bottom: none;
   }

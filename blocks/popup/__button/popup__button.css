@@ -1,9 +1,9 @@
-.popup__save-button {
+.popup__button {
     width: 358px;
     height: 50.15px;
     color: #ffffff;
     background-color: black;
-    border: none;
+    border: 1px solid #000000;
     font-weight: normal;
     font-size: 18px;
     line-height: 22px;
@@ -12,13 +12,13 @@
     border-radius: 2px;
 }
 
-.popup__save-button:hover {
+.popup__button:hover {
     background: rgba(0, 0, 0, 0.8);
     cursor: pointer;
 }
 
 @media all and (max-width: 530px) {
-    .popup__save-button {
+    .popup__button {
         width: 240px;
         margin-top: 36px;
         margin-bottom: 24px;
