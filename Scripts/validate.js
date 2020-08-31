@@ -2,35 +2,44 @@
 
 //функция для  проверки валидности на каждый ввод символа
 // Функция, которая добавляет класс с ошибкой
-function showInputError(element) {
-    element.classList.add('popup__input_type_error');
+function showInputError(formElement, inputElement, errorMessage) {
+    const formError = formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add('popup__input_type_error');
+    formError.textContent = errorMessage;
+    formError.classList.add('popup__error_visible');
+
   };
   
   // Функция, которая удаляет класс с ошибкой
-  function hideInputError(element) {
-    element.classList.remove('popup__input_type_error');
+  function hideInputError(formElement, inputElement) {
+    const formError = formElement.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove('popup__input_type_error');
+    formError.classList.remove('popup__error_visible');
+    formError.textContent = '';
   };
   
   // Функция, которая проверяет валидность поля
-  function isValid(inputElement) {      
+  function isValid(formElement, inputElement) {      
     if (!inputElement.validity.valid) {
+        
+        // console.log(inputElement.id);
       // Если поле не проходит валидацию, покажем ошибку
-      showInputError(inputElement);
+      showInputError(formElement, inputElement, inputElement.validationMessage);
     } else {
       // Если проходит, скроем
-      hideInputError(inputElement);
+      hideInputError(formElement, inputElement);
     }
   };
 
 
 function setEventListener(formElement, {inputSelector, ...rest}) {
-    //создаю массив з всех инпутов
     
-    const inputList = Array.from(document.querySelectorAll(inputSelector)); 
+    //создаю массив з всех инпутов
+    const inputList = Array.from(formElement.querySelectorAll(inputSelector)); 
 //обхожу весь массив инпутов и вывожу в консоль значеня свойства validity, при вводе значений в инпутах
     inputList.forEach(function (inputElement) {
         inputElement.addEventListener('input', function () {
-            isValid(inputElement);
+            isValid(formElement, inputElement);
           });    
     });
 }

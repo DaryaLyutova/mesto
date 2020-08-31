@@ -1,0 +1,5 @@
+.popup__profile {
+    border:0 none;
+    padding: 0;
+    display: flex;
+}

@@ -7,7 +7,7 @@
     min-height: 27px;
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.2);
-    margin: 29px auto 0 auto;
+    margin: 29px auto 0 36px;
 }
 
 .popup__input:first-of-type {
@@ -26,13 +26,6 @@
 @media all and (max-width: 530px) {
     .popup__input {
         min-width: 240px;
+        margin-left: 21px;
     }
 }
-
-/* .popup__input:invalid {
-    border-bottom: 1px solid #FF0000;
-  }
-  
-  .popup__input:valid {
-    border-bottom: none;
-  } */
