@@ -2,44 +2,46 @@
 
 //функция для  проверки валидности на каждый ввод символа
 // Функция, которая добавляет класс с ошибкой
-function showInputError(formElement, inputElement, errorMessage) {
+function showInputError(formElement, inputElement, inputErrorClass, errorClass, errorMessage) {
     const formError = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.add('popup__input_type_error');
+    inputElement.classList.add(inputErrorClass);
     formError.textContent = errorMessage;
-    formError.classList.add('popup__error_visible');
+    formError.classList.add(errorClass);
 
   };
   
   // Функция, которая удаляет класс с ошибкой
-  function hideInputError(formElement, inputElement) {
+  function hideInputError(formElement, inputElement, inputErrorClass, errorClass) {
     const formError = formElement.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.remove('popup__input_type_error');
-    formError.classList.remove('popup__error_visible');
+    inputElement.classList.remove(inputErrorClass);
+    formError.classList.remove(errorClass);
     formError.textContent = '';
   };
   
   // Функция, которая проверяет валидность поля
-  function isValid(formElement, inputElement) {      
+  function isValid(formElement, inputElement, inputErrorClass, errorClass) {      
     if (!inputElement.validity.valid) {
         
         // console.log(inputElement.id);
       // Если поле не проходит валидацию, покажем ошибку
-      showInputError(formElement, inputElement, inputElement.validationMessage);
+      showInputError(formElement, inputElement, inputErrorClass, errorClass, inputElement.validationMessage);
     } else {
       // Если проходит, скроем
-      hideInputError(formElement, inputElement);
+      hideInputError(formElement, inputElement, inputErrorClass, errorClass);
     }
   };
 
 
-function setEventListener(formElement, {inputSelector, ...rest}) {
+function setEventListener(formElement, {inputSelector, submitButtonSelector, inputErrorClass, errorClass, ...rest}) {
     
     //создаю массив з всех инпутов
     const inputList = Array.from(formElement.querySelectorAll(inputSelector)); 
+
 //обхожу весь массив инпутов и вывожу в консоль значеня свойства validity, при вводе значений в инпутах
     inputList.forEach(function (inputElement) {
         inputElement.addEventListener('input', function () {
-            isValid(formElement, inputElement);
+            isValid(formElement, inputElement, inputErrorClass, errorClass);
+
           });    
     });
 }
