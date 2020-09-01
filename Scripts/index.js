@@ -12,6 +12,8 @@ const inputName = popup.querySelector('.popup__input_name');
 const inputAboutYou = popup.querySelector('.popup__input_activity');
 const popupCardSaveButton = document.querySelector('.popup__button_card');
 const popupPhoto = document.querySelector('.popup_photo');
+const popupError = popup.querySelector(`.popup__error`);
+const errorElement = popup.querySelector(`#${popupError.id}-error`);
 
 //каточки на станице
 const initialCards = [
@@ -132,6 +134,8 @@ popupAddCard.addEventListener('submit', evt => {
 
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function() {
+    popupError.textContent = '';
+    popupInfo.reset();
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
     popupAdd (popupInfo);
@@ -140,6 +144,8 @@ popupCloseButton.addEventListener('click', function() {
     popupRemove (popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
+    popupError.textContent = '';
+    popupAddCard.reset();
     popupAdd (popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function() {
