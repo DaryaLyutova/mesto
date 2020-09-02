@@ -47,20 +47,37 @@ const cardsContainer = document.querySelector('.places');
 
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
+
+function resetFormPopup(popupElement) { 
+    const inputList = Array.from(popupElement.querySelectorAll('.popup__input'));
+    const inputSpan = Array.from(popupElement.querySelectorAll('.popup__error'));  
+
+    inputList.forEach(function (inputElement) {      
+        inputElement.classList.remove('popup__input_type_error');
+  });
+  inputSpan.forEach(function (spanElement) {
+    spanElement.classList.remove('popup__error_visible');
+    spanElement.textContent = '';
+});
+
+    popupElement.reset();
+  };
+
 function popupAdd (popupElement) {
     popupElement.classList.add('popup_opened');
-}
+    resetFormPopup(popupElement);
+};
 
 function popupRemove (popupElement) {
     popupElement.classList.remove('popup_opened');
-}
+};
 
 //закрытие попапа на overlay
 
 function closePopup (popupElement) {
     if (event.target !== popupElement) return
     popupRemove (popupElement);
-}
+};
 
 // //закрытие попапов на Esc
 document.addEventListener('keydown', function(evt) {
@@ -76,7 +93,7 @@ function createCard(nameElement, linkElement) {
     const cardTemplate = document.querySelector('.place').content;
     const cardElement = cardTemplate.cloneNode(true);
     const placeImage = cardElement.querySelector('.place__image');
-    const placeName = cardElement.querySelector('.place__title')
+    const placeName = cardElement.querySelector('.place__title');
       
     placeImage.src = linkElement;
     placeName.textContent = nameElement;
@@ -114,7 +131,7 @@ function createCard(nameElement, linkElement) {
 
 function addCard(nameElement, linkElement){
     cardsContainer.prepend(createCard(nameElement, linkElement));
-}
+};
 
 initialCards.forEach(function (item) {
     const nameElement = item.name;
@@ -134,18 +151,15 @@ popupAddCard.addEventListener('submit', evt => {
 
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function() {
-    popupError.textContent = '';
-    popupInfo.reset();
+    popupAdd (popupInfo);
     inputName.value = name.textContent;
     inputAboutYou.value = aboutYou.textContent;
-    popupAdd (popupInfo);
+    popupSaveButton.classList.remove('popup__button_disabled');
 });
 popupCloseButton.addEventListener('click', function() {
     popupRemove (popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click',  function() {
-    popupError.textContent = '';
-    popupAddCard.reset();
     popupAdd (popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function() {

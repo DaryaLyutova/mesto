@@ -36,12 +36,12 @@ function showInputError(formElement, inputElement, inputErrorClass, errorClass, 
 
   //функция переключения класса активной/неактивной кнопки "Сохранить"
   function toggleButtonState(inputList, formButton, inactiveButtonClass) {
-    if (hasInvalidInput(inputList)) {
-        // console.log(hasInvalidInput(inputList));
-        formButton.classList.add(inactiveButtonClass);
+    if (!hasInvalidInput(inputList)) {
+        
+        formButton.classList.remove(inactiveButtonClass);
     } else {
           // иначе сделай кнопку активной
-          formButton.classList.remove(inactiveButtonClass);
+          formButton.classList.add(inactiveButtonClass);
     }
   }
 
@@ -60,7 +60,7 @@ function setEventListener(formElement, {inputSelector, submitButtonSelector, inp
 
             toggleButtonState(inputList, formButton, inactiveButtonClass);
           });
-    });    
+    });
 }
 
 function enableValidation ({formSelector, ...rest}) {
