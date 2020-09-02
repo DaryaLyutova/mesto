@@ -21,7 +21,7 @@
 @media all and (max-width: 530px) {
     .popup__button {
         width: 240px;
-        margin-top: 36px;
-        margin-bottom: 24px;
+        margin: 36px auto 24px 21px;
+        min-width: 240px;
     }
 }
