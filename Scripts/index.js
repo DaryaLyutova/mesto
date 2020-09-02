@@ -105,7 +105,7 @@ function createCard(nameElement, linkElement) {
   
     //Удаление карточки 
     cardElement.querySelector('.place__delete').addEventListener('click', function(event) {
-        event.target.parentElement.remove();        
+        event.target.parentElement.remove();
     });
 
     //  попап с фотографией
@@ -113,9 +113,9 @@ function createCard(nameElement, linkElement) {
     const popupCloseButtonPhoto = popupPhoto.querySelector('.popup__close-button_photo');
 
     placeImage.addEventListener('click', function() {
-        popupAdd (popupPhoto);
         popupPhoto.querySelector('.popup__title-photo').textContent = nameElement;
-        popupPhoto.querySelector('.popup__image').src = linkElement;        
+        popupPhoto.querySelector('.popup__image').src = linkElement;
+        popupAdd (popupPhoto);     
     });
     
     popupPhoto.addEventListener('click', function() {
