@@ -32,9 +32,9 @@ const initialCards = [
   },
 ];
 
-const cardsContainer = document.querySelector(".places");
+export const cardsContainer = document.querySelector(".places");
 
-class Card {
+export class Card {
   constructor(name, link) {
     this._name = name;
     this._link = link;

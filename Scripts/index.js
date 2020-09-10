@@ -136,15 +136,24 @@ function closePopup(popupElement) {
 //     addCard(nameElement, linkElement);
 // });
 
-//Добавление карточки
-// popupAddCard.addEventListener("submit", (evt) => {
-//   evt.preventDefault();
-//   const nameElement = inputPlaceName.value;
-//   const linkElement = inputLink.value;
+//обавление карточки
+import { cardsContainer, Card } from "./Card.js";
 
-//   addCard(nameElement, linkElement);
-//   popupAddCard.reset();
-// });
+popupAddCard.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const nameElement = inputPlaceName.value;
+  const linkElement = inputLink.value;
+
+  // Создадим экземпляр карточки
+  const card = new Card(nameElement, linkElement);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  cardsContainer.prepend(cardElement);
+
+  popupAddCard.reset();
+});
 
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener("click", function () {
