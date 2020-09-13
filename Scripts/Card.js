@@ -33,6 +33,7 @@ const initialCards = [
 ];
 
 export const cardsContainer = document.querySelector(".places");
+export const popupPhoto = document.querySelector(".popup_photo");
 
 export class Card {
   constructor(name, link) {
@@ -69,11 +70,26 @@ export class Card {
       });
   }
 
+  //слушатель для открытия попапа
+  _setEventListenerImage() {
+    this._element
+      .querySelector(".place__image")
+      .addEventListener("click", () => {
+        popupPhoto.querySelector(
+          ".popup__title-photo"
+        ).textContent = this._name;
+        popupPhoto.querySelector(".popup__image").src = this._link;
+        popupPhoto.classList.add("popup_opened");
+     
+      });
+  }
+
   //создаем карточку
   generateCard() {
     this._element = this._getTemplate();
     this._likeCardClick();
     this._deleteCard();
+    this._setEventListenerImage();
 
     // Добавим данные
     this._element.querySelector(".place__image").src = this._link;

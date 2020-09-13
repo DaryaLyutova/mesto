@@ -13,51 +13,11 @@ const aboutYou = document.querySelector(".profile-info__activity");
 const inputName = popup.querySelector(".popup__input_name");
 const inputAboutYou = popup.querySelector(".popup__input_activity");
 const popupCardSaveButton = document.querySelector(".popup__button_card");
-const popupPhoto = document.querySelector(".popup_photo");
-const popupError = popup.querySelector(`.popup__error`);
-const errorElement = popup.querySelector(`#${popupError.id}-error`);
-const cardTemplate = document.querySelector(".place").content;
 const popupCloseButtonPhoto = popupPhoto.querySelector(
   ".popup__close-button_photo"
 );
 const inputPlaceName = popupAddCard.querySelector(".popup__input_placename");
 const inputLink = popupAddCard.querySelector(".popup__input_link");
-
-//каточки на станице
-// const initialCards = [
-//   {
-//     name: "Архыз",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-//   },
-//   {
-//     name: "Челябинская область",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-//   },
-//   {
-//     name: "Иваново",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-//   },
-//   {
-//     name: "Камчатка",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-//   },
-//   {
-//     name: "Холмогорский район",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-//   },
-//   {
-//     name: "Байкал",
-//     link:
-//       "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-//   },
-// ];
-
-// const cardsContainer = document.querySelector('.places');
 
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
@@ -96,48 +56,8 @@ function closePopup(popupElement) {
   popupRemove(popupElement);
 }
 
-//функция добавленя элементов массива в DOM
-// function createCard(nameElement, linkElement) {
-//     const cardElement = cardTemplate.cloneNode(true);
-//     const placeImage = cardElement.querySelector('.place__image');
-//     const placeName = cardElement.querySelector('.place__title');
-
-//     placeImage.src = linkElement;
-//     placeName.textContent = nameElement;
-
-//     //Лайк карточки
-//     cardElement.querySelector('.place__like').addEventListener('click', function (event) {
-//         event.target.classList.toggle('place__like_active');
-//     });
-
-//     //Удаление карточки
-//     cardElement.querySelector('.place__delete').addEventListener('click', function (event) {
-//         event.target.parentElement.remove();
-//     });
-
-//     //  попап с фотографией
-
-//     placeImage.addEventListener('click', function () {
-//         popupPhoto.querySelector('.popup__title-photo').textContent = nameElement;
-//         popupPhoto.querySelector('.popup__image').src = linkElement;
-//         popupAdd(popupPhoto);
-//     });
-
-//     return cardElement;
-// }
-
-// function addCard(nameElement, linkElement) {
-//     cardsContainer.prepend(createCard(nameElement, linkElement));
-// };
-
-// initialCards.forEach(function (item) {
-//     const nameElement = item.name;
-//     const linkElement = item.link;
-//     addCard(nameElement, linkElement);
-// });
-
 //обавление карточки
-import { cardsContainer, Card } from "./Card.js";
+import { cardsContainer, Card, popupPhoto } from "./Card.js";
 
 popupAddCard.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -188,6 +108,10 @@ function closeEscap(evt) {
     popupPhoto.classList.remove("popup_opened");
   }
 }
+
+(function closeEscapPopupPhoto() {
+  document.addEventListener("keydown", closeEscap);
+})();
 
 //внесение изменений данных пользователя из попапа
 function formSubmitHandler(evt) {
