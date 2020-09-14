@@ -8,7 +8,7 @@ const popupAddCardCloseButton = document.querySelector(
 );
 const popupCloseButton = popup.querySelector('.popup__close-button');
 const popupSaveButton = popup.querySelector('.popup__button');
-const name = document.querySelector('.profile-info__name');
+const namePerson = document.querySelector('.profile-info__name');
 const aboutYou = document.querySelector('.profile-info__activity');
 const inputName = popup.querySelector('.popup__input_name');
 const inputAboutYou = popup.querySelector('.popup__input_activity');
@@ -35,6 +35,16 @@ function makeCard(name, link) {
 
 initialCards.forEach((item) => {
   makeCard(item.name, item.link);
+});
+
+//добавление валидации
+
+import { FormValidator, getFormList, selectorObj } from './FormValidator.js';
+
+getFormList.forEach(function (formElement) {
+  const formValidator = new FormValidator(selectorObj, formElement);
+
+  formValidator.enableValidation();
 });
 
 // функция очищение формы попапов
@@ -87,7 +97,7 @@ popupAddCard.addEventListener('submit', (evt) => {
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function () {
   popupAdd(popupInfo);
-  inputName.value = name.textContent;
+  inputName.value = namePerson.textContent;
   inputAboutYou.value = aboutYou.textContent;
   popupSaveButton.classList.remove('popup__button_disabled');
 });
@@ -113,7 +123,7 @@ popupCloseButtonPhoto.addEventListener('click', function () {
 function formSubmitHandler(evt) {
   evt.preventDefault();
 
-  name.textContent = inputName.value;
+  namePerson.textContent = inputName.value;
   aboutYou.textContent = inputAboutYou.value;
 }
 

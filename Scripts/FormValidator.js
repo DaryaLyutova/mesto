@@ -1,4 +1,4 @@
-const selectorObj = {
+export const selectorObj = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -7,7 +7,7 @@ const selectorObj = {
   errorClass: 'popup__error_visible',
 };
 
-class FormValidator {
+export class FormValidator {
   constructor(selectorObj, formElement) {
     this._formSelector = selectorObj.formSelector;
     this._inputSelector = selectorObj.inputSelector;
@@ -97,12 +97,6 @@ class FormValidator {
   }
 }
 
-const getFormList = Array.from(
+export const getFormList = Array.from(
   document.querySelectorAll(selectorObj.formSelector)
 );
-
-getFormList.forEach(function (formElement) {
-  const formValidator = new FormValidator(selectorObj, formElement);
-
-  formValidator.enableValidation();
-});
