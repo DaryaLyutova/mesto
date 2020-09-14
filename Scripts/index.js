@@ -1,52 +1,52 @@
-const popup = document.querySelector(".popup");
-const popupAddCard = document.querySelector(".popup_add-card");
-const popupInfo = document.querySelector(".popup_info");
-const popupOpenButton = document.querySelector(".edit-button");
-const popupAddCardOpenButton = document.querySelector(".profile__add-button");
+const popup = document.querySelector('.popup');
+const popupAddCard = document.querySelector('.popup_add-card');
+const popupInfo = document.querySelector('.popup_info');
+const popupOpenButton = document.querySelector('.edit-button');
+const popupAddCardOpenButton = document.querySelector('.profile__add-button');
 const popupAddCardCloseButton = document.querySelector(
-  ".popup__close-button_card"
+  '.popup__close-button_card'
 );
-const popupCloseButton = popup.querySelector(".popup__close-button");
-const popupSaveButton = popup.querySelector(".popup__button");
-const name = document.querySelector(".profile-info__name");
-const aboutYou = document.querySelector(".profile-info__activity");
-const inputName = popup.querySelector(".popup__input_name");
-const inputAboutYou = popup.querySelector(".popup__input_activity");
-const popupCardSaveButton = document.querySelector(".popup__button_card");
+const popupCloseButton = popup.querySelector('.popup__close-button');
+const popupSaveButton = popup.querySelector('.popup__button');
+const name = document.querySelector('.profile-info__name');
+const aboutYou = document.querySelector('.profile-info__activity');
+const inputName = popup.querySelector('.popup__input_name');
+const inputAboutYou = popup.querySelector('.popup__input_activity');
+const popupCardSaveButton = document.querySelector('.popup__button_card');
 const popupCloseButtonPhoto = popupPhoto.querySelector(
-  ".popup__close-button_photo"
+  '.popup__close-button_photo'
 );
-const inputPlaceName = popupAddCard.querySelector(".popup__input_placename");
-const inputLink = popupAddCard.querySelector(".popup__input_link");
+const inputPlaceName = popupAddCard.querySelector('.popup__input_placename');
+const inputLink = popupAddCard.querySelector('.popup__input_link');
 
 //логика работы попапа с инфомацией о пользователе
 //открытие закрытие попапа
 
 function resetFormPopup(popupElement) {
-  const inputList = Array.from(popupElement.querySelectorAll(".popup__input"));
-  const inputSpan = Array.from(popupElement.querySelectorAll(".popup__error"));
+  const inputList = Array.from(popupElement.querySelectorAll('.popup__input'));
+  const inputSpan = Array.from(popupElement.querySelectorAll('.popup__error'));
 
   inputList.forEach(function (inputElement) {
-    inputElement.classList.remove("popup__input_type_error");
+    inputElement.classList.remove('popup__input_type_error');
   });
 
   inputSpan.forEach(function (spanElement) {
-    spanElement.classList.remove("popup__error_visible");
-    spanElement.textContent = "";
+    spanElement.classList.remove('popup__error_visible');
+    spanElement.textContent = '';
   });
 
   popupElement.reset();
 }
 
 function popupAdd(popupElement) {
-  popupElement.classList.add("popup_opened");
+  popupElement.classList.add('popup_opened');
   resetFormPopup(popupElement);
-  document.addEventListener("keydown", closeEscap);
+  document.addEventListener('keydown', closeEscap);
 }
 
 function popupRemove(popupElement) {
-  popupElement.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closeEscap);
+  popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeEscap);
 }
 
 //закрытие попапа на overlay
@@ -57,9 +57,9 @@ function closePopup(popupElement) {
 }
 
 //обавление карточки
-import { cardsContainer, Card, popupPhoto } from "./Card.js";
+import { cardsContainer, Card, popupPhoto } from './Card.js';
 
-popupAddCard.addEventListener("submit", (evt) => {
+popupAddCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const nameElement = inputPlaceName.value;
   const linkElement = inputLink.value;
@@ -76,41 +76,41 @@ popupAddCard.addEventListener("submit", (evt) => {
 });
 
 //вызов функций открытия/закрытия и обработки данных попапов
-popupOpenButton.addEventListener("click", function () {
+popupOpenButton.addEventListener('click', function () {
   popupAdd(popupInfo);
   inputName.value = name.textContent;
   inputAboutYou.value = aboutYou.textContent;
-  popupSaveButton.classList.remove("popup__button_disabled");
+  popupSaveButton.classList.remove('popup__button_disabled');
 });
-popupCloseButton.addEventListener("click", function () {
+popupCloseButton.addEventListener('click', function () {
   popupRemove(popupInfo);
 });
-popupAddCardOpenButton.addEventListener("click", function () {
+popupAddCardOpenButton.addEventListener('click', function () {
   popupAdd(popupAddCard);
 });
-popupAddCardCloseButton.addEventListener("click", function () {
+popupAddCardCloseButton.addEventListener('click', function () {
   popupRemove(popupAddCard);
 });
 
-popupPhoto.addEventListener("click", function () {
+popupPhoto.addEventListener('click', function () {
   closePopup(popupPhoto);
 });
 
-popupCloseButtonPhoto.addEventListener("click", function () {
+popupCloseButtonPhoto.addEventListener('click', function () {
   popupRemove(popupPhoto);
 });
 
 // //закрытие попапов на Esc
 function closeEscap(evt) {
-  if (evt.key === "Escape") {
-    popup.classList.remove("popup_opened");
-    popupAddCard.classList.remove("popup_opened");
-    popupPhoto.classList.remove("popup_opened");
+  if (evt.key === 'Escape') {
+    popup.classList.remove('popup_opened');
+    popupAddCard.classList.remove('popup_opened');
+    popupPhoto.classList.remove('popup_opened');
   }
 }
 
 (function closeEscapPopupPhoto() {
-  document.addEventListener("keydown", closeEscap);
+  document.addEventListener('keydown', closeEscap);
 })();
 
 //внесение изменений данных пользователя из попапа
@@ -121,19 +121,19 @@ function formSubmitHandler(evt) {
   aboutYou.textContent = inputAboutYou.value;
 }
 
-popup.addEventListener("submit", formSubmitHandler);
+popup.addEventListener('submit', formSubmitHandler);
 
-popupSaveButton.addEventListener("click", function () {
+popupSaveButton.addEventListener('click', function () {
   popupRemove(popupInfo);
 });
-popupCardSaveButton.addEventListener("click", function () {
+popupCardSaveButton.addEventListener('click', function () {
   popupRemove(popupAddCard);
 });
 
-popup.addEventListener("click", function () {
+popup.addEventListener('click', function () {
   closePopup(popup);
 });
 
-popupAddCard.addEventListener("click", function () {
+popupAddCard.addEventListener('click', function () {
   closePopup(popupAddCard);
 });

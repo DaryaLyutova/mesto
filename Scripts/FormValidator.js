@@ -1,10 +1,10 @@
 const selectorObj = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
 };
 
 class FormValidator {
@@ -36,7 +36,7 @@ class FormValidator {
     );
     inputElement.classList.remove(this._inputErrorClass);
     _formError.classList.remove(this._errorClass);
-    _formError.textContent = "";
+    _formError.textContent = '';
   }
 
   //   // Функция, которая проверяет валидность поля
@@ -81,7 +81,7 @@ class FormValidator {
 
     //обхожу весь массив инпутов и вывожу в консоль значеня свойства validity, при вводе значений в инпутах
     _inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", () => {
+      inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
 
         this._toggleButtonState(_inputList);
@@ -90,7 +90,7 @@ class FormValidator {
   }
 
   enableValidation() {
-    this._formElement.addEventListener("submit", (evt) => {
+    this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
     this._setEventListener();
@@ -104,5 +104,5 @@ const getFormList = Array.from(
 getFormList.forEach(function (formElement) {
   const formValidator = new FormValidator(selectorObj, formElement);
 
-  const formValidatorElement = formValidator.enableValidation();
+  formValidator.enableValidation();
 });
