@@ -74,7 +74,6 @@ function popupAdd(popupElement) {
 //функция закрытия попапа
 function popupRemove(popupElement) {
   popupElement.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeEscap);
 }
 
 //функция закрытие попапа на overlay
@@ -82,6 +81,19 @@ function closePopup(popupElement) {
   if (event.target !== popupElement) return;
   popupRemove(popupElement);
 }
+
+// //закрытие попапов на Esc
+function closeEscap(evt) {
+  if (evt.key === 'Escape') {
+    popup.classList.remove('popup_opened');
+    popupAddCard.classList.remove('popup_opened');
+    popupPhoto.classList.remove('popup_opened');
+  }
+}
+
+(function closeEscapPopupPhoto() {
+  document.addEventListener('keydown', closeEscap);
+})();
 
 // добавления новой карточки с фотографией
 popupAddCard.addEventListener('submit', (evt) => {
@@ -145,16 +157,3 @@ popup.addEventListener('click', function () {
 popupAddCard.addEventListener('click', function () {
   closePopup(popupAddCard);
 });
-
-// //закрытие попапов на Esc
-function closeEscap(evt) {
-  if (evt.key === 'Escape') {
-    popup.classList.remove('popup_opened');
-    popupAddCard.classList.remove('popup_opened');
-    popupPhoto.classList.remove('popup_opened');
-  }
-}
-
-(function closeEscapPopupPhoto() {
-  document.addEventListener('keydown', closeEscap);
-})();
