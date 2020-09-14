@@ -1,39 +1,39 @@
 //каточки на станице
-const initialCards = [
+export const initialCards = [
   {
-    name: "Архыз",
+    name: 'Архыз',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
   },
   {
-    name: "Челябинская область",
+    name: 'Челябинская область',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
   },
   {
-    name: "Иваново",
+    name: 'Иваново',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
   },
   {
-    name: "Камчатка",
+    name: 'Камчатка',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
   },
   {
-    name: "Холмогорский район",
+    name: 'Холмогорский район',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
   },
   {
-    name: "Байкал",
+    name: 'Байкал',
     link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
   },
 ];
 
-export const cardsContainer = document.querySelector(".places");
-export const popupPhoto = document.querySelector(".popup_photo");
+export const cardsContainer = document.querySelector('.places');
+export const popupPhoto = document.querySelector('.popup_photo');
 
 export class Card {
   constructor(name, link) {
@@ -44,8 +44,8 @@ export class Card {
   _getTemplate() {
     // забираем размеку из HTML и клонируем элемент
     const cardElement = document
-      .querySelector(".place")
-      .content.querySelector(".place__container")
+      .querySelector('.place')
+      .content.querySelector('.place__container')
       .cloneNode(true);
 
     // вернём DOM-элемент карточки
@@ -55,17 +55,17 @@ export class Card {
   // лайк карточки
   _likeCardClick() {
     this._element
-      .querySelector(".place__like")
-      .addEventListener("click", function (event) {
-        event.target.classList.toggle("place__like_active");
+      .querySelector('.place__like')
+      .addEventListener('click', function (event) {
+        event.target.classList.toggle('place__like_active');
       });
   }
 
   //удаление карточки
   _deleteCard() {
     this._element
-      .querySelector(".place__delete")
-      .addEventListener("click", function (event) {
+      .querySelector('.place__delete')
+      .addEventListener('click', function (event) {
         event.target.parentElement.remove();
       });
   }
@@ -73,14 +73,13 @@ export class Card {
   //слушатель для открытия попапа
   _setEventListenerImage() {
     this._element
-      .querySelector(".place__image")
-      .addEventListener("click", () => {
+      .querySelector('.place__image')
+      .addEventListener('click', () => {
         popupPhoto.querySelector(
-          ".popup__title-photo"
+          '.popup__title-photo'
         ).textContent = this._name;
-        popupPhoto.querySelector(".popup__image").src = this._link;
-        popupPhoto.classList.add("popup_opened");
-     
+        popupPhoto.querySelector('.popup__image').src = this._link;
+        popupPhoto.classList.add('popup_opened');
       });
   }
 
@@ -92,20 +91,10 @@ export class Card {
     this._setEventListenerImage();
 
     // Добавим данные
-    this._element.querySelector(".place__image").src = this._link;
-    this._element.querySelector(".place__title").textContent = this._name;
+    this._element.querySelector('.place__image').src = this._link;
+    this._element.querySelector('.place__title').textContent = this._name;
 
     // Вернём элемент наружу
     return this._element;
   }
 }
-
-initialCards.forEach((item) => {
-  // Создадим экземпляр карточки
-  const card = new Card(item.name, item.link);
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-
-  // Добавляем в DOM
-  cardsContainer.prepend(cardElement);
-});

@@ -19,9 +19,25 @@ const popupCloseButtonPhoto = popupPhoto.querySelector(
 const inputPlaceName = popupAddCard.querySelector('.popup__input_placename');
 const inputLink = popupAddCard.querySelector('.popup__input_link');
 
-//логика работы попапа с инфомацией о пользователе
-//открытие закрытие попапа
+//добавление карточки
+import { cardsContainer, Card, popupPhoto, initialCards } from './Card.js';
 
+//функция для создания карточки иеста
+function makeCard(name, link) {
+  // Создадим экземпляр карточки
+  const card = new Card(name, link);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  cardsContainer.prepend(cardElement);
+}
+
+initialCards.forEach((item) => {
+  makeCard(item.name, item.link);
+});
+
+// функция очищение формы попапов
 function resetFormPopup(popupElement) {
   const inputList = Array.from(popupElement.querySelectorAll('.popup__input'));
   const inputSpan = Array.from(popupElement.querySelectorAll('.popup__error'));
@@ -38,39 +54,32 @@ function resetFormPopup(popupElement) {
   popupElement.reset();
 }
 
+//функция открытия попапа
 function popupAdd(popupElement) {
   popupElement.classList.add('popup_opened');
   resetFormPopup(popupElement);
   document.addEventListener('keydown', closeEscap);
 }
 
+//функция закрытия попапа
 function popupRemove(popupElement) {
   popupElement.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeEscap);
 }
 
-//закрытие попапа на overlay
-
+//функция закрытие попапа на overlay
 function closePopup(popupElement) {
   if (event.target !== popupElement) return;
   popupRemove(popupElement);
 }
 
-//обавление карточки
-import { cardsContainer, Card, popupPhoto } from './Card.js';
-
+// добавления новой карточки с фотографией
 popupAddCard.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const nameElement = inputPlaceName.value;
   const linkElement = inputLink.value;
 
-  // Создадим экземпляр карточки
-  const card = new Card(nameElement, linkElement);
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
-
-  // Добавляем в DOM
-  cardsContainer.prepend(cardElement);
+  makeCard(nameElement, linkElement);
 
   popupAddCard.reset();
 });
@@ -100,6 +109,33 @@ popupCloseButtonPhoto.addEventListener('click', function () {
   popupRemove(popupPhoto);
 });
 
+//внесение изменений данных пользователя из попапа
+function formSubmitHandler(evt) {
+  evt.preventDefault();
+
+  name.textContent = inputName.value;
+  aboutYou.textContent = inputAboutYou.value;
+}
+
+popup.addEventListener('submit', formSubmitHandler);
+
+//закрытие попапов при сохранении
+popupSaveButton.addEventListener('click', function () {
+  popupRemove(popupInfo);
+});
+popupCardSaveButton.addEventListener('click', function () {
+  popupRemove(popupAddCard);
+});
+
+// закрытие на overlay
+popup.addEventListener('click', function () {
+  closePopup(popup);
+});
+
+popupAddCard.addEventListener('click', function () {
+  closePopup(popupAddCard);
+});
+
 // //закрытие попапов на Esc
 function closeEscap(evt) {
   if (evt.key === 'Escape') {
@@ -112,28 +148,3 @@ function closeEscap(evt) {
 (function closeEscapPopupPhoto() {
   document.addEventListener('keydown', closeEscap);
 })();
-
-//внесение изменений данных пользователя из попапа
-function formSubmitHandler(evt) {
-  evt.preventDefault();
-
-  name.textContent = inputName.value;
-  aboutYou.textContent = inputAboutYou.value;
-}
-
-popup.addEventListener('submit', formSubmitHandler);
-
-popupSaveButton.addEventListener('click', function () {
-  popupRemove(popupInfo);
-});
-popupCardSaveButton.addEventListener('click', function () {
-  popupRemove(popupAddCard);
-});
-
-popup.addEventListener('click', function () {
-  closePopup(popup);
-});
-
-popupAddCard.addEventListener('click', function () {
-  closePopup(popupAddCard);
-});
