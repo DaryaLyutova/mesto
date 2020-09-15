@@ -38,10 +38,16 @@ initialCards.forEach((item) => {
 });
 
 //добавление валидации
-getFormList.forEach(function (formElement) {
+//функция создания валидации
+function makeValidation(selectorObj, formElement) {
   const formValidator = new FormValidator(selectorObj, formElement);
 
   formValidator.enableValidation();
+}
+
+//добавляем к каждой форме
+getFormList.forEach(function (formElement) {
+  makeValidation(selectorObj, formElement);
 });
 
 // функция очищение формы попапов
