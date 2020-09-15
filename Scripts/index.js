@@ -118,6 +118,7 @@ popupOpenButton.addEventListener('click', function () {
   inputAboutYou.value = aboutYou.textContent;
 
   popupSaveButton.classList.remove('popup__button_disabled');
+  popupSaveButton.removeAttribute('disabled');
 });
 popupCloseButton.addEventListener('click', function () {
   closePopup(popupInfo);
@@ -143,7 +144,7 @@ function formSubmitHandler(evt) {
 
   namePerson.textContent = inputName.value;
   aboutYou.textContent = inputAboutYou.value;
-  
+
   closePopup(popupInfo);
 }
 
