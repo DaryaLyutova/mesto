@@ -51,18 +51,18 @@ export class FormValidator {
   }
 
   //функция переключения класса активной/неактивной кнопки "Сохранить"
-  _hasInvalidInput(_inputList) {
-    return _inputList.some(function (inputElement) {
+  _hasInvalidInput() {
+    return this._inputList.some(function (inputElement) {
       return !inputElement.validity.valid;
     });
   }
 
   //функция переключения класса активной/неактивной кнопки "Сохранить"
-  _toggleButtonState(_inputList) {
+  _toggleButtonState() {
     const _formButton = this._formElement.querySelector(
       this._submitButtonSelector
     );
-    if (!this._hasInvalidInput(_inputList)) {
+    if (!this._hasInvalidInput()) {
       _formButton.classList.remove(this._inactiveButtonClass);
       _formButton.removeAttribute('disabled');
     } else {
@@ -74,19 +74,18 @@ export class FormValidator {
 
   _setEventListener() {
     //создаю массив з всех инпутов
-    const _inputList = Array.from(
+    this._inputList = Array.from(
       this._formElement.querySelectorAll(this._inputSelector)
     );
-    //   const formButton = formElement.querySelector(submitButtonSelector);
 
-    this._toggleButtonState(_inputList);
+    this._toggleButtonState();
 
     //обхожу весь массив инпутов и вывожу в консоль значеня свойства validity, при вводе значений в инпутах
-    _inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
 
-        this._toggleButtonState(_inputList);
+        this._toggleButtonState();
       });
     });
   }
@@ -96,6 +95,14 @@ export class FormValidator {
       evt.preventDefault();
     });
     this._setEventListener();
+  }
+
+  resetForm() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+      this._toggleButtonState();
+    });
+    this._formElement.reset();
   }
 }
 

@@ -38,39 +38,12 @@ initialCards.forEach((item) => {
 });
 
 //добавление валидации
-//функция создания валидации
-function makeValidation(selectorObj, formElement) {
-  const formValidator = new FormValidator(selectorObj, formElement);
-
-  formValidator.enableValidation();
-}
-
-//добавляем к каждой форме
-getFormList.forEach(function (formElement) {
-  makeValidation(selectorObj, formElement);
-});
-
-// функция очищение формы попапов
-function resetFormPopup(popupElement) {
-  const inputList = Array.from(popupElement.querySelectorAll('.popup__input'));
-  const inputSpan = Array.from(popupElement.querySelectorAll('.popup__error'));
-
-  inputList.forEach(function (inputElement) {
-    inputElement.classList.remove('popup__input_type_error');
-  });
-
-  inputSpan.forEach(function (spanElement) {
-    spanElement.classList.remove('popup__error_visible');
-    spanElement.textContent = '';
-  });
-
-  popupElement.reset();
-}
+const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
+const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
 
 //функция открытия попапа
 function popupOpen(popupElement) {
   popupElement.classList.add('popup_opened');
-  resetFormPopup(popupElement);
   document.addEventListener('keydown', closeEscap);
 }
 
@@ -100,7 +73,7 @@ popupAddCard.addEventListener('submit', (evt) => {
   const nameElement = inputPlaceName.value;
   const linkElement = inputLink.value;
 
-  makeCard(nameElement, linkElement);
+  makeCard(nameElement, linkElement, '.place');
 
   closePopup(popupAddCard);
 
@@ -110,17 +83,19 @@ popupAddCard.addEventListener('submit', (evt) => {
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function () {
   popupOpen(popupInfo);
+  formValidatorPopupInfo.enableValidation();
+  formValidatorPopupInfo.resetForm();
   inputName.value = namePerson.textContent;
   inputAboutYou.value = aboutYou.textContent;
-
   popupSaveButton.classList.remove('popup__button_disabled');
-  popupSaveButton.removeAttribute('disabled');
 });
 popupCloseButton.addEventListener('click', function () {
   closePopup(popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click', function () {
   popupOpen(popupAddCard);
+  formValidatorPopupAddCard.enableValidation();
+  formValidatorPopupAddCard.resetForm();
 });
 popupAddCardCloseButton.addEventListener('click', function () {
   closePopup(popupAddCard);
