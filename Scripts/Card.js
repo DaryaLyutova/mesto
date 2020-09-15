@@ -1,15 +1,16 @@
 import { popupPhoto } from './constants.js';
 
 export class Card {
-  constructor(name, link) {
+  constructor(name, link, cardSelector) {
     this._name = name;
     this._link = link;
+    this._cardSelector = cardSelector;
   }
 
   _getTemplate() {
     // забираем размеку из HTML и клонируем элемент
     const cardElement = document
-      .querySelector('.place')
+      .querySelector(this._cardSelector)
       .content.querySelector('.place__container')
       .cloneNode(true);
 

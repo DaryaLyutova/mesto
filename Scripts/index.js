@@ -23,9 +23,9 @@ import { FormValidator, getFormList, selectorObj } from './FormValidator.js';
 
 //добавление карточки
 //функция для создания карточки иеста
-function makeCard(name, link) {
+function makeCard(name, link, cardSelector) {
   // Создадим экземпляр карточки
-  const card = new Card(name, link);
+  const card = new Card(name, link, cardSelector);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
 
@@ -34,7 +34,7 @@ function makeCard(name, link) {
 }
 
 initialCards.forEach((item) => {
-  makeCard(item.name, item.link);
+  makeCard(item.name, item.link, '.place');
 });
 
 //добавление валидации
