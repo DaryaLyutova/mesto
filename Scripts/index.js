@@ -106,6 +106,8 @@ popupAddCard.addEventListener('submit', (evt) => {
 
   makeCard(nameElement, linkElement);
 
+  closePopup(popupAddCard);
+
   popupAddCard.reset();
 });
 
@@ -114,6 +116,7 @@ popupOpenButton.addEventListener('click', function () {
   popupOpen(popupInfo);
   inputName.value = namePerson.textContent;
   inputAboutYou.value = aboutYou.textContent;
+
   popupSaveButton.classList.remove('popup__button_disabled');
 });
 popupCloseButton.addEventListener('click', function () {
@@ -140,17 +143,11 @@ function formSubmitHandler(evt) {
 
   namePerson.textContent = inputName.value;
   aboutYou.textContent = inputAboutYou.value;
+  
+  closePopup(popupInfo);
 }
 
 popupInfo.addEventListener('submit', formSubmitHandler);
-
-//закрытие попапов при сохранении
-popupSaveButton.addEventListener('click', function () {
-  closePopup(popupInfo);
-});
-popupCardSaveButton.addEventListener('click', function () {
-  closePopup(popupAddCard);
-});
 
 // закрытие на overlay
 popupInfo.addEventListener('click', function () {
