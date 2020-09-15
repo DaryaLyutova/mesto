@@ -74,9 +74,18 @@ function popupOpen(popupElement) {
   document.addEventListener('keydown', closeEscap);
 }
 
+function closeEscap() {
+  if (event.key === 'Escape') {
+    popupInfo.classList.remove('popup_opened');
+    popupAddCard.classList.remove('popup_opened');
+    popupPhoto.classList.remove('popup_opened');
+  }
+}
+
 //функция закрытия попапа
 function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeEscap);
 }
 
 //функция закрытие попапа на overlay
@@ -84,19 +93,6 @@ function closePopupByOverlayClick(popupElement) {
   if (event.target !== popupElement) return;
   closePopup(popupElement);
 }
-
-// //закрытие попапов на Esc
-function closeEscap(evt) {
-  if (evt.key === 'Escape') {
-    popupInfo.classList.remove('popup_opened');
-    popupAddCard.classList.remove('popup_opened');
-    popupPhoto.classList.remove('popup_opened');
-  }
-}
-
-(function closeEscapPopupPhoto() {
-  document.addEventListener('keydown', closeEscap);
-})();
 
 // добавления новой карточки с фотографией
 popupAddCard.addEventListener('submit', (evt) => {
@@ -130,10 +126,6 @@ popupAddCardCloseButton.addEventListener('click', function () {
   closePopup(popupAddCard);
 });
 
-popupPhoto.addEventListener('click', function () {
-  closePopupByOverlayClick(popupPhoto);
-});
-
 popupCloseButtonPhoto.addEventListener('click', function () {
   closePopup(popupPhoto);
 });
@@ -157,4 +149,8 @@ popupInfo.addEventListener('click', function () {
 
 popupAddCard.addEventListener('click', function () {
   closePopupByOverlayClick(popupAddCard);
+});
+
+popupPhoto.addEventListener('click', function () {
+  closePopupByOverlayClick(popupPhoto);
 });
