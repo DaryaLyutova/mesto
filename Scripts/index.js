@@ -68,21 +68,21 @@ function resetFormPopup(popupElement) {
 }
 
 //функция открытия попапа
-function popupAdd(popupElement) {
+function popupOpen(popupElement) {
   popupElement.classList.add('popup_opened');
   resetFormPopup(popupElement);
   document.addEventListener('keydown', closeEscap);
 }
 
 //функция закрытия попапа
-function popupRemove(popupElement) {
+function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
 }
 
 //функция закрытие попапа на overlay
-function closePopup(popupElement) {
+function closePopupByOverlayClick(popupElement) {
   if (event.target !== popupElement) return;
-  popupRemove(popupElement);
+  closePopup(popupElement);
 }
 
 // //закрытие попапов на Esc
@@ -111,27 +111,27 @@ popupAddCard.addEventListener('submit', (evt) => {
 
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function () {
-  popupAdd(popupInfo);
+  popupOpen(popupInfo);
   inputName.value = namePerson.textContent;
   inputAboutYou.value = aboutYou.textContent;
   popupSaveButton.classList.remove('popup__button_disabled');
 });
 popupCloseButton.addEventListener('click', function () {
-  popupRemove(popupInfo);
+  closePopup(popupInfo);
 });
 popupAddCardOpenButton.addEventListener('click', function () {
-  popupAdd(popupAddCard);
+  popupOpen(popupAddCard);
 });
 popupAddCardCloseButton.addEventListener('click', function () {
-  popupRemove(popupAddCard);
+  closePopup(popupAddCard);
 });
 
 popupPhoto.addEventListener('click', function () {
-  closePopup(popupPhoto);
+  closePopupByOverlayClick(popupPhoto);
 });
 
 popupCloseButtonPhoto.addEventListener('click', function () {
-  popupRemove(popupPhoto);
+  closePopup(popupPhoto);
 });
 
 //внесение изменений данных пользователя из попапа
@@ -146,17 +146,17 @@ popupInfo.addEventListener('submit', formSubmitHandler);
 
 //закрытие попапов при сохранении
 popupSaveButton.addEventListener('click', function () {
-  popupRemove(popupInfo);
+  closePopup(popupInfo);
 });
 popupCardSaveButton.addEventListener('click', function () {
-  popupRemove(popupAddCard);
+  closePopup(popupAddCard);
 });
 
 // закрытие на overlay
 popupInfo.addEventListener('click', function () {
-  closePopup(popupInfo);
+  closePopupByOverlayClick(popupInfo);
 });
 
 popupAddCard.addEventListener('click', function () {
-  closePopup(popupAddCard);
+  closePopupByOverlayClick(popupAddCard);
 });
