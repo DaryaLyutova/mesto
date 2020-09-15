@@ -1,25 +1,25 @@
-import { cardsContainer, Card, popupPhoto, initialCards } from './Card.js';
+import { Card } from './Card.js';
+import {
+  initialCards,
+  popupPhoto,
+  popupAddCard,
+  popupInfo,
+  popupOpenButton,
+  popupAddCardOpenButton,
+  popupAddCardCloseButton,
+  popupCloseButton,
+  popupSaveButton,
+  namePerson,
+  aboutYou,
+  inputName,
+  inputAboutYou,
+  popupCardSaveButton,
+  popupCloseButtonPhoto,
+  inputPlaceName,
+  inputLink,
+  cardsContainer,
+} from './constants.js';
 import { FormValidator, getFormList, selectorObj } from './FormValidator.js';
-
-const popupAddCard = document.querySelector('.popup_add-card');
-const popupInfo = document.querySelector('.popup_info');
-const popupOpenButton = document.querySelector('.edit-button');
-const popupAddCardOpenButton = document.querySelector('.profile__add-button');
-const popupAddCardCloseButton = document.querySelector(
-  '.popup__close-button_card'
-);
-const popupCloseButton = popupInfo.querySelector('.popup__close-button');
-const popupSaveButton = popupInfo.querySelector('.popup__button');
-const namePerson = document.querySelector('.profile-info__name');
-const aboutYou = document.querySelector('.profile-info__activity');
-const inputName = popupInfo.querySelector('.popup__input_name');
-const inputAboutYou = popupInfo.querySelector('.popup__input_activity');
-const popupCardSaveButton = popupAddCard.querySelector('.popup__button_card');
-const popupCloseButtonPhoto = popupPhoto.querySelector(
-  '.popup__close-button_photo'
-);
-const inputPlaceName = popupAddCard.querySelector('.popup__input_placename');
-const inputLink = popupAddCard.querySelector('.popup__input_link');
 
 //добавление карточки
 //функция для создания карточки иеста
