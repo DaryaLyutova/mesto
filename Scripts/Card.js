@@ -1,10 +1,12 @@
 import { popupPhoto } from './constants.js';
+import { popupOpen } from './utils.js';
 
 export class Card {
   constructor(name, link, cardSelector) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    this._popupOpen = popupOpen;
   }
 
   _getTemplate() {
@@ -35,7 +37,7 @@ export class Card {
   _setEventListenerImage() {
     popupPhoto.querySelector('.popup__title-photo').textContent = this._name;
     popupPhoto.querySelector('.popup__image').src = this._link;
-    popupPhoto.classList.add('popup_opened');
+    this._popupOpen(popupPhoto);
   }
 
   _setEventListeners() {

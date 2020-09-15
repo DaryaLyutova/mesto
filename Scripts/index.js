@@ -13,13 +13,13 @@ import {
   aboutYou,
   inputName,
   inputAboutYou,
-  popupCardSaveButton,
   popupCloseButtonPhoto,
   inputPlaceName,
   inputLink,
   cardsContainer,
 } from './constants.js';
 import { FormValidator, getFormList, selectorObj } from './FormValidator.js';
+import { popupOpen, closeEscap } from './utils.js';
 
 //добавление карточки
 //функция для создания карточки иеста
@@ -40,20 +40,6 @@ initialCards.forEach((item) => {
 //добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
-
-//функция открытия попапа
-function popupOpen(popupElement) {
-  popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', closeEscap);
-}
-
-function closeEscap() {
-  if (event.key === 'Escape') {
-    popupInfo.classList.remove('popup_opened');
-    popupAddCard.classList.remove('popup_opened');
-    popupPhoto.classList.remove('popup_opened');
-  }
-}
 
 //функция закрытия попапа
 function closePopup(popupElement) {
