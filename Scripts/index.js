@@ -18,8 +18,8 @@ import {
   inputLink,
   cardsContainer,
 } from './constants.js';
-import { FormValidator, getFormList, selectorObj } from './FormValidator.js';
-import { popupOpen, closeEscap } from './utils.js';
+import { FormValidator, selectorObj } from './FormValidator.js';
+import { popupOpen, closePopup } from './utils.js';
 
 //добавление карточки
 //функция для создания карточки иеста
@@ -40,18 +40,6 @@ initialCards.forEach((item) => {
 //добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
-
-//функция закрытия попапа
-function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeEscap);
-}
-
-//функция закрытие попапа на overlay
-function closePopupByOverlayClick(popupElement) {
-  if (event.target !== popupElement) return;
-  closePopup(popupElement);
-}
 
 // добавления новой карточки с фотографией
 popupAddCard.addEventListener('submit', (evt) => {
@@ -102,16 +90,3 @@ function formSubmitHandler(evt) {
 }
 
 popupInfo.addEventListener('submit', formSubmitHandler);
-
-// закрытие на overlay
-popupInfo.addEventListener('click', function () {
-  closePopupByOverlayClick(popupInfo);
-});
-
-popupAddCard.addEventListener('click', function () {
-  closePopupByOverlayClick(popupAddCard);
-});
-
-popupPhoto.addEventListener('click', function () {
-  closePopupByOverlayClick(popupPhoto);
-});

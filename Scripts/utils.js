@@ -1,14 +1,25 @@
-import { popupPhoto, popupAddCard, popupInfo } from './constants.js';
+//функция закрытия попапа
+export function closePopup(popupElement) {
+  popupElement.classList.remove('popup_opened');
+}
 
-export function closeEscap() {
-  if (event.key === 'Escape') {
-    popupInfo.classList.remove('popup_opened');
-    popupAddCard.classList.remove('popup_opened');
-    popupPhoto.classList.remove('popup_opened');
-  }
+function closeEscap(popupElement) {
+  if (event.key !== 'Escape') return;
+  closePopup(popupElement);
+}
+
+//функция закрытие попапа на overlay
+function closePopupByOverlayClick(popupElement) {
+  if (event.target !== popupElement) return;
+  closePopup(popupElement);
 }
 //функция открытия попапа
 export function popupOpen(popupElement) {
   popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', closeEscap);
+  document.addEventListener('keydown', function () {
+    closeEscap(popupElement);
+  });
+  popupElement.addEventListener('click', function () {
+    closePopupByOverlayClick(popupElement);
+  });
 }
