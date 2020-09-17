@@ -105,3 +105,7 @@ export class FormValidator {
     this._formElement.reset();
   }
 }
+
+export const getFormList = Array.from( 
+  document.querySelectorAll(selectorObj.formSelector) 
+); 

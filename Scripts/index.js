@@ -40,6 +40,8 @@ initialCards.forEach((item) => {
 //добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
+formValidatorPopupInfo.enableValidation();
+formValidatorPopupAddCard.enableValidation();
 
 // добавления новой карточки с фотографией
 popupAddCard.addEventListener('submit', (evt) => {
@@ -57,7 +59,7 @@ popupAddCard.addEventListener('submit', (evt) => {
 //вызов функций открытия/закрытия и обработки данных попапов
 popupOpenButton.addEventListener('click', function () {
   popupOpen(popupInfo);
-  formValidatorPopupInfo.enableValidation();
+
   formValidatorPopupInfo.resetForm();
   inputName.value = namePerson.textContent;
   inputAboutYou.value = aboutYou.textContent;
@@ -68,7 +70,7 @@ popupCloseButton.addEventListener('click', function () {
 });
 popupAddCardOpenButton.addEventListener('click', function () {
   popupOpen(popupAddCard);
-  formValidatorPopupAddCard.enableValidation();
+
   formValidatorPopupAddCard.resetForm();
 });
 popupAddCardCloseButton.addEventListener('click', function () {
