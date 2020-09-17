@@ -3,23 +3,23 @@ export function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
 }
 
-function closeEscap(popupElement) {
-  if (event.key !== 'Escape') return;
-  closePopup(popupElement);
+function closeEscap() {
+  if (event.key == 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  }
 }
 
 //функция закрытие попапа на overlay
 function closePopupByOverlayClick(popupElement) {
-  if (event.target !== popupElement) return;
-  closePopup(popupElement);
+  if (event.target !== popupElement) {
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  }
 }
 //функция открытия попапа
 export function popupOpen(popupElement) {
   popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', function () {
-    closeEscap(popupElement);
-  });
-  popupElement.addEventListener('click', function () {
-    closePopupByOverlayClick(popupElement);
-  });
+  document.addEventListener('keydown', closeEscap);
+  popupElement.addEventListener('click', closePopupByOverlayClick);
 }
