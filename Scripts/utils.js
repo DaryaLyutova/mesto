@@ -1,6 +1,8 @@
 //функция закрытия попапа
 export function closePopup(popupElement) {
   popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeEscap);
+  popupElement.removeEventListener('click', closePopupByOverlayClick);
 }
 
 function closeEscap() {
