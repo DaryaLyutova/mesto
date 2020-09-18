@@ -6,18 +6,18 @@ export function closePopup(popupElement) {
 }
 
 function closeEscap() {
-  if (event.key == 'Escape') {
+  if (event.key === 'Escape') {
     const popupOpened = document.querySelector('.popup_opened');
     closePopup(popupOpened);
   }
 }
 
 //функция закрытие попапа на overlay
-function closePopupByOverlayClick(popupElement) {
-  if (event.target !== popupElement) {
-    const popupOpened = document.querySelector('.popup_opened');
-    closePopup(popupOpened);
-  }
+function closePopupByOverlayClick() {
+  const popupOpened = document.querySelector('.popup_opened');
+  if (event.target !== popupOpened) return;
+
+  closePopup(popupOpened);
 }
 //функция открытия попапа
 export function popupOpen(popupElement) {
