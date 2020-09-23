@@ -1,4 +1,4 @@
-import { Card } from './Card.js';
+import { Card } from '../components/Card.js';
 import {
   initialCards,
   popupPhoto,
@@ -17,9 +17,10 @@ import {
   inputPlaceName,
   inputLink,
   cardsContainer,
-} from './constants.js';
-import { FormValidator, selectorObj } from './FormValidator.js';
-import { popupOpen, closePopup } from './utils.js';
+} from '../utils/constants.js';
+import { FormValidator, selectorObj } from '../components/FormValidator.js';
+import { popupOpen, closePopup } from '../utils/utils.js';
+import Section from '../components/Section.js';
 
 //добавление карточки
 //функция для создания карточки иеста
@@ -30,12 +31,20 @@ function makeCard(name, link, cardSelector) {
   const cardElement = card.generateCard();
 
   // Добавляем в DOM
-  cardsContainer.prepend(cardElement);
+  cardList.setItem(cardElement);
 }
 
-initialCards.forEach((item) => {
-  makeCard(item.name, item.link, '.place');
-});
+const cardList = new Section(
+  {
+    data: initialCards,
+    renderer: (item) => {
+      makeCard(item.name, item.link, '.place');
+    },
+  },
+  cardsContainer
+);
+
+cardList.renderItems();
 
 //добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
