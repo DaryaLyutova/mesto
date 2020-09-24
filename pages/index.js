@@ -17,6 +17,7 @@ import {
   inputPlaceName,
   inputLink,
   cardsContainer,
+  popupList,
 } from '../utils/constants.js';
 import { FormValidator, selectorObj } from '../components/FormValidator.js';
 // import { popupOpen, closePopup } from '../utils/utils.js';
@@ -67,6 +68,15 @@ const cardList = new Section(
 
 cardList.renderItems();
 
+const popupCloseButtonList = new Section({
+  data: popupList,
+  renderer: (item) => {
+    const popup = new Popup(item);
+    popup.closePopup();
+  },
+});
+
+popupCloseButtonList.renderItems();
 // //добавление валидации
 // const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 // const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);

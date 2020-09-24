@@ -6,17 +6,17 @@ export default class Popup {
   // закрытие пщпапа на Esc
   _handleEscClose() {
     if (event.key === 'Escape') {
-      const popupOpened = document.querySelector('.popup_opened');
-      closePopup(popupOpened);
+      // const popupOpened = document.querySelector('.popup_opened');
+      this.closePopup();
     }
   }
 
   // закрытие попапа на overlay
   _closePopupByOverlayClick() {
-    const popupOpened = document.querySelector('.popup_opened');
-    if (event.target !== popupOpened) return;
+    // const _popupOpened = document.querySelector('.popup_opened');
+    if (event.target !== this._popupElement) return;
 
-    closePopup(popupOpened);
+    this.closePopup();
   }
 
   popupOpen() {
@@ -35,10 +35,11 @@ export default class Popup {
       'click',
       this._closePopupByOverlayClick
     );
+    this._setEventListeners();
   }
 
   // слушатель кликов на иконку закрыть
-  setEventListeners() {
+  _setEventListeners() {
     this._popupElement
       .querySelector('.popup__close-button')
       .addEventListener('click', () => {

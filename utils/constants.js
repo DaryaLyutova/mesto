@@ -59,3 +59,4 @@ export const inputPlaceName = popupAddCard.querySelector(
 );
 export const inputLink = popupAddCard.querySelector('.popup__input_link');
 export const cardsContainer = document.querySelector('.places');
+export const popupList = Array.from(document.querySelectorAll('.popup'));
