@@ -2,11 +2,12 @@ import { popupPhoto } from '../utils/constants.js';
 import { popupOpen } from '../utils/utils.js';
 
 export class Card {
-  constructor(name, link, cardSelector) {
+  constructor(name, link, { handleCardClick }, cardSelector) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
     this._popupOpen = popupOpen;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -35,9 +36,7 @@ export class Card {
 
   //слушатель для открытия попапа
   _setEventListenerImage() {
-    popupPhoto.querySelector('.popup__title-photo').textContent = this._name;
-    popupPhoto.querySelector('.popup__image').src = this._link;
-    this._popupOpen(popupPhoto);
+    this._handleCardClick();
   }
 
   _setEventListeners() {
