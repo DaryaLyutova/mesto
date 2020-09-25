@@ -10,9 +10,9 @@ import {
   popupCloseButton,
   popupSaveButton,
   namePerson,
-  aboutYou,
+  infoAboutPerson,
   inputName,
-  inputAboutYou,
+  inputinfoAboutPerson,
   popupCloseButtonPhoto,
   inputPlaceName,
   inputLink,
@@ -24,6 +24,7 @@ import { FormValidator, selectorObj } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 // //добавление карточки
 // //функция для создания карточки иеста
@@ -77,6 +78,8 @@ const popupCloseButtonList = new Section({
 });
 
 popupCloseButtonList.renderItems();
+
+
 // //добавление валидации
 // const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 // const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
@@ -102,7 +105,7 @@ popupCloseButtonList.renderItems();
 
 //   formValidatorPopupInfo.resetForm();
 //   inputName.value = namePerson.textContent;
-//   inputAboutYou.value = aboutYou.textContent;
+//   inputinfoAboutPerson.value = infoAboutPerson.textContent;
 //   popupSaveButton.classList.remove('popup__button_disabled');
 // });
 // popupCloseButton.addEventListener('click', function () {
@@ -126,7 +129,7 @@ popupCloseButtonList.renderItems();
 //   evt.preventDefault();
 
 //   namePerson.textContent = inputName.value;
-//   aboutYou.textContent = inputAboutYou.value;
+//   infoAboutPerson.textContent = inputinfoAboutPerson.value;
 
 //   closePopup(popupInfo);
 // }

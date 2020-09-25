@@ -45,9 +45,9 @@ export const popupAddCardCloseButton = document.querySelector(
 export const popupCloseButton = popupInfo.querySelector('.popup__close-button');
 export const popupSaveButton = popupInfo.querySelector('.popup__button');
 export const namePerson = document.querySelector('.profile-info__name');
-export const aboutYou = document.querySelector('.profile-info__activity');
+export const infoAboutPerson = document.querySelector('.profile-info__activity');
 export const inputName = popupInfo.querySelector('.popup__input_name');
-export const inputAboutYou = popupInfo.querySelector('.popup__input_activity');
+export const inputinfoAboutPerson = popupInfo.querySelector('.popup__input_activity');
 export const popupCardSaveButton = popupAddCard.querySelector(
   '.popup__button_card'
 );

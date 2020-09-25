@@ -1,5 +1,3 @@
-// const { popupOpenButton, popupPhoto } = require('../utils/constants');
-// const { popupOpen } = require('../utils/utils');
 import Popup from './Popup.js';
 
 export default class PopupWithImage extends Popup {

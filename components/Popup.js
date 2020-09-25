@@ -6,26 +6,25 @@ export default class Popup {
   // закрытие пщпапа на Esc
   _handleEscClose() {
     if (event.key === 'Escape') {
-      // const popupOpened = document.querySelector('.popup_opened');
       this.closePopup();
     }
   }
 
   // закрытие попапа на overlay
   _closePopupByOverlayClick() {
-    // const _popupOpened = document.querySelector('.popup_opened');
     if (event.target !== this._popupElement) return;
-
+    console.log(this._popupElement);
     this.closePopup();
   }
 
   popupOpen() {
     this._popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);
-    this._popupElement.addEventListener(
-      'click',
-      this._closePopupByOverlayClick
-    );
+    document.addEventListener('keydown', () => {
+      this._handleEscClose();
+    });
+    this._popupElement.addEventListener('click', () => {
+      this._closePopupByOverlayClick();
+    });
   }
 
   closePopup() {
