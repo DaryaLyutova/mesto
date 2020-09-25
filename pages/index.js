@@ -79,12 +79,30 @@ const popupCloseButtonList = new Section({
 
 popupCloseButtonList.renderItems();
 
+//откытие попапа для внесения данных о пользователе
+popupOpenButton.addEventListener('click', () => {
+  const popupInfoOpen = new Popup(popupInfo);
+  popupInfoOpen.popupOpen();
+  formValidatorPopupInfo.resetForm();
+  inputName.value = namePerson.textContent;
+  inputinfoAboutPerson.value = infoAboutPerson.textContent;
+  popupSaveButton.classList.remove('popup__button_disabled');
+});
 
-// //добавление валидации
-// const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
-// const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
-// formValidatorPopupInfo.enableValidation();
-// formValidatorPopupAddCard.enableValidation();
+//обрабтка данных попапа внесения данных пользователя и его закрытие
+const popupWithForm = new PopupWithForm(popupInfo, {
+  formSubmit: () => {
+    namePerson.textContent = inputName.value;
+    infoAboutPerson.textContent = inputinfoAboutPerson.value;
+  },
+});
+popupWithForm.closePopup();
+
+//добавление валидации
+const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
+const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
+formValidatorPopupInfo.enableValidation();
+formValidatorPopupAddCard.enableValidation();
 
 // // добавления новой карточки с фотографией
 // popupAddCard.addEventListener('submit', (evt) => {
@@ -99,39 +117,10 @@ popupCloseButtonList.renderItems();
 //   popupAddCard.reset();
 // });
 
-// //вызов функций открытия/закрытия и обработки данных попапов
-// popupOpenButton.addEventListener('click', function () {
-//   popupOpen(popupInfo);
+// popupInfo.addEventListener('submit', formSubmitHandler);
 
-//   formValidatorPopupInfo.resetForm();
-//   inputName.value = namePerson.textContent;
-//   inputinfoAboutPerson.value = infoAboutPerson.textContent;
-//   popupSaveButton.classList.remove('popup__button_disabled');
-// });
-// popupCloseButton.addEventListener('click', function () {
-//   closePopup(popupInfo);
-// });
 // popupAddCardOpenButton.addEventListener('click', function () {
 //   popupOpen(popupAddCard);
 
 //   formValidatorPopupAddCard.resetForm();
 // });
-// popupAddCardCloseButton.addEventListener('click', function () {
-//   closePopup(popupAddCard);
-// });
-
-// popupCloseButtonPhoto.addEventListener('click', function () {
-//   closePopup(popupPhoto);
-// });
-
-// //внесение изменений данных пользователя из попапа
-// function formSubmitHandler(evt) {
-//   evt.preventDefault();
-
-//   namePerson.textContent = inputName.value;
-//   infoAboutPerson.textContent = inputinfoAboutPerson.value;
-
-//   closePopup(popupInfo);
-// }
-
-// popupInfo.addEventListener('submit', formSubmitHandler);

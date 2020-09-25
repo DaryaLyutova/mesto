@@ -13,7 +13,6 @@ export default class Popup {
   // закрытие попапа на overlay
   _closePopupByOverlayClick() {
     if (event.target !== this._popupElement) return;
-    console.log(this._popupElement);
     this.closePopup();
   }
 
@@ -28,13 +27,14 @@ export default class Popup {
   }
 
   closePopup() {
+    this._setEventListeners();
     this._popupElement.classList.remove('popup_opened');
+
     document.removeEventListener('keydown', this._handleEscClose);
     this._popupElement.removeEventListener(
       'click',
       this._closePopupByOverlayClick
     );
-    this._setEventListeners();
   }
 
   // слушатель кликов на иконку закрыть
