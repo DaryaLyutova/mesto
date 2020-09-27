@@ -80,6 +80,7 @@ popupOpenButton.addEventListener('click', () => {
 
   userInfo.getUserInfo();
   popupSaveButton.classList.remove('popup__button_disabled');
+  popupSaveButton.removeAttribute('disabled');
 });
 
 //обрабтка данных попапа внесения данных пользователя и его закрытие
