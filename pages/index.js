@@ -16,10 +16,6 @@ import {
   inputLink,
   cardsContainer,
   popupList,
-  namePerson,
-  infoAboutPerson,
-  inputName,
-  inputinfoAboutPerson,
 } from '../utils/constants.js';
 import { FormValidator, selectorObj } from '../components/FormValidator.js';
 import { personInfo } from '../components/UserInfo.js';
@@ -74,10 +70,9 @@ const popupCloseButtonList = new Section({
 popupCloseButtonList.renderItems();
 
 //информация о пользователе
-// const userInfo = new UserInfo(personInfo);
+const userInfo = new UserInfo(personInfo);
 
 //откытие попапа для внесения данных о пользователе
-
 popupOpenButton.addEventListener('click', () => {
   const popupInfoOpen = new Popup(popupInfo);
   popupInfoOpen.popupOpen();
