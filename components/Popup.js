@@ -3,7 +3,7 @@ export default class Popup {
     this._popupElement = popupElement;
   }
 
-  // закрытие пщпапа на Esc
+  // закрытие попапа на Esc
   _handleEscClose() {
     if (event.key === 'Escape') {
       this.closePopup();

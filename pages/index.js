@@ -1,4 +1,9 @@
-import { Card } from '../components/Card.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 import {
   initialCards,
   popupPhoto,
@@ -6,28 +11,20 @@ import {
   popupInfo,
   popupOpenButton,
   popupAddCardOpenButton,
-  popupAddCardCloseButton,
-  popupCloseButton,
   popupSaveButton,
-  namePerson,
-  infoAboutPerson,
-  inputName,
-  inputinfoAboutPerson,
-  popupCloseButtonPhoto,
   inputPlaceName,
   inputLink,
   cardsContainer,
   popupList,
+  namePerson,
+  infoAboutPerson,
+  inputName,
+  inputinfoAboutPerson,
 } from '../utils/constants.js';
 import { FormValidator, selectorObj } from '../components/FormValidator.js';
-// import { popupOpen, closePopup } from '../utils/utils.js';
-import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
+import { personInfo } from '../components/UserInfo.js';
 
-// //добавление карточки
-// //функция для создания карточки места
+//функция для создания карточки места
 function makeCard(name, link, { handleCardClick }, cardSelector) {
   // Создадим экземпляр карточки
   const card = new Card(name, link, { handleCardClick }, cardSelector);
@@ -38,6 +35,7 @@ function makeCard(name, link, { handleCardClick }, cardSelector) {
   cardList.setItem(cardElement);
 }
 
+//создание списка карточек и отображение их на странице
 const cardList = new Section(
   {
     data: initialCards,
@@ -57,11 +55,6 @@ const cardList = new Section(
         },
         '.place'
       );
-      // // Создаём карточку и возвращаем наружу
-      // const cardElement = card.generateCard();
-
-      // // Добавляем в DOM
-      // cardList.setItem(cardElement);
     },
   },
   cardsContainer
@@ -69,6 +62,7 @@ const cardList = new Section(
 
 cardList.renderItems();
 
+//закрытие попапов на кнопку "закрыть"
 const popupCloseButtonList = new Section({
   data: popupList,
   renderer: (item) => {
@@ -79,26 +73,29 @@ const popupCloseButtonList = new Section({
 
 popupCloseButtonList.renderItems();
 
+//информация о пользователе
+// const userInfo = new UserInfo(personInfo);
+
 //откытие попапа для внесения данных о пользователе
+
 popupOpenButton.addEventListener('click', () => {
   const popupInfoOpen = new Popup(popupInfo);
   popupInfoOpen.popupOpen();
   formValidatorPopupInfo.resetForm();
-  inputName.value = namePerson.textContent;
-  inputinfoAboutPerson.value = infoAboutPerson.textContent;
+
+  userInfo.getUserInfo();
   popupSaveButton.classList.remove('popup__button_disabled');
 });
 
 //обрабтка данных попапа внесения данных пользователя и его закрытие
 const popupFormInfo = new PopupWithForm(popupInfo, {
   formSubmit: () => {
-    namePerson.textContent = inputName.value;
-    infoAboutPerson.textContent = inputinfoAboutPerson.value;
+    userInfo.setUserInfo();
   },
 });
 popupFormInfo.closePopup();
 
-//открытиу попапа добавления карточки
+//открытие попапа добавления карточки
 popupAddCardOpenButton.addEventListener('click', () => {
   const popupCaddAddOpen = new Popup(popupAddCard);
   popupCaddAddOpen.popupOpen();
@@ -134,24 +131,3 @@ const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
 formValidatorPopupInfo.enableValidation();
 formValidatorPopupAddCard.enableValidation();
-
-// // добавления новой карточки с фотографией
-// popupAddCard.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   const nameElement = inputPlaceName.value;
-//   const linkElement = inputLink.value;
-
-//   makeCard(nameElement, linkElement, '.place');
-
-//   closePopup(popupAddCard);
-
-//   popupAddCard.reset();
-// });
-
-// popupInfo.addEventListener('submit', formSubmitHandler);
-
-// popupAddCardOpenButton.addEventListener('click', function () {
-//   popupOpen(popupAddCard);
-
-//   formValidatorPopupAddCard.resetForm();
-// });
