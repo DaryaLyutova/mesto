@@ -1,9 +1,11 @@
-import Card from '../components/Card.js';
-import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
+import './pages/index.css';
+
+import Card from './components/Card.js';
+import Section from './components/Section.js';
+import Popup from './components/Popup.js';
+import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import UserInfo from './components/UserInfo.js';
 import {
   initialCards,
   popupPhoto,
@@ -16,9 +18,9 @@ import {
   inputLink,
   cardsContainer,
   popupList,
-} from '../utils/constants.js';
-import { FormValidator, selectorObj } from '../components/FormValidator.js';
-import { personInfo } from '../components/UserInfo.js';
+} from './utils/constants.js';
+import { FormValidator, selectorObj } from './components/FormValidator.js';
+import { personInfo } from './components/UserInfo.js';
 
 //функция для создания карточки места
 function makeCard(name, link, { handleCardClick }, cardSelector) {
