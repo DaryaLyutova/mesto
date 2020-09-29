@@ -13,26 +13,32 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        exclude: '/node_modules/',
       },
-      // добавили правило для обработки файлов
+
+      // правило для работы с CSS-файлам
       {
-        // регулярное выражение, которое ищет все файлы с такими расширениями
-        test: /\.(png|svg|jpg|gif|woff2|woff)$/,
-        // при обработке этих файлов нужно использовать file-loader
-        loader: 'file-loader',
+        test: /\.css$/,
+        loader: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
       },
-      // аналогично добавьте правило для работы с html
+      // правило для работы с html
       {
         test: /\.html$/,
         loader: 'html-loader',
       },
+      // регулярное выражение, которое ищет все файлы с такими расширениями
       {
-        // применять это правило только к CSS-файлам
-        test: /\.css$/,
-        // при обработке этих файлов нужно использовать
-        // MiniCssExtractPlugin.loader и css-loader
-        loader: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(png|svg|jpg|gif|woff2|woff)$/,
+        loader: 'file-loader',
       },
     ],
   },
