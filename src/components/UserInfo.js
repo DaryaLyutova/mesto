@@ -4,11 +4,9 @@ export const personInfo = {
 };
 
 export default class UserInfo {
-  constructor(personInfo, inputUserName, inputUserInfo) {
+  constructor(personInfo) {
     this._name = document.querySelector(personInfo.name);
     this._aboutPerson = document.querySelector(personInfo.aboutPerson);
-    this._inputUserName = inputUserName;
-    this._inputUserInfo = inputUserInfo;
   }
 
   getUserInfo() {
@@ -20,8 +18,8 @@ export default class UserInfo {
     return newPersonInfo;
   }
 
-  setUserInfo() {
-    this._name.textContent = this._inputUserName.value;
-    this._aboutPerson.textContent = this._inputUserInfo.value;
+  setUserInfo(name, about) {
+    this._name.textContent = name;
+    this._aboutPerson.textContent = about;
   }
 }

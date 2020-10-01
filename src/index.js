@@ -72,11 +72,7 @@ const popupPhotoClose = new Popup(popupPhoto);
 popupPhotoClose.setEventListeners();
 
 //информация о пользователе
-const userInfo = new UserInfo(
-  personInfo,
-  inputNamePerson,
-  inputInfoAboutPerson
-);
+const userInfo = new UserInfo(personInfo);
 
 //откытие попапа для внесения данных о пользователе
 popupOpenButton.addEventListener('click', () => {
@@ -94,7 +90,7 @@ popupOpenButton.addEventListener('click', () => {
 //обрабтка данных попапа внесения данных пользователя и его закрытие
 const popupFormInfo = new PopupWithForm(popupInfo, {
   formSubmit: () => {
-    userInfo.setUserInfo();
+    userInfo.setUserInfo(inputNamePerson.value, inputInfoAboutPerson.value);
   },
 });
 popupFormInfo.setEventListeners();
