@@ -35,10 +35,8 @@ function makeCard(name, link, { handleCardClick }, cardSelector) {
   cardList.setItem(cardElement);
 }
 
-function makePopupImage(name, link, popupElement) {
-  const popupImage = new PopupWithImage(name, link, popupElement);
-  popupImage.popupOpen();
-}
+const popupImage = new PopupWithImage(popupElement);
+popupImage.setEventListeners();
 
 //создание списка карточек и отображение их на странице
 const cardList = new Section(
@@ -50,7 +48,7 @@ const cardList = new Section(
         item.link,
         {
           handleCardClick: () => {
-            makePopupImage(item.name, item.link, popupPhoto);
+            popupImage.popupOpen(item.name, item.link);
           },
         },
         '.place'
@@ -67,9 +65,6 @@ popupInfoClose.setEventListeners();
 
 const popupAddCardClose = new Popup(popupAddCard);
 popupAddCardClose.setEventListeners();
-
-const popupPhotoClose = new Popup(popupPhoto);
-popupPhotoClose.setEventListeners();
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
