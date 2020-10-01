@@ -27,7 +27,6 @@ export default class Popup {
   }
 
   closePopup() {
-    this._setEventListeners();
     this._popupElement.classList.remove('popup_opened');
 
     document.removeEventListener('keydown', this._handleEscClose);
@@ -38,7 +37,7 @@ export default class Popup {
   }
 
   // слушатель кликов на иконку закрыть
-  _setEventListeners() {
+  setEventListeners() {
     this._popupElement
       .querySelector('.popup__close-button')
       .addEventListener('click', () => {

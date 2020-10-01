@@ -18,6 +18,8 @@ import {
   inputLink,
   cardsContainer,
   popupList,
+  inputNamePerson,
+  inputInfoAboutPerson,
 } from './utils/constants.js';
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';
@@ -33,6 +35,11 @@ function makeCard(name, link, { handleCardClick }, cardSelector) {
   cardList.setItem(cardElement);
 }
 
+function makePopupImage(name, link, popupElement) {
+  const popupImage = new PopupWithImage(name, link, popupElement);
+  popupImage.popupOpen();
+}
+
 //создание списка карточек и отображение их на странице
 const cardList = new Section(
   {
@@ -43,12 +50,7 @@ const cardList = new Section(
         item.link,
         {
           handleCardClick: () => {
-            const popupImage = new PopupWithImage(
-              item.name,
-              item.link,
-              popupPhoto
-            );
-            popupImage.popupOpen();
+            makePopupImage(item.name, item.link, popupPhoto);
           },
         },
         '.place'
@@ -60,27 +62,31 @@ const cardList = new Section(
 
 cardList.renderItems();
 
-//закрытие попапов на кнопку "закрыть"
-const popupCloseButtonList = new Section({
-  data: popupList,
-  renderer: (item) => {
-    const popup = new Popup(item);
-    popup.closePopup();
-  },
-});
+const popupInfoClose = new Popup(popupInfo);
+popupInfoClose.setEventListeners();
 
-popupCloseButtonList.renderItems();
+const popupAddCardClose = new Popup(popupAddCard);
+popupAddCardClose.setEventListeners();
+
+const popupPhotoClose = new Popup(popupPhoto);
+popupPhotoClose.setEventListeners();
 
 //информация о пользователе
-const userInfo = new UserInfo(personInfo);
+const userInfo = new UserInfo(
+  personInfo,
+  inputNamePerson,
+  inputInfoAboutPerson
+);
 
 //откытие попапа для внесения данных о пользователе
 popupOpenButton.addEventListener('click', () => {
-  const popupInfoOpen = new Popup(popupInfo);
-  popupInfoOpen.popupOpen();
+  popupFormInfo.popupOpen();
   formValidatorPopupInfo.resetForm();
 
-  userInfo.getUserInfo();
+  const getUserInfo = userInfo.getUserInfo();
+  inputNamePerson.value = getUserInfo.name;
+  inputInfoAboutPerson.value = getUserInfo.aboutPerson;
+
   popupSaveButton.classList.remove('popup__button_disabled');
   popupSaveButton.removeAttribute('disabled');
 });
@@ -91,12 +97,11 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
     userInfo.setUserInfo();
   },
 });
-popupFormInfo.closePopup();
+popupFormInfo.setEventListeners();
 
 //открытие попапа добавления карточки
 popupAddCardOpenButton.addEventListener('click', () => {
-  const popupCaddAddOpen = new Popup(popupAddCard);
-  popupCaddAddOpen.popupOpen();
+  popupFormNewCard.popupOpen();
   formValidatorPopupAddCard.resetForm();
 });
 
@@ -110,19 +115,14 @@ const popupFormNewCard = new PopupWithForm(popupAddCard, {
       linkElement,
       {
         handleCardClick: () => {
-          const popupImage = new PopupWithImage(
-            nameElement,
-            linkElement,
-            popupPhoto
-          );
-          popupImage.popupOpen();
+          makePopupImage(nameElement, linkElement, popupPhoto);
         },
       },
       '.place'
     );
   },
 });
-popupFormNewCard.closePopup();
+popupFormNewCard.setEventListeners();
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
