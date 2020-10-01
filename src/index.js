@@ -35,7 +35,7 @@ function makeCard(name, link, { handleCardClick }, cardSelector) {
   cardList.setItem(cardElement);
 }
 
-const popupImage = new PopupWithImage(popupElement);
+const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
 
 //создание списка карточек и отображение их на странице
