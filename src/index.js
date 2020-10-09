@@ -7,7 +7,6 @@ import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
 import {
-  initialCards,
   popupPhoto,
   popupAddCard,
   popupInfo,
@@ -17,48 +16,75 @@ import {
   inputPlaceName,
   inputLink,
   cardsContainer,
-  popupList,
   inputNamePerson,
   inputInfoAboutPerson,
 } from './utils/constants.js';
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';
+import Api from './components/Api.js';
 
-//функция для создания карточки места
-function makeCard(name, link, { handleCardClick }, cardSelector) {
-  // Создадим экземпляр карточки
-  const card = new Card(name, link, { handleCardClick }, cardSelector);
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();
+const apiUserInfo = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me',
+  headers: {
+    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
+    'Content-Type': 'application/json',
+  },
+});
 
-  // Добавляем в DOM
-  cardList.setItem(cardElement);
-}
+apiUserInfo.getUserInfo();
 
 const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
 
-//создание списка карточек и отображение их на странице
-const cardList = new Section(
-  {
-    data: initialCards,
-    renderer: (item) => {
-      makeCard(
-        item.name,
-        item.link,
-        {
-          handleCardClick: () => {
-            popupImage.popupOpen(item.name, item.link);
-          },
-        },
-        '.place'
-      );
-    },
+const apiCards = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
+  headers: {
+    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
+    'Content-Type': 'application/json',
   },
-  cardsContainer
-);
+});
 
-cardList.renderItems();
+const cards = apiCards.getInitialCards();
+
+//выводим каточки, полученные с Api на страницу
+cards
+  .then((data) => {
+    //функция для создания карточки места
+    function makeCard(name, link, { handleCardClick }, cardSelector) {
+      // Создадим экземпляр карточки
+      const card = new Card(name, link, { handleCardClick }, cardSelector);
+      // Создаём карточку и возвращаем наружу
+      const cardElement = card.generateCard();
+
+      // Добавляем в DOM
+      cardList.setItem(cardElement);
+    }
+
+    //создание списка карточек и отображение их на странице
+    const cardList = new Section(
+      {
+        data: data,
+        renderer: (item) => {
+          makeCard(
+            item.name,
+            item.link,
+            {
+              handleCardClick: () => {
+                popupImage.popupOpen(item.name, item.link);
+              },
+            },
+            '.place'
+          );
+        },
+      },
+      cardsContainer
+    );
+
+    cardList.renderItems();
+  })
+  .catch((err) => {
+    alert(err);
+  });
 
 const popupInfoClose = new Popup(popupInfo);
 popupInfoClose.setEventListeners();
