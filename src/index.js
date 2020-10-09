@@ -33,9 +33,6 @@ const apiUserInfo = new Api({
 
 apiUserInfo.getUserInfo();
 
-const popupImage = new PopupWithImage(popupPhoto);
-popupImage.setEventListeners();
-
 const apiCards = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
   headers: {
@@ -81,10 +78,43 @@ cards
     );
 
     cardList.renderItems();
+
+    popupAddCardOpenButton.addEventListener('click', () => {
+      popupFormNewCard.popupOpen();
+      formValidatorPopupAddCard.resetForm();
+    });
+
+    // добавления новой карточки с фотографией
+    const popupFormNewCard = new PopupWithForm(popupAddCard, {
+      formSubmit: () => {
+        const nameElement = inputPlaceName.value;
+        const linkElement = inputLink.value;
+        apiCards
+          .makeNewCard({ name: nameElement, link: linkElement })
+          .then(() => {
+            makeCard(
+              nameElement,
+              linkElement,
+              {
+                handleCardClick: () => {
+                  makePopupImage(nameElement, linkElementk, popupPhoto);
+                },
+              },
+              '.place'
+            );
+          });
+      },
+    });
+    popupFormNewCard.setEventListeners();
   })
   .catch((err) => {
     alert(err);
   });
+
+const popupImage = new PopupWithImage(popupPhoto);
+popupImage.setEventListeners();
+
+//открытие попапа добавления карточки
 
 const popupInfoClose = new Popup(popupInfo);
 popupInfoClose.setEventListeners();
@@ -115,31 +145,6 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
   },
 });
 popupFormInfo.setEventListeners();
-
-//открытие попапа добавления карточки
-popupAddCardOpenButton.addEventListener('click', () => {
-  popupFormNewCard.popupOpen();
-  formValidatorPopupAddCard.resetForm();
-});
-
-// добавления новой карточки с фотографией
-const popupFormNewCard = new PopupWithForm(popupAddCard, {
-  formSubmit: () => {
-    const nameElement = inputPlaceName.value;
-    const linkElement = inputLink.value;
-    makeCard(
-      nameElement,
-      linkElement,
-      {
-        handleCardClick: () => {
-          makePopupImage(nameElement, linkElement, popupPhoto);
-        },
-      },
-      '.place'
-    );
-  },
-});
-popupFormNewCard.setEventListeners();
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
