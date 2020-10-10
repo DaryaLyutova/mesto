@@ -15,6 +15,9 @@ import {
   popupSaveButton,
   inputPlaceName,
   inputLink,
+  namePerson,
+  infoAboutPerson,
+  avatar,
   cardsContainer,
   inputNamePerson,
   inputInfoAboutPerson,
@@ -31,7 +34,16 @@ const apiUserInfo = new Api({
   },
 });
 
-apiUserInfo.getUserInfo();
+apiUserInfo
+  .getUserInfo()
+  .then((data) => {
+    namePerson.textContent = data.name;
+    infoAboutPerson.textContent = data.about;
+    avatar.src = data.avatar;
+  })
+  .catch((err) => {
+    alert(err);
+  });
 
 const apiCards = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
@@ -43,7 +55,7 @@ const apiCards = new Api({
 
 const cards = apiCards.getInitialCards();
 
-//выводим каточки, полученные с Api на страницу
+//действия с карточками
 cards
   .then((data) => {
     //функция для создания карточки места

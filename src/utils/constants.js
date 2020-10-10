@@ -14,6 +14,7 @@ export const namePerson = document.querySelector('.profile-info__name');
 export const infoAboutPerson = document.querySelector(
   '.profile-info__activity'
 );
+export const avatar = document.querySelector('.avatar');
 export const inputNamePerson = popupInfo.querySelector('.popup__input_name');
 export const inputInfoAboutPerson = popupInfo.querySelector(
   '.popup__input_activity'
