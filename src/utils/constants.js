@@ -1,7 +1,9 @@
 export const popupPhoto = document.querySelector('.popup_photo');
 export const popupAddCard = document.querySelector('.popup_add-card');
 export const popupInfo = document.querySelector('.popup_info');
+export const popupAvatar = document.querySelector('.popup_avatar');
 export const popupOpenButton = document.querySelector('.edit-button');
+export const popupAvatarOpenButton = document.querySelector('.avatar__hover');
 export const popupAddCardOpenButton = document.querySelector(
   '.profile__add-button'
 );
@@ -15,6 +17,7 @@ export const infoAboutPerson = document.querySelector(
   '.profile-info__activity'
 );
 export const avatar = document.querySelector('.avatar');
+export const inputAvatar = popupAvatar.querySelector('.popup__input_avatar-link');
 export const inputNamePerson = popupInfo.querySelector('.popup__input_name');
 export const inputInfoAboutPerson = popupInfo.querySelector(
   '.popup__input_activity'

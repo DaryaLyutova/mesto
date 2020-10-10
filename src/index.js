@@ -10,7 +10,9 @@ import {
   popupPhoto,
   popupAddCard,
   popupInfo,
+  popupAvatar,
   popupOpenButton,
+  popupAvatarOpenButton,
   popupAddCardOpenButton,
   popupSaveButton,
   inputPlaceName,
@@ -21,6 +23,7 @@ import {
   cardsContainer,
   inputNamePerson,
   inputInfoAboutPerson,
+  inputAvatar,
 } from './utils/constants.js';
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';
@@ -74,6 +77,32 @@ popupFormInfo.setEventListeners();
 
 const popupInfoClose = new Popup(popupInfo);
 popupInfoClose.setEventListeners();
+
+//попап с аватаром
+// const apiUserAvatar = new Api({
+//   url: 'https://mesto.nomoreparties.co/v1/cohort-16//users/me/avatar',
+//   headers: {
+//     authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//   },
+// });
+
+popupAvatarOpenButton.addEventListener('click', () => {
+  popupFormAvatar.popupOpen();
+  // formValidatorPopupInfo.resetForm();
+});
+
+const popupFormAvatar = new PopupWithForm(popupAvatar, {
+  formSubmit: () => {
+    const avatarPerson = inputAvatar.value;
+    console.log(document.querySelector('.avatar'));
+    document.querySelector('.avatar').src = avatarPerson;
+    // apiUserAvatar.patchUserAvatar(avatarPerson).then(() => {
+    //   document.querySelector('.avatar').src = avatarPerson;
+    // });
+  },
+});
+popupFormAvatar.setEventListeners();
 
 const apiCards = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
