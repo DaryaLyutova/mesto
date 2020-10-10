@@ -33,20 +33,20 @@ export default class Api {
     });
   }
 
-  patchUserAvatar(url) {
-    return fetch(this._url, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify(url),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
+  // patchUserAvatar(url) {
+  //   return fetch(this._url, {
+  //     method: 'PATCH',
+  //     headers: this._headers,
+  //     body: JSON.stringify(url),
+  //   }).then((res) => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
 
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
-  }
+  //     // если ошибка, отклоняем промис
+  //     return Promise.reject(`Ошибка: ${res.status}`);
+  //   });
+  // }
 
   getInitialCards() {
     return fetch(this._url, {
