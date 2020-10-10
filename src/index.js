@@ -45,6 +45,36 @@ apiUserInfo
     alert(err);
   });
 
+//откытие попапа для внесения данных о пользователе
+popupOpenButton.addEventListener('click', () => {
+  popupFormInfo.popupOpen();
+  formValidatorPopupInfo.resetForm();
+
+  const getUserInfo = userInfo.getUserInfo();
+  inputNamePerson.value = getUserInfo.name;
+  inputInfoAboutPerson.value = getUserInfo.aboutPerson;
+
+  popupSaveButton.classList.remove('popup__button_disabled');
+  popupSaveButton.removeAttribute('disabled');
+});
+
+//обрабтка данных попапа внесения данных пользователя и его закрытие
+const popupFormInfo = new PopupWithForm(popupInfo, {
+  formSubmit: () => {
+    const namePerson = inputNamePerson.value;
+    const aboutPerson = inputInfoAboutPerson.value;
+    apiUserInfo
+      .patchUserInfo({ name: namePerson, about: aboutPerson })
+      .then(() => {
+        userInfo.setUserInfo(namePerson, aboutPerson);
+      });
+  },
+});
+popupFormInfo.setEventListeners();
+
+const popupInfoClose = new Popup(popupInfo);
+popupInfoClose.setEventListeners();
+
 const apiCards = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
   headers: {
@@ -128,35 +158,11 @@ popupImage.setEventListeners();
 
 //открытие попапа добавления карточки
 
-const popupInfoClose = new Popup(popupInfo);
-popupInfoClose.setEventListeners();
-
 const popupAddCardClose = new Popup(popupAddCard);
 popupAddCardClose.setEventListeners();
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
-
-//откытие попапа для внесения данных о пользователе
-popupOpenButton.addEventListener('click', () => {
-  popupFormInfo.popupOpen();
-  formValidatorPopupInfo.resetForm();
-
-  const getUserInfo = userInfo.getUserInfo();
-  inputNamePerson.value = getUserInfo.name;
-  inputInfoAboutPerson.value = getUserInfo.aboutPerson;
-
-  popupSaveButton.classList.remove('popup__button_disabled');
-  popupSaveButton.removeAttribute('disabled');
-});
-
-//обрабтка данных попапа внесения данных пользователя и его закрытие
-const popupFormInfo = new PopupWithForm(popupInfo, {
-  formSubmit: () => {
-    userInfo.setUserInfo(inputNamePerson.value, inputInfoAboutPerson.value);
-  },
-});
-popupFormInfo.setEventListeners();
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
