@@ -78,28 +78,26 @@ popupFormInfo.setEventListeners();
 const popupInfoClose = new Popup(popupInfo);
 popupInfoClose.setEventListeners();
 
-//попап с аватаром
-// const apiUserAvatar = new Api({
-//   url: 'https://mesto.nomoreparties.co/v1/cohort-16//users/me/avatar',
-//   headers: {
-//     authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
-//     'Content-Type': 'application/x-www-form-urlencoded',
-//   },
-// });
+// попап с аватаром
+const apiUserAvatar = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me/avatar',
+  headers: {
+    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
+    'Content-Type': 'application/json',
+  },
+});
 
 popupAvatarOpenButton.addEventListener('click', () => {
   popupFormAvatar.popupOpen();
-  // formValidatorPopupInfo.resetForm();
+  formValidatorPopupAvatar.resetForm();
 });
 
 const popupFormAvatar = new PopupWithForm(popupAvatar, {
   formSubmit: () => {
     const avatarPerson = inputAvatar.value;
-    console.log(document.querySelector('.avatar'));
-    document.querySelector('.avatar').src = avatarPerson;
-    // apiUserAvatar.patchUserAvatar(avatarPerson).then(() => {
-    //   document.querySelector('.avatar').src = avatarPerson;
-    // });
+    apiUserAvatar.patchUserAvatar({ avatar: avatarPerson }).then(() => {
+      document.querySelector('.avatar').src = avatarPerson;
+    });
   },
 });
 popupFormAvatar.setEventListeners();
@@ -196,5 +194,7 @@ const userInfo = new UserInfo(personInfo);
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
 const formValidatorPopupAddCard = new FormValidator(selectorObj, popupAddCard);
+const formValidatorPopupAvatar = new FormValidator(selectorObj, popupAvatar);
 formValidatorPopupInfo.enableValidation();
 formValidatorPopupAddCard.enableValidation();
+formValidatorPopupAvatar.enableValidation();
