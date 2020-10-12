@@ -75,20 +75,44 @@ export default class Api {
     });
   }
 
-  
+  putLikeCard(id) {
+    return fetch(`${this._url}${id}`, {
+      method: 'PUT',
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 
-  // deleteCard(data) {
-  //   return fetch('${this._url)$/${id}', {
-  //     method: 'DELETE',
-  //     headers: this._headers,
-  //   }).then((res) => {
-  //     if (res.ok) {
-  //       return res.json();
-  //     }
-  //     // если ошибка, отклоняем промис
-  //     return Promise.reject(`Ошибка: ${res.status}`);
-  //   });
-  // }
+  deleteLikeCard(id) {
+    return fetch(`${this._url}${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
+
+  deleteCard(id) {
+    return fetch(`${this._url}$/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 
 }
 

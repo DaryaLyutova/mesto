@@ -1,13 +1,15 @@
 import { inputPlaceName } from "../utils/constants";
 
 export default class Card {
-  constructor({dataCard, handleCardClick }, cardSelector) {
+  constructor({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick}, cardSelector) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
     this.__id = dataCard._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
+    this._handleDeleteIconClick = handleDeleteIconClick;
   }
 
   _getTemplate() {
@@ -22,16 +24,18 @@ export default class Card {
   }
 
   // лайк карточки
-  // _likeCardClick() {
-  //   this._element
-  //     .querySelector('.place__like')
-  //     .classList.toggle('place__like_active');
-  // }
+  _likeCardClick() {
+    this._element
+      .querySelector('.place__like')
+      .classList.toggle('place__like_active');
+      // this._handleLikeClick();
+  }
 
   //удаление карточки
   _deleteCard() {
-    this._element.remove();
-    this._element = null;
+    this._handleDeleteIconClick();
+    // this._element.remove();
+    // this._element = null;
   }
 
   //слушатель для открытия попапа
@@ -40,11 +44,12 @@ export default class Card {
   }
 
   _setEventListeners() {
-    // this._element
-    //   .querySelector('.place__like')
-    //   .addEventListener('click', () => {
-    //     this._likeCardClick();
-    //   });
+    this._element
+      .querySelector('.place__like')
+      .addEventListener('click', () => {
+        this._likeCardClick();
+        this._handleLikeClick();
+      });
     this._element
       .querySelector('.place__delete')
       .addEventListener('click', () => {
@@ -67,7 +72,7 @@ export default class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
-    this._deleteElement()
+    this._deleteElement();
     // Добавим данные
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;

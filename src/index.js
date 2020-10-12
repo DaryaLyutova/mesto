@@ -10,6 +10,7 @@ import {
   popupAddCard,
   popupInfo,
   popupAvatar,
+  popupSubmit,
   popupOpenButton,
   popupAvatarOpenButton,
   popupAddCardOpenButton,
@@ -121,14 +122,22 @@ const apiCards = new Api({
 const cards = apiCards.getInitialCards();
 
 //функция для создания карточки места
-function makeCard({dataCard, handleCardClick }, cardSelector, elementsList) {
+function makeCard({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({dataCard, handleCardClick }, cardSelector);
+  const card = new Card({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();      
   // Добавляем в DOM
   elementsList.setItem(cardElement);
 }
+
+const apiLikeCard = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards/likes/',
+  headers: {
+    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
+    'Content-Type': 'application/json',
+  },
+});
 
 //действия с карточками
 cards
@@ -145,8 +154,21 @@ cards
             _id: item.owner._id}, 
             handleCardClick: () => {
                 popupImage.popupOpen(item.name, item.link);
-              },
+              }, 
+              handleLikeClick: () => {                
+                  apiLikeCard.putLikeCard(item._id);             
             },
+            handleDeleteIconClick: () => {
+              const popupWithSubmit = new PopupWithSubmit(popupSubmit, {formSubmit: () => {
+                apiCards.deleteCard(item.owner._id);
+                console.log(item.owner._id);
+                  //  this._element.remove();
+                  //  this._element = null;
+              }  
+            });
+              popupWithSubmit.popupOpen();
+              popupWithSubmit.setEventListeners();
+          }},
             '.place', cardList);          
         },
       },
@@ -189,6 +211,7 @@ cards
 
 const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
+
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);

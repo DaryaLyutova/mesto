@@ -2,6 +2,7 @@ export const popupPhoto = document.querySelector('.popup_photo');
 export const popupAddCard = document.querySelector('.popup_add-card');
 export const popupInfo = document.querySelector('.popup_info');
 export const popupAvatar = document.querySelector('.popup_avatar');
+export const popupSubmit = document.querySelector('.popup__submit');
 export const popupOpenButton = document.querySelector('.edit-button');
 export const popupAvatarOpenButton = document.querySelector('.avatar__hover');
 export const popupAddCardOpenButton = document.querySelector(
