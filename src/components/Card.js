@@ -1,8 +1,11 @@
+import { inputPlaceName } from "../utils/constants";
+
 export default class Card {
-  constructor(name, link, likes, { handleCardClick }, cardSelector) {
+  constructor(name, link, likes, _id, { handleCardClick }, cardSelector) {
     this._name = name;
     this._link = link;
     this._likes = likes;
+    this.__id = _id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -54,11 +57,17 @@ export default class Card {
       });
   }
 
+  _deleteElement() {
+    if (this.__id !== '87a2c0f969175984846e265f') {
+      this._element.querySelector('.place__delete').remove();
+    }
+  }
+
   //создаем карточку
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
-
+    this._deleteElement()
     // Добавим данные
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;

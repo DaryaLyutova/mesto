@@ -120,73 +120,68 @@ const apiCards = new Api({
 
 const cards = apiCards.getInitialCards();
 
+//функция для создания карточки места
+function makeCard( name, link, likes, _id, { handleCardClick }, cardSelector, elementsList) {
+  // Создадим экземпляр карточки
+  const card = new Card(name, link, likes, _id, { handleCardClick }, cardSelector);
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateCard();      
+  // Добавляем в DOM
+  elementsList.setItem(cardElement);
+}
+
 //действия с карточками
 cards
   .then((data) => {
-    //функция для создания карточки места
-    function makeCard( name, link, likes, { handleCardClick }, cardSelector) {
-      // Создадим экземпляр карточки
-      const card = new Card(name, link, likes, { handleCardClick }, cardSelector);
-      // Создаём карточку и возвращаем наружу
-      const cardElement = card.generateCard();
-
-      // Добавляем в DOM
-      cardList.setItem(cardElement);
-    }
-
     //создание списка карточек и отображение их на странице
     const cardList = new Section(
       {
-        data,
+        data: data,
         renderer: (item) => {
           makeCard(
             item.name,
             item.link,
-            item.likes,
-            {
-              handleCardClick: () => {
+            item.likes, item.owner._id, 
+            {handleCardClick: () => {
                 popupImage.popupOpen(item.name, item.link);
               },
             },
-            '.place'
-          );
+            '.place', cardList);          
         },
       },
       cardsContainer
     );
+    cardList.renderItems();
 
-    return cardList.renderItems();
-  })
-  .then(() =>{
-    return popupAddCardOpenButton.addEventListener('click', () => {
-    popupFormNewCard.popupOpen();
-    formValidatorPopupAddCard.resetForm();
-  });})
-  .then(() => {
-    // добавления новой карточки с фотографией
-    const popupFormNewCard = new PopupWithForm(popupAddCard, {
-      formSubmit: () => {
-        const nameElement = inputPlaceName.value;
-        const linkElement = inputLink.value;
-        const likesElement = [];
-        apiCards.makeNewCard({ name: nameElement, link: linkElement })
-          .then(() => {
-            makeCard(
-              nameElement,
-              linkElement,
-              likesElement,
-              {
-                handleCardClick: () => {
-                  popupImage.popupOpen(nameElement, linkElement, popupPhoto);
-                },
-              },
-              '.place'
-            );
-          });
-      },
-    });    
-    return popupFormNewCard.setEventListeners();
-  })
+    popupAddCardOpenButton.addEventListener('click', () => {
+        popupFormNewCard.popupOpen();
+        formValidatorPopupAddCard.resetForm();
+      });
+        // добавления новой карточки с фотографией
+        const popupFormNewCard = new PopupWithForm(popupAddCard, {
+          formSubmit: () => {
+            const nameElement = inputPlaceName.value;
+            const linkElement = inputLink.value;
+            const likesElement = [];
+            const idElement = '87a2c0f969175984846e265f';
+            apiCards.makeNewCard({ name: nameElement, link: linkElement })
+              .then(() => {
+                makeCard(
+                  nameElement,
+                  linkElement,
+                  likesElement, idElement,
+                  {
+                    handleCardClick: () => {
+                      popupImage.popupOpen(nameElement, linkElement, popupPhoto);
+                    },
+                  },
+                  '.place', cardList
+                );
+              });
+          },
+        });    
+        return popupFormNewCard.setEventListeners();
+    })
   .catch((err) => {
     alert(err);
   });
