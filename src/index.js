@@ -28,6 +28,7 @@ import {
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';
 import Api from './components/Api.js';
+import PopupWithSubmit from './components/PopupWithSubmit.js'
 
 const apiUserInfo = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me',
@@ -70,13 +71,14 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
       .patchUserInfo({ name: namePerson, about: aboutPerson })
       .then(() => {
         userInfo.setUserInfo(namePerson, aboutPerson);
+      })
+      .catch((err) => {
+        alert(err);
       });
+    
   },
 });
 popupFormInfo.setEventListeners();
-
-const popupInfoClose = new Popup(popupInfo);
-popupInfoClose.setEventListeners();
 
 // попап с аватаром
 const apiUserAvatar = new Api({
@@ -97,6 +99,9 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
     const avatarPerson = inputAvatar.value;
     apiUserAvatar.patchUserAvatar({ avatar: avatarPerson }).then(() => {
       document.querySelector('.avatar').src = avatarPerson;
+    })
+    .catch((err) => {
+      alert(err);
     });
   },
 });
@@ -116,9 +121,9 @@ const cards = apiCards.getInitialCards();
 cards
   .then((data) => {
     //функция для создания карточки места
-    function makeCard(name, link, { handleCardClick }, cardSelector) {
+    function makeCard( name, link, likes, { handleCardClick }, cardSelector) {
       // Создадим экземпляр карточки
-      const card = new Card(name, link, { handleCardClick }, cardSelector);
+      const card = new Card(name, link, likes, { handleCardClick }, cardSelector);
       // Создаём карточку и возвращаем наружу
       const cardElement = card.generateCard();
 
@@ -134,6 +139,7 @@ cards
           makeCard(
             item.name,
             item.link,
+            item.likes,
             {
               handleCardClick: () => {
                 popupImage.popupOpen(item.name, item.link);
@@ -158,22 +164,21 @@ cards
       formSubmit: () => {
         const nameElement = inputPlaceName.value;
         const linkElement = inputLink.value;
-        apiCards
-          .makeNewCard({ name: nameElement, link: linkElement })
+        apiCards.makeNewCard({ name: nameElement, link: linkElement })
           .then(() => {
             makeCard(
               nameElement,
               linkElement,
               {
                 handleCardClick: () => {
-                  makePopupImage(nameElement, linkElementk, popupPhoto);
+                  popupImage.popupOpen(nameElement, linkElement, popupPhoto);
                 },
               },
               '.place'
             );
           });
       },
-    });
+    });    
     popupFormNewCard.setEventListeners();
   })
   .catch((err) => {
@@ -182,11 +187,6 @@ cards
 
 const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
-
-//открытие попапа добавления карточки
-
-const popupAddCardClose = new Popup(popupAddCard);
-popupAddCardClose.setEventListeners();
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
@@ -198,3 +198,13 @@ const formValidatorPopupAvatar = new FormValidator(selectorObj, popupAvatar);
 formValidatorPopupInfo.enableValidation();
 formValidatorPopupAddCard.enableValidation();
 formValidatorPopupAvatar.enableValidation();
+
+// function renderLoading(isLoading) {
+//   if (isLoading) {
+//     popupSaveButton.innerText = 'Сохранение...';
+//     console.log(popupSaveButton);
+//   } else {
+//     popupSaveButton.innerText = 'Сохранение';
+//     console.log(popupSaveButton);
+//   }
+// }

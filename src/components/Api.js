@@ -75,5 +75,20 @@ export default class Api {
     });
   }
 
-  // другие методы работы с API
+  
+
+  // deleteCard(data) {
+  //   return fetch('${this._url)$/${id}', {
+  //     method: 'DELETE',
+  //     headers: this._headers,
+  //   }).then((res) => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
+  //     // если ошибка, отклоняем промис
+  //     return Promise.reject(`Ошибка: ${res.status}`);
+  //   });
+  // }
+
 }
+
