@@ -1,5 +1,4 @@
 import './pages/index.css';
-
 import Card from './components/Card.js';
 import Section from './components/Section.js';
 import Popup from './components/Popup.js';
@@ -24,6 +23,7 @@ import {
   inputNamePerson,
   inputInfoAboutPerson,
   inputAvatar,
+  likesCounter,
 } from './utils/constants.js';
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';
@@ -37,6 +37,9 @@ const apiUserInfo = new Api({
     'Content-Type': 'application/json',
   },
 });
+
+//информация о пользователе
+const userInfo = new UserInfo(personInfo);
 
 apiUserInfo
   .getUserInfo()
@@ -70,7 +73,7 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
     apiUserInfo
       .patchUserInfo({ name: namePerson, about: aboutPerson })
       .then(() => {
-        userInfo.setUserInfo(namePerson, aboutPerson);
+        return userInfo.setUserInfo(namePerson, aboutPerson);
       })
       .catch((err) => {
         alert(err);
@@ -98,7 +101,7 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
   formSubmit: () => {
     const avatarPerson = inputAvatar.value;
     apiUserAvatar.patchUserAvatar({ avatar: avatarPerson }).then(() => {
-      document.querySelector('.avatar').src = avatarPerson;
+      return document.querySelector('.avatar').src = avatarPerson;
     })
     .catch((err) => {
       alert(err);
@@ -134,7 +137,7 @@ cards
     //создание списка карточек и отображение их на странице
     const cardList = new Section(
       {
-        data: data,
+        data,
         renderer: (item) => {
           makeCard(
             item.name,
@@ -152,23 +155,26 @@ cards
       cardsContainer
     );
 
-    cardList.renderItems();
-
-    popupAddCardOpenButton.addEventListener('click', () => {
-      popupFormNewCard.popupOpen();
-      formValidatorPopupAddCard.resetForm();
-    });
-
+    return cardList.renderItems();
+  })
+  .then(() =>{
+    return popupAddCardOpenButton.addEventListener('click', () => {
+    popupFormNewCard.popupOpen();
+    formValidatorPopupAddCard.resetForm();
+  });})
+  .then(() => {
     // добавления новой карточки с фотографией
     const popupFormNewCard = new PopupWithForm(popupAddCard, {
       formSubmit: () => {
         const nameElement = inputPlaceName.value;
         const linkElement = inputLink.value;
+        const likesElement = [];
         apiCards.makeNewCard({ name: nameElement, link: linkElement })
           .then(() => {
             makeCard(
               nameElement,
               linkElement,
+              likesElement,
               {
                 handleCardClick: () => {
                   popupImage.popupOpen(nameElement, linkElement, popupPhoto);
@@ -179,7 +185,7 @@ cards
           });
       },
     });    
-    popupFormNewCard.setEventListeners();
+    return popupFormNewCard.setEventListeners();
   })
   .catch((err) => {
     alert(err);
@@ -187,9 +193,6 @@ cards
 
 const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
-
-//информация о пользователе
-const userInfo = new UserInfo(personInfo);
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
