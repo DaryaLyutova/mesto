@@ -1,11 +1,11 @@
 import { inputPlaceName } from "../utils/constants";
 
 export default class Card {
-  constructor(name, link, likes, _id, { handleCardClick }, cardSelector) {
-    this._name = name;
-    this._link = link;
-    this._likes = likes;
-    this.__id = _id;
+  constructor({dataCard, handleCardClick }, cardSelector) {
+    this._name = dataCard.name;
+    this._link = dataCard.link;
+    this._likes = dataCard.likes;
+    this.__id = dataCard._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
   }

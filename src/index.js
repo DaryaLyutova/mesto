@@ -121,9 +121,9 @@ const apiCards = new Api({
 const cards = apiCards.getInitialCards();
 
 //функция для создания карточки места
-function makeCard( name, link, likes, _id, { handleCardClick }, cardSelector, elementsList) {
+function makeCard({dataCard, handleCardClick }, cardSelector, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card(name, link, likes, _id, { handleCardClick }, cardSelector);
+  const card = new Card({dataCard, handleCardClick }, cardSelector);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();      
   // Добавляем в DOM
@@ -138,11 +138,12 @@ cards
       {
         data: data,
         renderer: (item) => {
-          makeCard(
-            item.name,
-            item.link,
-            item.likes, item.owner._id, 
-            {handleCardClick: () => {
+          makeCard({dataCard:{ 
+            name: item.name,
+            link: item.link,
+            likes: item.likes, 
+            _id: item.owner._id}, 
+            handleCardClick: () => {
                 popupImage.popupOpen(item.name, item.link);
               },
             },
@@ -166,11 +167,11 @@ cards
             const idElement = '87a2c0f969175984846e265f';
             apiCards.makeNewCard({ name: nameElement, link: linkElement })
               .then(() => {
-                makeCard(
-                  nameElement,
-                  linkElement,
-                  likesElement, idElement,
-                  {
+                makeCard({dataCard:{
+                  name: nameElement,
+                  link: linkElement,
+                  likes: likesElement, 
+                  _id: idElement},                  
                     handleCardClick: () => {
                       popupImage.popupOpen(nameElement, linkElement, popupPhoto);
                     },
