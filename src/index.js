@@ -1,7 +1,6 @@
 import './pages/index.css';
 import Card from './components/Card.js';
 import Section from './components/Section.js';
-import Popup from './components/Popup.js';
 import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
@@ -158,14 +157,18 @@ cards
               popupImage.popupOpen(item.name, item.link);
             },
             handleLikeClick: () => {
-              apiLikeCard.putLikeCard(item._id);
+              apiLikeCard.putLikeCard(item._id)
+              // .then(() => {
+              // apiLikeCard.deleteLikeCard(item._id)
+              //   // .likeCardAdd();
+              //   // likesCounter = item.likes.length + 1;
+
+              // });
             },
             handleDeleteIconClick: () => {
               const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
                 formSubmit: () => {
                   apiCards.deleteCard(item._id);
-                  //  this._element.remove();
-                  //  this._element = null;                  
                 }
               });
               popupWithSubmit.popupOpen();
@@ -189,7 +192,6 @@ cards
         const nameElement = inputPlaceName.value;
         const linkElement = inputLink.value;
         const likesElement = [];
-        // const idElement = '87a2c0f969175984846e265f';
         apiCards.makeNewCard({ name: nameElement, link: linkElement })
           .then((data) => {
             makeCard({
@@ -228,7 +230,6 @@ cards
 
 const popupImage = new PopupWithImage(popupPhoto);
 popupImage.setEventListeners();
-
 
 // добавление валидации
 const formValidatorPopupInfo = new FormValidator(selectorObj, popupInfo);
