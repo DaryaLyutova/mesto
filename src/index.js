@@ -79,7 +79,7 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
       .catch((err) => {
         alert(err);
       });
-    
+
   },
 });
 popupFormInfo.setEventListeners();
@@ -104,9 +104,9 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
     apiUserAvatar.patchUserAvatar({ avatar: avatarPerson }).then(() => {
       return document.querySelector('.avatar').src = avatarPerson;
     })
-    .catch((err) => {
-      alert(err);
-    });
+      .catch((err) => {
+        alert(err);
+      });
   },
 });
 popupFormAvatar.setEventListeners();
@@ -122,11 +122,11 @@ const apiCards = new Api({
 const cards = apiCards.getInitialCards();
 
 //функция для создания карточки места
-function makeCard({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
+function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
+  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
   // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateCard();      
+  const cardElement = card.generateCard();
   // Добавляем в DOM
   elementsList.setItem(cardElement);
 }
@@ -147,28 +147,32 @@ cards
       {
         data: data,
         renderer: (item) => {
-          makeCard({dataCard:{ 
-            name: item.name,
-            link: item.link,
-            likes: item.likes, 
-            _id: item.owner._id}, 
+          makeCard({
+            dataCard: {
+              name: item.name,
+              link: item.link,
+              likes: item.likes,
+              _id: item.owner._id
+            },
             handleCardClick: () => {
-                popupImage.popupOpen(item.name, item.link);
-              }, 
-              handleLikeClick: () => {
-                  apiLikeCard.putLikeCard(item._id);
+              popupImage.popupOpen(item.name, item.link);
+            },
+            handleLikeClick: () => {
+              apiLikeCard.putLikeCard(item._id);
             },
             handleDeleteIconClick: () => {
-              const popupWithSubmit = new PopupWithSubmit(popupSubmit, {formSubmit: () => {
-                apiCards.deleteCard(item._id);
+              const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
+                formSubmit: () => {
+                  apiCards.deleteCard(item._id);
                   //  this._element.remove();
                   //  this._element = null;                  
-              }  
-            });
+                }
+              });
               popupWithSubmit.popupOpen();
               popupWithSubmit.setEventListeners();
-          }},
-            '.place', cardList);          
+            }
+          },
+            '.place', cardList);
         },
       },
       cardsContainer
@@ -176,44 +180,48 @@ cards
     cardList.renderItems();
 
     popupAddCardOpenButton.addEventListener('click', () => {
-        popupFormNewCard.popupOpen();
-        formValidatorPopupAddCard.resetForm();
-      });
-        // добавления новой карточки с фотографией
-        const popupFormNewCard = new PopupWithForm(popupAddCard, {
-          formSubmit: () => {
-            const nameElement = inputPlaceName.value;
-            const linkElement = inputLink.value;
-            const likesElement = [];
-            // const idElement = '87a2c0f969175984846e265f';
-            apiCards.makeNewCard({ name: nameElement, link: linkElement })
-              .then((data) => {
-                makeCard({dataCard:{
-                  name: data.name,
-                  link: data.link,
-                  likes: data.likes, 
-                  _id: data.owner._id},                  
-                    handleCardClick: () => {
-                      popupImage.popupOpen(nameElement, linkElement, popupPhoto);
-                    },
-                    handleLikeClick: () => {
-                      apiLikeCard.putLikeCard(likesElement);
-                },
-                    handleDeleteIconClick: ()=> {
-                      const popupWithSubmit = new PopupWithSubmit(popupSubmit, {formSubmit: () => {
-                        apiCards.deleteCard(data._id);
-                      }  
-                    });
-                      popupWithSubmit.popupOpen();
-                      popupWithSubmit.setEventListeners();
-                    }},                  
-                  '.place', cardList
-                );
-              });
-          },
-        });    
-        return popupFormNewCard.setEventListeners();
-    })
+      popupFormNewCard.popupOpen();
+      formValidatorPopupAddCard.resetForm();
+    });
+    // добавления новой карточки с фотографией
+    const popupFormNewCard = new PopupWithForm(popupAddCard, {
+      formSubmit: () => {
+        const nameElement = inputPlaceName.value;
+        const linkElement = inputLink.value;
+        const likesElement = [];
+        // const idElement = '87a2c0f969175984846e265f';
+        apiCards.makeNewCard({ name: nameElement, link: linkElement })
+          .then((data) => {
+            makeCard({
+              dataCard: {
+                name: data.name,
+                link: data.link,
+                likes: data.likes,
+                _id: data.owner._id
+              },
+              handleCardClick: () => {
+                popupImage.popupOpen(nameElement, linkElement, popupPhoto);
+              },
+              handleLikeClick: () => {
+                apiLikeCard.putLikeCard(likesElement);
+              },
+              handleDeleteIconClick: () => {
+                const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
+                  formSubmit: () => {
+                    apiCards.deleteCard(data._id);
+                  }
+                });
+                popupWithSubmit.popupOpen();
+                popupWithSubmit.setEventListeners();
+              }
+            },
+              '.place', cardList
+            );
+          });
+      },
+    });
+    return popupFormNewCard.setEventListeners();
+  })
   .catch((err) => {
     alert(err);
   });

@@ -7,13 +7,13 @@ export default class PopupWithForm extends Popup {
     // this._popupSaveButton = document.querySelector('.popup__button');
   }
   _getInputValues(evt) {
-    evt.preventDefault();   
+    evt.preventDefault();
     this._formSubmit();
   }
   setEventListeners() {
-    super.setEventListeners();    
+    super.setEventListeners();
     this._popupElement.addEventListener('submit', (evt) => {
-      this._getInputValues(evt);      
+      this._getInputValues(evt);
       this.closePopup();
     });
   }
