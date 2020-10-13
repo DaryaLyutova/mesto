@@ -1,7 +1,7 @@
 import { inputPlaceName } from "../utils/constants";
 
 export default class Card {
-  constructor({dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick}, cardSelector) {
+  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
@@ -24,17 +24,17 @@ export default class Card {
   }
 
   // лайк карточки
-  _likeCardClick() {
-    this._element
-      .querySelector('.place__like')
-      .classList.toggle('place__like_active');
-      // this._handleLikeClick();
-  }
+  // _likeCardClick() {
+  //   this._element
+  //     .querySelector('.place__like')
+  //     .classList.toggle('place__like_active');
+  //     // this._handleLikeClick();
+  // }
 
   //удаление карточки
   _deleteCard() {
     this._handleDeleteIconClick();
-   }
+  }
 
   //слушатель для открытия попапа
   _setEventListenerImage() {
@@ -45,7 +45,7 @@ export default class Card {
     this._element
       .querySelector('.place__like')
       .addEventListener('click', () => {
-        this._likeCardClick();
+        // this._likeCardClick();
         this._handleLikeClick();
       });
     this._element
@@ -75,7 +75,7 @@ export default class Card {
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;
     this._element.querySelector('.place__like-counter').textContent = this._likes.length;
-   
+
     // Вернём элемент наружу
     return this._element;
   }
