@@ -34,9 +34,7 @@ export default class Card {
   //удаление карточки
   _deleteCard() {
     this._handleDeleteIconClick();
-    // this._element.remove();
-    // this._element = null;
-  }
+   }
 
   //слушатель для открытия попапа
   _setEventListenerImage() {
