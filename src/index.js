@@ -23,7 +23,6 @@ import {
   inputNamePerson,
   inputInfoAboutPerson,
   inputAvatar,
-  likesCounter,
 } from './utils/constants.js';
 import { FormValidator, selectorObj } from './components/FormValidator.js';
 import { personInfo } from './components/UserInfo.js';

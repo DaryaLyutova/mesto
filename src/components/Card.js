@@ -1,5 +1,3 @@
-import { inputPlaceName } from "../utils/constants";
-
 export default class Card {
   constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector) {
     this._name = dataCard.name;
@@ -53,8 +51,7 @@ export default class Card {
 
   _setEventListeners() {
     this._element
-      .querySelector('.place__like')
-      .addEventListener('click', () => {
+      .addEventListener('submit', () => {
         this._getLike();
       });
     this._element
