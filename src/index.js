@@ -40,9 +40,8 @@ const apiUserInfo = new Api({
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
-
-apiUserInfo
-  .getUserInfo()
+const apiUser = apiUserInfo.getUserInfo();
+apiUser
   .then((data) => {
     namePerson.textContent = data.name;
     infoAboutPerson.textContent = data.about;
@@ -164,19 +163,23 @@ cards
               popupImage.popupOpen(item.name, item.link);
             },
             handleLikeClick: () => {
-              item.likes.forEach((one) => {
-                if (one._id !== '87a2c0f969175984846e265f') {
-                  console.log(item);
+              return apiUser.then((dataUser) => {
+                if (item.likes.length === 0) {
                   apiLikeCard.putLikeCard(item._id);
-                  document.querySelector('.place__like').classList.add('place__like_active');
-                  document.querySelector('.place__like-counter').textContent = item.likes.length - 1;
                 }
                 else {
-                  apiLikeCard.deleteLikeCard(item._id);
-                  document.querySelector('.place__like').classList.remove('place__like_active');
-                  document.querySelector('.place__like-counter').textContent = item.likes.length + 1;
+                  item.likes.forEach((one) => {
+                    if (one._id === dataUser._id) {
+                      apiLikeCard.deleteLikeCard(item._id);
+                    }
+                    else {
+                      apiLikeCard.putLikeCard(item._id);
+                    }
+                  })
                 }
-              })
+              }).catch((err) => {
+                alert(err);
+              });
             },
             handleDeleteIconClick: () => {
               const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
@@ -193,12 +196,13 @@ cards
       },
       cardsContainer
     );
+    return cardList
+  })
+  .then((cardList) => {
     cardList.renderItems();
-
-    popupAddCardOpenButton.addEventListener('click', () => {
-      popupFormNewCard.popupOpen();
-      formValidatorPopupAddCard.resetForm();
-    });
+    return cardList
+  })
+  .then((cardList) => {
     // добавления новой карточки с фотографией
     const popupFormNewCard = new PopupWithForm(popupAddCard, {
       formSubmit: () => {
@@ -218,7 +222,23 @@ cards
                 popupImage.popupOpen(nameElement, linkElement, popupPhoto);
               },
               handleLikeClick: () => {
-                apiLikeCard.putLikeCard(data._id);
+                return apiUser.then((dataUser) => {
+                  if (data.likes.length === 0) {
+                    apiLikeCard.putLikeCard(data._id);
+                  }
+                  else {
+                    data.likes.forEach((one) => {
+                      if (one._id !== dataUser._id) {
+                        apiLikeCard.putLikeCard(data._id);
+                      }
+                      else {
+                        apiLikeCard.deleteLikeCard(data._id);
+                      }
+                    })
+                  }
+                }).catch((err) => {
+                  alert(err);
+                });
               },
               handleDeleteIconClick: () => {
                 const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
@@ -232,6 +252,7 @@ cards
             },
               '.place', cardList
             );
+
           })
           .catch((err) => {
             alert(err);
@@ -241,7 +262,17 @@ cards
           });
       },
     });
-    return popupFormNewCard.setEventListeners();
+    return popupFormNewCard
+  })
+  .then((popupFormNewCard) => {
+    popupFormNewCard.setEventListeners();
+    return popupFormNewCard
+  })
+  .then((popupFormNewCard) => {
+    return popupAddCardOpenButton.addEventListener('click', () => {
+      popupFormNewCard.popupOpen();
+      formValidatorPopupAddCard.resetForm();
+    });
   })
   .catch((err) => {
     alert(err);

@@ -64,6 +64,13 @@ export default class Api {
     }).then((res) => this._showErrow(res));
   }
 
+  getLikeCard(id) {
+    return fetch(`${this._url}${id}`, {
+      method: 'GET',
+      headers: this._headers,
+    }).then((res) => this._showErrow(res));
+  }
+
   deleteCard(id) {
     return fetch(`${this._url}/${id}`, {
       method: 'DELETE',
