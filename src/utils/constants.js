@@ -36,3 +36,12 @@ export const inputLink = popupAddCard.querySelector('.popup__input_link');
 export const cardsContainer = document.querySelector('.places');
 export const popupList = Array.from(document.querySelectorAll('.popup'));
 export const likesCounter = cardsContainer.querySelector('.place__like-counter');
+
+export const selectorObj = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};

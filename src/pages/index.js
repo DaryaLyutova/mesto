@@ -23,8 +23,9 @@ import {
   inputNamePerson,
   inputInfoAboutPerson,
   inputAvatar,
+  selectorObj
 } from './../utils/constants.js';
-import { FormValidator, selectorObj } from './../components/FormValidator.js';
+import FormValidator from './../components/FormValidator.js';
 import { personInfo } from './../components/UserInfo.js';
 import Api from './../components/Api.js';
 import PopupWithSubmit from './../components/PopupWithSubmit.js'

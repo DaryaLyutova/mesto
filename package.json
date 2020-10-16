@@ -4,7 +4,7 @@
   "description": "Продолжаем улучшать предыдущий проект, в котором была сверстана адаптивная страница согласно макету (контрольными точками выбраны 1240px, 300px).",
   "main": "index.js",
   "scripts": {
-    "build": "rd /s /q dist && webpack",
+    "build": "rm -rf dist && webpack",
     "dev": "webpack-dev-server --open --watch"
   },
   "repository": {

@@ -1,13 +1,4 @@
-export const selectorObj = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-};
-
-export class FormValidator {
+export default class FormValidator {
   constructor(selectorObj, formElement) {
     this._formSelector = selectorObj.formSelector;
     this._inputSelector = selectorObj.inputSelector;
