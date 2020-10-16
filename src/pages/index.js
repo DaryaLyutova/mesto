@@ -23,15 +23,15 @@ import {
   inputNamePerson,
   inputInfoAboutPerson,
   inputAvatar,
-  selectorObj
+  selectorObj,
+  personInfo
 } from './../utils/constants.js';
 import FormValidator from './../components/FormValidator.js';
-import { personInfo } from './../components/UserInfo.js';
 import Api from './../components/Api.js';
 import PopupWithSubmit from './../components/PopupWithSubmit.js'
 
-const apiUserInfo = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me',
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-16',
   headers: {
     authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const apiUserInfo = new Api({
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
-const apiUser = apiUserInfo.getUserInfo();
+const apiUser = api.getUserInfo();
 apiUser
   .then((data) => {
     namePerson.textContent = data.name;
@@ -69,7 +69,7 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
   formSubmit: () => {
     const namePerson = inputNamePerson.value;
     const aboutPerson = inputInfoAboutPerson.value;
-    apiUserInfo
+    api
       .patchUserInfo({ name: namePerson, about: aboutPerson })
       .then(() => {
         return userInfo.setUserInfo(namePerson, aboutPerson);
@@ -82,15 +82,6 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
 });
 popupFormInfo.setEventListeners();
 
-// попап с аватаром
-const apiUserAvatar = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me/avatar',
-  headers: {
-    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
-    'Content-Type': 'application/json',
-  },
-});
-
 popupAvatarOpenButton.addEventListener('click', () => {
   popupFormAvatar.popupOpen();
   formValidatorPopupAvatar.resetForm();
@@ -100,7 +91,7 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
   formSubmit: () => {
     const avatarPerson = inputAvatar.value;
     renderLoading(true);
-    apiUserAvatar.patchUserAvatar({ avatar: avatarPerson })
+    api.patchUserAvatar({ avatar: avatarPerson })
       .then(() => {
         return document.querySelector('.avatar').src = avatarPerson;
       })
@@ -114,24 +105,7 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 });
 popupFormAvatar.setEventListeners();
 
-const apiCards = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards',
-  headers: {
-    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
-    'Content-Type': 'application/json',
-  },
-});
-
-const cards = apiCards.getInitialCards();
-
-const apiLikeCard = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-16/cards/likes/',
-  headers: {
-    authorization: 'db246294-1b1a-41e2-ab61-b5ce8b44318f',
-    'Content-Type': 'application/json',
-  },
-});
-
+const cards = api.getInitialCards();
 
 //функция для создания карточки места
 function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
@@ -165,15 +139,15 @@ cards
             handleLikeClick: () => {
               return apiUser.then((dataUser) => {
                 if (item.likes.length === 0) {
-                  apiLikeCard.putLikeCard(item._id);
+                  api.putLikeCard(item._id);
                 }
                 else {
                   item.likes.forEach((one) => {
                     if (one._id === dataUser._id) {
-                      apiLikeCard.deleteLikeCard(item._id);
+                      api.deleteLikeCard(item._id);
                     }
                     else {
-                      apiLikeCard.putLikeCard(item._id);
+                      api.putLikeCard(item._id);
                     }
                   })
                 }
@@ -184,7 +158,7 @@ cards
             handleDeleteIconClick: () => {
               const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
                 formSubmit: () => {
-                  apiCards.deleteCard(item._id);
+                  api.deleteCard(item._id);
                 }
               });
               popupWithSubmit.popupOpen();
@@ -209,7 +183,7 @@ cards
         const nameElement = inputPlaceName.value;
         const linkElement = inputLink.value;
         renderLoading(true);
-        apiCards.makeNewCard({ name: nameElement, link: linkElement })
+        api.makeNewCard({ name: nameElement, link: linkElement })
           .then((data) => {
             return makeCard({
               dataCard: {
@@ -224,15 +198,15 @@ cards
               handleLikeClick: () => {
                 return apiUser.then((dataUser) => {
                   if (data.likes.length === 0) {
-                    apiLikeCard.putLikeCard(data._id);
+                    api.putLikeCard(data._id);
                   }
                   else {
                     data.likes.forEach((one) => {
                       if (one._id !== dataUser._id) {
-                        apiLikeCard.putLikeCard(data._id);
+                        api.putLikeCard(data._id);
                       }
                       else {
-                        apiLikeCard.deleteLikeCard(data._id);
+                        api.deleteLikeCard(data._id);
                       }
                     })
                   }
@@ -243,7 +217,7 @@ cards
               handleDeleteIconClick: () => {
                 const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
                   formSubmit: () => {
-                    apiCards.deleteCard(data._id);
+                    api.deleteCard(data._id);
                   }
                 });
                 popupWithSubmit.popupOpen();

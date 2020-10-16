@@ -20,17 +20,12 @@ export default class Popup {
 
   popupOpen() {
     this._popupElement.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);    
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   closePopup() {
     this._popupElement.classList.remove('popup_opened');
-
     document.removeEventListener('keydown', this._handleEscClose);
-    this._popupElement.removeEventListener(
-      'click',
-      this._closePopupByOverlayClick
-    );
   }
 
   // слушатель кликов на иконку закрыть
@@ -40,9 +35,7 @@ export default class Popup {
       .addEventListener('click', () => {
         this.closePopup();
       });
-      this._popupElement.addEventListener(
-        'click',
-        this._closePopupByOverlayClick
-      );
+    this._popupElement.addEventListener(
+      'click', this._closePopupByOverlayClick);
   }
 }

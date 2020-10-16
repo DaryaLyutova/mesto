@@ -1,8 +1,3 @@
-export const personInfo = {
-  name: '.profile-info__name',
-  aboutPerson: '.profile-info__activity',
-};
-
 export default class UserInfo {
   constructor(personInfo) {
     this._name = document.querySelector(personInfo.name);

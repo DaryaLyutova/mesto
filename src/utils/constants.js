@@ -45,3 +45,8 @@ export const selectorObj = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible',
 };
+
+export const personInfo = {
+  name: '.profile-info__name',
+  aboutPerson: '.profile-info__activity',
+};
