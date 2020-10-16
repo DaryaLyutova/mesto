@@ -2,7 +2,7 @@
     position: absolute;
     right: 0;
     background:none;
-    background-image: url(../../../images/add-button/Vector.svg);
+    background-image: url(../../../images/add-button/Add-button.svg);
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid #FFFFFF;
@@ -14,7 +14,7 @@
 }
 
 .profile__add-button:hover {
-    background-image: url(../../../images/add-button/Vector-hover.svg);
+    background-image: url(../../../images/add-button/Add-button-hover.svg);
     background-position: center;
     border: 2px solid rgba(255, 255, 255, 0.6);
     cursor: pointer;
