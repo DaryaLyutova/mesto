@@ -73,6 +73,9 @@ const popupFormInfo = new PopupWithForm(popupInfo, {
       .then(() => {
         return userInfo.setUserInfo(namePerson, aboutPerson);
       })
+      .then(() => {
+        return popupFormInfo.closePopup();
+      })
       .catch((err) => {
         alert(err);
       });
@@ -93,6 +96,9 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
     api.patchUserAvatar({ avatar: avatarPerson })
       .then(() => {
         return userInfo.changeAvatar(avatarPerson)
+      })
+      .then(() => {
+        return popupFormAvatar.closePopup();
       })
       .catch((err) => {
         alert(err);
@@ -225,6 +231,9 @@ Promise.all([apiUser, apiCards])
               '.place', cardList
             );
 
+          })
+          .then(() => {
+            return popupFormNewCard.closePopup();
           })
           .catch((err) => {
             alert(err);

@@ -52,7 +52,7 @@ export default class Card {
 
   _setEventListeners() {
     this._element
-      .addEventListener('submit', () => {
+      .addEventListener('click', () => {
         this._getLike();
       });
     this._element
@@ -67,6 +67,10 @@ export default class Card {
       });
   }
 
+  setLikesInfo() {
+    this._element.querySelector('.place__like-counter').textContent = this._likes.length;
+  }
+
   //создаем карточку
   generateCard() {
     this._element = this._getTemplate();
@@ -75,7 +79,7 @@ export default class Card {
     // Добавим данные
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;
-    this._element.querySelector('.place__like-counter').textContent = this._likes.length;
+    this.setLikesInfo();
 
     // Вернём элемент наружу
     return this._element;
