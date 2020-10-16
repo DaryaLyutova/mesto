@@ -1,9 +1,9 @@
-import './pages/index.css';
-import Card from './components/Card.js';
-import Section from './components/Section.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import UserInfo from './components/UserInfo.js';
+import './index.css';
+import Card from './../components/Card.js';
+import Section from './../components/Section.js';
+import PopupWithImage from './../components/PopupWithImage.js';
+import PopupWithForm from './../components/PopupWithForm.js';
+import UserInfo from './../components/UserInfo.js';
 import {
   popupPhoto,
   popupAddCard,
@@ -23,11 +23,11 @@ import {
   inputNamePerson,
   inputInfoAboutPerson,
   inputAvatar,
-} from './utils/constants.js';
-import { FormValidator, selectorObj } from './components/FormValidator.js';
-import { personInfo } from './components/UserInfo.js';
-import Api from './components/Api.js';
-import PopupWithSubmit from './components/PopupWithSubmit.js'
+} from './../utils/constants.js';
+import { FormValidator, selectorObj } from './../components/FormValidator.js';
+import { personInfo } from './../components/UserInfo.js';
+import Api from './../components/Api.js';
+import PopupWithSubmit from './../components/PopupWithSubmit.js'
 
 const apiUserInfo = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-16/users/me',
