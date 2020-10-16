@@ -49,4 +49,5 @@ export const selectorObj = {
 export const personInfo = {
   name: '.profile-info__name',
   aboutPerson: '.profile-info__activity',
+  avatar: '.avatar',
 };

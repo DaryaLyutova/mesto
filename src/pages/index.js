@@ -43,9 +43,8 @@ const userInfo = new UserInfo(personInfo);
 const apiUser = api.getUserInfo();
 apiUser
   .then((data) => {
-    namePerson.textContent = data.name;
-    infoAboutPerson.textContent = data.about;
-    avatar.src = data.avatar;
+    userInfo.setUserInfo(data.name, data.about);
+    userInfo.setUserAvatar(data.avatar);
   })
   .catch((err) => {
     alert(err);
@@ -93,7 +92,7 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
     renderLoading(true);
     api.patchUserAvatar({ avatar: avatarPerson })
       .then(() => {
-        return document.querySelector('.avatar').src = avatarPerson;
+        return userInfo.changeAvatar(avatarPerson)
       })
       .catch((err) => {
         alert(err);
@@ -105,67 +104,66 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 });
 popupFormAvatar.setEventListeners();
 
-const cards = api.getInitialCards();
-
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
+function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
+  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // Добавляем в DOM
   elementsList.setItem(cardElement);
-}
+};
 
-
+const apiCards = api.getInitialCards();
 //действия с карточками
-cards
-  .then((data) => {
+Promise.all([apiUser, apiCards])
+  .then((values) => {    //попадаем сюда когда оба промиса будут выполнены
+    const [userData, initialCards] = values;
+    return [userData, initialCards]
+  })
+  .then(([userData, initialCards]) => {
+    const userId = userData._id;
     //создание списка карточек и отображение их на странице
     const cardList = new Section(
       {
-        data: data,
-        renderer: (item) => {
+        data: initialCards,
+        renderer: (card) => {
           makeCard({
             dataCard: {
-              name: item.name,
-              link: item.link,
-              likes: item.likes,
-              _id: item.owner._id
+              name: card.name,
+              link: card.link,
+              likes: card.likes,
+              _id: card.owner._id
             },
             handleCardClick: () => {
-              popupImage.popupOpen(item.name, item.link);
+              popupImage.popupOpen(card.name, card.link);
             },
             handleLikeClick: () => {
-              return apiUser.then((dataUser) => {
-                if (item.likes.length === 0) {
-                  api.putLikeCard(item._id);
-                }
-                else {
-                  item.likes.forEach((one) => {
-                    if (one._id === dataUser._id) {
-                      api.deleteLikeCard(item._id);
-                    }
-                    else {
-                      api.putLikeCard(item._id);
-                    }
-                  })
-                }
-              }).catch((err) => {
-                alert(err);
-              });
+              if (card.likes.length === 0) {
+                api.putLikeCard(card._id);
+              }
+              else {
+                card.likes.forEach((one) => {
+                  if (one._id === userId) {
+                    api.deleteLikeCard(card._id);
+                  }
+                  else {
+                    api.putLikeCard(card._id);
+                  }
+                })
+              }
             },
             handleDeleteIconClick: () => {
               const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
                 formSubmit: () => {
-                  api.deleteCard(item._id);
+                  api.deleteCard(card._id);
                 }
               });
               popupWithSubmit.popupOpen();
               popupWithSubmit.setEventListeners();
             }
           },
-            '.place', cardList);
+            '.place', userId, cardList);
         },
       },
       cardsContainer

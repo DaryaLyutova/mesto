@@ -1,9 +1,10 @@
 export default class Card {
-  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector) {
+  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
     this.__id = dataCard._id;
+    this._userId = userId;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
@@ -22,13 +23,13 @@ export default class Card {
   }
 
   // лайк карточки
-  _activElemets() {
+  _activElemets(userId) {
     this._likes.forEach((one) => {
-      if (one._id === '87a2c0f969175984846e265f') {
+      if (one._id === this._userId) {
         this._element.querySelector('.place__like').classList.add('place__like_active');
       }
     });
-    if (this.__id !== '87a2c0f969175984846e265f') {
+    if (this.__id !== this._userId) {
       this._element.querySelector('.place__delete').remove();
     }
   }
