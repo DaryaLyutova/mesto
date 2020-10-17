@@ -1,12 +1,12 @@
 export default class Card {
-  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector) {
+  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
     this._userId = dataCard.owner._id;
     this._id = dataCard._id;
     this._cardSelector = cardSelector;
-    // this._userId = userId;
+    this._myId = myId;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
@@ -26,11 +26,11 @@ export default class Card {
   // лайк карточки
   _activElemets() {
     this._likes.forEach((one) => {
-      if (one._id === '87a2c0f969175984846e265f') {
+      if (one._id === this._myId) {
         this._element.querySelector('.place__like').classList.add('place__like_active');
       }
     });
-    if (this._userId !== '87a2c0f969175984846e265f') {
+    if (this._userId !== this._myId) {
       this._element.querySelector('.place__delete').remove();
     }
   }
@@ -60,7 +60,7 @@ export default class Card {
     this._element
       .querySelector('.place__image')
       .addEventListener('click', () => {
-        this._handleCardClick();
+        this._handleCardClick(this._name, this._link);
       });
   }
 
@@ -73,7 +73,6 @@ export default class Card {
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;
     this._quantityLikes();
-    // this.setLikesInfo();
 
     // Вернём элемент наружу
     return this._element;

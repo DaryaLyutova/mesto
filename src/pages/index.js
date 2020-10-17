@@ -108,9 +108,9 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 popupFormAvatar.setEventListeners();
 
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
+function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
+  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // Добавляем в DOM
@@ -157,7 +157,7 @@ Promise.all([apiUser, apiCards])
   })
   .then(([userData, initialCards]) => {
 
-    const userId = userData._id;
+    const myId = userData._id;
     //создание списка карточек и отображение их на странице
     const cardList = new Section(
       {
@@ -165,8 +165,8 @@ Promise.all([apiUser, apiCards])
         renderer: (item) => {
           makeCard({
             dataCard: item,
-            handleCardClick: () => {
-              popupImage.popupOpen(item.name, item.link);
+            handleCardClick: (name, link) => {
+              popupImage.popupOpen(name, link);
             },
             handleLikeClick: (id, state, card) => {
               changeLike(id, state, card)
@@ -175,7 +175,7 @@ Promise.all([apiUser, apiCards])
               deleteCardAgree(id);
             }
           },
-            '.place', cardList);
+            '.place', myId, cardList);
         },
       },
       cardsContainer
@@ -197,8 +197,8 @@ Promise.all([apiUser, apiCards])
           .then((data) => {
             return makeCard({
               dataCard: data,
-              handleCardClick: () => {
-                popupImage.popupOpen(nameElement, linkElement);
+              handleCardClick: (name, link) => {
+                popupImage.popupOpen(name, link);
               },
               handleLikeClick: (id, state, card) => {
                 changeLike(id, state, card)
@@ -207,7 +207,7 @@ Promise.all([apiUser, apiCards])
                 deleteCardAgree(id)
               }
             },
-              '.place', cardList
+              '.place', data.owner._id, cardList
             );
 
           })
