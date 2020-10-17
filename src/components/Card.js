@@ -1,11 +1,12 @@
 export default class Card {
-  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId) {
+  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
-    this.__id = dataCard._id;
-    this._userId = userId;
+    this._userId = dataCard.owner._id;
+    this._id = dataCard._id;
     this._cardSelector = cardSelector;
+    // this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
@@ -23,52 +24,44 @@ export default class Card {
   }
 
   // лайк карточки
-  _activElemets(userId) {
+  _activElemets() {
     this._likes.forEach((one) => {
-      if (one._id === this._userId) {
+      if (one._id === '87a2c0f969175984846e265f') {
         this._element.querySelector('.place__like').classList.add('place__like_active');
       }
     });
-    if (this.__id !== this._userId) {
+    if (this._userId !== '87a2c0f969175984846e265f') {
       this._element.querySelector('.place__delete').remove();
     }
   }
 
-  //удаление карточки
-  _deleteCard() {
-    this._handleDeleteIconClick();
-  }
-
-  //слушатель для открытия попапа
-  _setEventListenerImage() {
-    this._handleCardClick();
-  }
-
-  _getLike() {
-    this._handleLikeClick();
+  _quantityLikes() {
     this._element.querySelector('.place__like-counter').textContent = this._likes.length;
-    this._element.querySelector('.place__like').classList.toggle('place__like_active');
+  }
+
+  setLikesInfo() {
+    if (this._element.querySelector('.place__like_active')) {
+      this._state = true;
+    }
+    else { this._state = false; };
+    this._handleLikeClick(this._id, this._state, this._element);
   }
 
   _setEventListeners() {
-    this._element
+    this._element.querySelector('.place__like')
       .addEventListener('click', () => {
-        this._getLike();
+        this.setLikesInfo();
       });
     this._element
       .querySelector('.place__delete')
       .addEventListener('click', () => {
-        this._deleteCard();
+        this._handleDeleteIconClick(this._id);
       });
     this._element
       .querySelector('.place__image')
       .addEventListener('click', () => {
-        this._setEventListenerImage();
+        this._handleCardClick();
       });
-  }
-
-  setLikesInfo() {
-    this._element.querySelector('.place__like-counter').textContent = this._likes.length;
   }
 
   //создаем карточку
@@ -79,7 +72,8 @@ export default class Card {
     // Добавим данные
     this._element.querySelector('.place__image').src = this._link;
     this._element.querySelector('.place__title').textContent = this._name;
-    this.setLikesInfo();
+    this._quantityLikes();
+    // this.setLikesInfo();
 
     // Вернём элемент наружу
     return this._element;

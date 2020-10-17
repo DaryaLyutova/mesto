@@ -50,6 +50,13 @@ export default class Api {
     }).then((res) => this._showErrow(res));
   }
 
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => this._showErrow(res));
+  }
+
   putLikeCard(id) {
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',
@@ -63,22 +70,4 @@ export default class Api {
       headers: this._headers,
     }).then((res) => this._showErrow(res));
   }
-
-  getLikeCard(id) {
-    return fetch(`${this._url}/cards/likes/${id}`, {
-      method: 'GET',
-      headers: this._headers,
-    }).then((res) => this._showErrow(res));
-  }
-
-  deleteCard(id) {
-    return fetch(`${this._url}/cards/${id}`, {
-      method: 'DELETE',
-      headers: this._headers,
-    }).then((res) => this._showErrow(res));
-  }
-
-
-
 }
-

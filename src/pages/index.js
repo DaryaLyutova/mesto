@@ -16,9 +16,6 @@ import {
   popupSaveButton,
   inputPlaceName,
   inputLink,
-  namePerson,
-  infoAboutPerson,
-  avatar,
   cardsContainer,
   inputNamePerson,
   inputInfoAboutPerson,
@@ -111,14 +108,45 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 popupFormAvatar.setEventListeners();
 
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId, elementsList) {
+function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, userId);
+  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // Добавляем в DOM
   elementsList.setItem(cardElement);
 };
+
+//функция добавления лайка
+function changeLike(id, state, card) {
+  if (state === true) {
+    api.deleteLikeCard(id)
+      .then((data) => {
+        card.querySelector('.place__like').classList.toggle('place__like_active');
+        card.querySelector('.place__like-counter').textContent = data.likes.length;
+      }).catch((err) => {
+        alert(err);
+      })
+  } else {
+    api.putLikeCard(id).then((data) => {
+      card.querySelector('.place__like').classList.toggle('place__like_active');
+      card.querySelector('.place__like-counter').textContent = data.likes.length;
+    }).catch((err) => {
+      alert(err);
+    })
+  }
+}
+
+//функция подверждения и удаления карточки
+function deleteCardAgree(id) {
+  const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
+    formSubmit: () => {
+      api.deleteCard(id);
+    }
+  });
+  popupWithSubmit.popupOpen();
+  popupWithSubmit.setEventListeners();
+}
 
 const apiCards = api.getInitialCards();
 //действия с карточками
@@ -128,48 +156,26 @@ Promise.all([apiUser, apiCards])
     return [userData, initialCards]
   })
   .then(([userData, initialCards]) => {
+
     const userId = userData._id;
     //создание списка карточек и отображение их на странице
     const cardList = new Section(
       {
         data: initialCards,
-        renderer: (card) => {
+        renderer: (item) => {
           makeCard({
-            dataCard: {
-              name: card.name,
-              link: card.link,
-              likes: card.likes,
-              _id: card.owner._id
-            },
+            dataCard: item,
             handleCardClick: () => {
-              popupImage.popupOpen(card.name, card.link);
+              popupImage.popupOpen(item.name, item.link);
             },
-            handleLikeClick: () => {
-              if (card.likes.length === 0) {
-                api.putLikeCard(card._id);
-              }
-              else {
-                card.likes.forEach((one) => {
-                  if (one._id === userId) {
-                    api.deleteLikeCard(card._id);
-                  }
-                  else {
-                    api.putLikeCard(card._id);
-                  }
-                })
-              }
+            handleLikeClick: (id, state, card) => {
+              changeLike(id, state, card)
             },
-            handleDeleteIconClick: () => {
-              const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
-                formSubmit: () => {
-                  api.deleteCard(card._id);
-                }
-              });
-              popupWithSubmit.popupOpen();
-              popupWithSubmit.setEventListeners();
+            handleDeleteIconClick: (id) => {
+              deleteCardAgree(id);
             }
           },
-            '.place', userId, cardList);
+            '.place', cardList);
         },
       },
       cardsContainer
@@ -190,42 +196,15 @@ Promise.all([apiUser, apiCards])
         api.makeNewCard({ name: nameElement, link: linkElement })
           .then((data) => {
             return makeCard({
-              dataCard: {
-                name: data.name,
-                link: data.link,
-                likes: data.likes,
-                _id: data.owner._id
-              },
+              dataCard: data,
               handleCardClick: () => {
-                popupImage.popupOpen(nameElement, linkElement, popupPhoto);
+                popupImage.popupOpen(nameElement, linkElement);
               },
-              handleLikeClick: () => {
-                return apiUser.then((dataUser) => {
-                  if (data.likes.length === 0) {
-                    api.putLikeCard(data._id);
-                  }
-                  else {
-                    data.likes.forEach((one) => {
-                      if (one._id !== dataUser._id) {
-                        api.putLikeCard(data._id);
-                      }
-                      else {
-                        api.deleteLikeCard(data._id);
-                      }
-                    })
-                  }
-                }).catch((err) => {
-                  alert(err);
-                });
+              handleLikeClick: (id, state, card) => {
+                changeLike(id, state, card)
               },
-              handleDeleteIconClick: () => {
-                const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
-                  formSubmit: () => {
-                    api.deleteCard(data._id);
-                  }
-                });
-                popupWithSubmit.popupOpen();
-                popupWithSubmit.setEventListeners();
+              handleDeleteIconClick: (id) => {
+                deleteCardAgree(id)
               }
             },
               '.place', cardList
