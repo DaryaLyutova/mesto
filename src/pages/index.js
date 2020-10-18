@@ -14,12 +14,9 @@ import {
   popupAvatarOpenButton,
   popupAddCardOpenButton,
   popupSaveButton,
-  inputPlaceName,
-  inputLink,
   cardsContainer,
   inputNamePerson,
   inputInfoAboutPerson,
-  inputAvatar,
   selectorObj,
   personInfo
 } from './../utils/constants.js';
@@ -158,14 +155,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       {
         data: initialCards,
         renderer: (item) => {
-          makeCard({
-            dataCard: item
-          },
+          makeCard({ dataCard: item },
             '.place', myId, cardList);
         },
-      },
-      cardsContainer
-    );
+      }, cardsContainer);
     return cardList
   })
   .then((cardList) => {
@@ -179,9 +172,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         renderLoading(true);
         api.makeNewCard(formValues)
           .then((data) => {
-            return makeCard({
-              dataCard: data
-            },
+            return makeCard({ dataCard: data },
               '.place', data.owner._id, cardList
             );
           })
