@@ -64,6 +64,12 @@ export default class Card {
       });
   }
 
+  //удаление карточки 
+  deleteCard() { 
+    this._element.remove(); 
+    this._element = null; 
+  } 
+
   //создаем карточку
   generateCard() {
     this._element = this._getTemplate();

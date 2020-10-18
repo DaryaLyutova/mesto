@@ -35,18 +35,6 @@ const api = new Api({
   },
 });
 
-//информация о пользователе
-const userInfo = new UserInfo(personInfo);
-const apiUser = api.getUserInfo();
-apiUser
-  .then((data) => {
-    userInfo.setUserInfo(data.name, data.about);
-    userInfo.setUserAvatar(data.avatar);
-  })
-  .catch((err) => {
-    alert(err);
-  });
-
 //откытие попапа для внесения данных о пользователе
 popupOpenButton.addEventListener('click', () => {
   popupFormInfo.popupOpen();
@@ -108,9 +96,27 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 popupFormAvatar.setEventListeners();
 
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId, elementsList) {
+function makeCard({ dataCard, handleCardClick, handleLikeClick }, cardSelector, myId, elementsList) {
   // Создадим экземпляр карточки
-  const card = new Card({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId);
+  const card = new Card({
+    dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick: (id) => {
+      // popupWithSubmit.popupOen();
+      const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
+        formSubmit: () => {
+          return api.deleteCard(id)
+            .then(() => {
+              return card.deleteCard()
+            })
+            .then(() => {
+              return popupWithSubmit.closePopup();
+            })
+            .catch(err => console.log(`При удалении карточки: ${err}`));
+        }
+      });
+      popupWithSubmit.popupOpen();
+      popupWithSubmit.setEventListeners();
+    }
+  }, cardSelector, myId);
   // Создаём карточку и возвращаем наружу
   const cardElement = card.generateCard();
   // Добавляем в DOM
@@ -137,22 +143,17 @@ function changeLike(id, state, card) {
   }
 }
 
-//функция подверждения и удаления карточки
-function deleteCardAgree(id) {
-  const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
-    formSubmit: () => {
-      api.deleteCard(id);
-    }
-  });
-  popupWithSubmit.popupOpen();
-  popupWithSubmit.setEventListeners();
-}
+//информация о пользователе
+const userInfo = new UserInfo(personInfo);
 
-const apiCards = api.getInitialCards();
 //действия с карточками
-Promise.all([apiUser, apiCards])
-  .then((values) => {    //попадаем сюда когда оба промиса будут выполнены
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then((values) => {
     const [userData, initialCards] = values;
+    return [userData, initialCards]
+  }).then(([userData, initialCards]) => {
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar);
     return [userData, initialCards]
   })
   .then(([userData, initialCards]) => {
@@ -170,9 +171,6 @@ Promise.all([apiUser, apiCards])
             },
             handleLikeClick: (id, state, card) => {
               changeLike(id, state, card)
-            },
-            handleDeleteIconClick: (id) => {
-              deleteCardAgree(id);
             }
           },
             '.place', myId, cardList);
@@ -202,9 +200,6 @@ Promise.all([apiUser, apiCards])
               },
               handleLikeClick: (id, state, card) => {
                 changeLike(id, state, card)
-              },
-              handleDeleteIconClick: (id) => {
-                deleteCardAgree(id)
               }
             },
               '.place', data.owner._id, cardList
