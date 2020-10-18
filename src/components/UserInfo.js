@@ -13,11 +13,7 @@ export default class UserInfo {
 
     return newPersonInfo;
   }
-
-  changeAvatar(avatar) {
-    this._avatar.src = avatar;
-  }
-
+  
   setUserInfo(name, about) {
     this._name.textContent = name;
     this._aboutPerson.textContent = about;

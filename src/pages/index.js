@@ -80,7 +80,7 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
     renderLoading(true);
     api.patchUserAvatar({ avatar: avatarPerson })
       .then(() => {
-        return userInfo.changeAvatar(avatarPerson)
+        return userInfo.setUserAvatar(avatarPerson)
       })
       .then(() => {
         return popupFormAvatar.closePopup();
@@ -96,10 +96,12 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 popupFormAvatar.setEventListeners();
 
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick }, cardSelector, myId, elementsList) {
+function makeCard({ dataCard }, cardSelector, myId, elementsList) {
   // Создадим экземпляр карточки
   const card = new Card({
-    dataCard, handleCardClick, handleLikeClick: (id, state) => {
+    dataCard, handleCardClick: (name, link) => {
+      popupImage.popupOpen(name, link);
+    }, handleLikeClick: (id, state) => {
       if (state === true) {
         return api.deleteLikeCard(id)
           .then((data) => {
@@ -160,10 +162,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         data: initialCards,
         renderer: (item) => {
           makeCard({
-            dataCard: item,
-            handleCardClick: (name, link) => {
-              popupImage.popupOpen(name, link);
-            }
+            dataCard: item
           },
             '.place', myId, cardList);
         },
@@ -186,14 +185,10 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
         api.makeNewCard({ name: nameElement, link: linkElement })
           .then((data) => {
             return makeCard({
-              dataCard: data,
-              handleCardClick: (name, link) => {
-                popupImage.popupOpen(name, link);
-              }
+              dataCard: data
             },
               '.place', data.owner._id, cardList
             );
-
           })
           .then(() => {
             return popupFormNewCard.closePopup();
