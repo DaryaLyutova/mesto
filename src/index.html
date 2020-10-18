@@ -36,11 +36,11 @@
         <button type="button" class="popup__close-button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__profile">
-          <input type="text" placeholder="Имя" class="popup__input popup__input_name" id="name-input" name="user-info"
+          <input type="text" placeholder="Имя" class="popup__input popup__input_name" id="name-input" name="name"
             minlength="2" maxlength="40" required />
           <span class="popup__error" id="name-input-error"></span>
           <input type="text" placeholder="О себе" class="popup__input popup__input_activity" id="activity-input"
-            name="user-info" minlength="2" maxlength="200" required />
+            name="about" minlength="2" maxlength="200" required />
           <span class="popup__error" id="activity-input-error">.</span>
           <button type="submit" class="popup__button">Сохранить</button>
         </fieldset>
@@ -52,10 +52,10 @@
         <h2 class="popup__title">Новое место</h2>
         <fieldset class="popup__profile">
           <input type="text" placeholder="Название" class="popup__input popup__input_placename" id="placename-input"
-            name="add-card" minlength="1" maxlength="30" required />
+            name="name" minlength="1" maxlength="30" required />
           <span class="popup__error" id="placename-input-error"></span>
           <input type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_link" id="email-input"
-            name="add-card" required />
+            name="link" required />
           <span class="popup__error" id="email-input-error"></span>
           <button type="submit" class="popup__button popup__button_card">
             Сохранить
@@ -81,12 +81,12 @@
         </button>
       </div>
     </form>
-    <form class="popup popup_avatar popup__form" name="avatar-input" novalidate>
+    <form class="popup popup_avatar popup__form" name="avatar" novalidate>
       <div class="popup__container">
         <button type="button" class="popup__close-button"></button>
         <h2 class="popup__title">Обновить аватар</h2>
         <input type="url" placeholder="Ссылка на аватар" class="popup__input popup__input_avatar-link" id="avatar-input"
-          name="avatar-input" required />
+          name="avatar" required />
         <span class="popup__error" id="avatar-input-error"></span>
         <button type="submit" class="popup__button popup__button_avatar">
           Сохранить

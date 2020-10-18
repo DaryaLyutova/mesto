@@ -50,13 +50,11 @@ popupOpenButton.addEventListener('click', () => {
 
 //обрабтка данных попапа внесения данных пользователя и его закрытие
 const popupFormInfo = new PopupWithForm(popupInfo, {
-  formSubmit: () => {
-    const namePerson = inputNamePerson.value;
-    const aboutPerson = inputInfoAboutPerson.value;
+  formSubmit: (formValues) => {
     api
-      .patchUserInfo({ name: namePerson, about: aboutPerson })
+      .patchUserInfo(formValues)
       .then(() => {
-        return userInfo.setUserInfo(namePerson, aboutPerson);
+        return userInfo.setUserInfo(formValues.name, formValues.about);
       })
       .then(() => {
         return popupFormInfo.closePopup();
@@ -75,12 +73,11 @@ popupAvatarOpenButton.addEventListener('click', () => {
 });
 
 const popupFormAvatar = new PopupWithForm(popupAvatar, {
-  formSubmit: () => {
-    const avatarPerson = inputAvatar.value;
+  formSubmit: (formValues) => {
     renderLoading(true);
-    api.patchUserAvatar({ avatar: avatarPerson })
+    api.patchUserAvatar(formValues)
       .then(() => {
-        return userInfo.setUserAvatar(avatarPerson)
+        return userInfo.setUserAvatar(formValues.avatar)
       })
       .then(() => {
         return popupFormAvatar.closePopup();
@@ -178,11 +175,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((cardList) => {
     // добавления новой карточки с фотографией
     const popupFormNewCard = new PopupWithForm(popupAddCard, {
-      formSubmit: () => {
-        const nameElement = inputPlaceName.value;
-        const linkElement = inputLink.value;
+      formSubmit: (formValues) => {
         renderLoading(true);
-        api.makeNewCard({ name: nameElement, link: linkElement })
+        api.makeNewCard(formValues)
           .then((data) => {
             return makeCard({
               dataCard: data
