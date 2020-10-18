@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId) {
+  constructor({ dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick }, cardSelector, myId, datalikes) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._likes = dataCard.likes;
@@ -7,6 +7,7 @@ export default class Card {
     this._id = dataCard._id;
     this._cardSelector = cardSelector;
     this._myId = myId;
+    this._datalikes = datalikes;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
@@ -39,12 +40,17 @@ export default class Card {
     this._element.querySelector('.place__like-counter').textContent = this._likes.length;
   }
 
+  changeLikeInfo(datalikes) {
+    this._element.querySelector('.place__like').classList.toggle('place__like_active');
+    this._element.querySelector('.place__like-counter').textContent = datalikes.length;
+  }
+
   setLikesInfo() {
     if (this._element.querySelector('.place__like_active')) {
       this._state = true;
     }
     else { this._state = false; };
-    this._handleLikeClick(this._id, this._state, this._element);
+    this._handleLikeClick(this._id, this._state);
   }
 
   _setEventListeners() {
@@ -65,10 +71,10 @@ export default class Card {
   }
 
   //удаление карточки 
-  deleteCard() { 
-    this._element.remove(); 
-    this._element = null; 
-  } 
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
 
   //создаем карточку
   generateCard() {

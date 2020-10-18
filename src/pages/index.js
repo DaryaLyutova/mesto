@@ -96,10 +96,25 @@ const popupFormAvatar = new PopupWithForm(popupAvatar, {
 popupFormAvatar.setEventListeners();
 
 //функция для создания карточки места
-function makeCard({ dataCard, handleCardClick, handleLikeClick }, cardSelector, myId, elementsList) {
+function makeCard({ dataCard, handleCardClick }, cardSelector, myId, elementsList) {
   // Создадим экземпляр карточки
   const card = new Card({
-    dataCard, handleCardClick, handleLikeClick, handleDeleteIconClick: (id) => {
+    dataCard, handleCardClick, handleLikeClick: (id, state) => {
+      if (state === true) {
+        return api.deleteLikeCard(id)
+          .then((data) => {
+            return card.changeLikeInfo(data.likes);
+          }).catch((err) => {
+            alert(err);
+          })
+      } else {
+        return api.putLikeCard(id).then((data) => {
+          return card.changeLikeInfo(data.likes);
+        }).catch((err) => {
+          alert(err);
+        })
+      }
+    }, handleDeleteIconClick: (id) => {
       // popupWithSubmit.popupOen();
       const popupWithSubmit = new PopupWithSubmit(popupSubmit, {
         formSubmit: () => {
@@ -122,26 +137,6 @@ function makeCard({ dataCard, handleCardClick, handleLikeClick }, cardSelector, 
   // Добавляем в DOM
   elementsList.setItem(cardElement);
 };
-
-//функция добавления лайка
-function changeLike(id, state, card) {
-  if (state === true) {
-    api.deleteLikeCard(id)
-      .then((data) => {
-        card.querySelector('.place__like').classList.toggle('place__like_active');
-        card.querySelector('.place__like-counter').textContent = data.likes.length;
-      }).catch((err) => {
-        alert(err);
-      })
-  } else {
-    api.putLikeCard(id).then((data) => {
-      card.querySelector('.place__like').classList.toggle('place__like_active');
-      card.querySelector('.place__like-counter').textContent = data.likes.length;
-    }).catch((err) => {
-      alert(err);
-    })
-  }
-}
 
 //информация о пользователе
 const userInfo = new UserInfo(personInfo);
@@ -168,9 +163,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
             dataCard: item,
             handleCardClick: (name, link) => {
               popupImage.popupOpen(name, link);
-            },
-            handleLikeClick: (id, state, card) => {
-              changeLike(id, state, card)
             }
           },
             '.place', myId, cardList);
@@ -197,9 +189,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
               dataCard: data,
               handleCardClick: (name, link) => {
                 popupImage.popupOpen(name, link);
-              },
-              handleLikeClick: (id, state, card) => {
-                changeLike(id, state, card)
               }
             },
               '.place', data.owner._id, cardList
